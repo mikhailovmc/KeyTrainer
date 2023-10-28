@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using KeyTrainer.Contracts;
 using KeyTrainer.Dto;
 using Microsoft.AspNetCore.Mvc;
-//using KeyTrainer.Business;
 
 namespace KeyTrainer.Controllers
 {
