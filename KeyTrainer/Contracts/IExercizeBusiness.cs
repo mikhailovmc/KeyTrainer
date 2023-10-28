@@ -15,7 +15,7 @@ namespace KeyTrainer.Contracts
         /// Получить список упражнений по уровням сложности
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<ExercizeSendDto>> GetExercizes();
+        Task<IEnumerable<ExercizeFullDto>> GetExercizes();
 
         /// <summary>
         /// Получить упражнение по его Id
