@@ -25,8 +25,8 @@ namespace KeyTrainer.Controllers
         /// </summary>
         /// <returns>Список упражнений по уровням сложности</returns>
         [HttpGet]
-        [Route("api/GetExercizes")]
-        public async Task<IEnumerable<ExercizeSendDto>> GetExercizes()
+        [Route("GetExercizes")]
+        public async Task<IEnumerable<ExercizeFullDto>> GetExercizes()
         {
             var exercizes = await _exercizeBusiness.GetExercizes();
             if (exercizes == null)
@@ -34,18 +34,28 @@ namespace KeyTrainer.Controllers
             return exercizes;
         }
 
+        /// <summary>
+        /// Получить упражнение по его Id
+        /// </summary>
+        /// <param name="id">Id упражнения</param>
+        /// <returns>Упражнение</returns>
         [HttpGet]
-        [Route("api/GetExercize/{id}")]
+        [Route("GetExercize/{id}")]
         public async Task<ExercizeFullDto> GetExercize(int id)
         {
-            var exercizes = await _exercizeBusiness.GetExercizeById(id);
-            if (exercizes == null)
+            var exercize = await _exercizeBusiness.GetExercizeById(id);
+            if (exercize == null)
                 throw new Exception("Не удалось получить упражнение!");
-            return exercizes;
+            return exercize;
         }
 
+        /// <summary>
+        /// Получить уровень сложности по его Id
+        /// </summary>
+        /// <param name="id">Id уровня сложности</param>
+        /// <returns>Уровень сложности</returns>
         [HttpGet]
-        [Route("api/GetDifficultyLevel/{id}")]
+        [Route("GetDifficultyLevel/{id}")]
         public async Task<DifficultyLevelFullDto> GetDifficultyLevel(int id)
         {
             var exercizes = await _exercizeBusiness.GetDifficultyLevelById(id);

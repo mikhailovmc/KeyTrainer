@@ -56,8 +56,16 @@ namespace KeyTrainer
                 .AsSelf()
                 .InstancePerRequest();
 
+            builder.RegisterType<ExercizeController>()
+                .AsSelf()
+                .InstancePerRequest();
+
             builder.RegisterType<UserBusiness>().As<IUserBusiness>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<ExercizeBusiness>().As<IExercizeBusiness>();
+            builder.RegisterType<ExercizeRepository>().As<IExercizeRepository>();
+
+
             builder.RegisterType<KeyTrainerDbContext>()
                 .AsSelf()
                 .InstancePerLifetimeScope();

@@ -26,21 +26,29 @@ namespace KeyTrainer.Business
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ExercizeSendDto>> GetExercizes()
+        public async Task<IEnumerable<ExercizeFullDto>> GetExercizes()
         {
-            return await _exercizeRepository.GetExercizes();
+            var exercizesDto = new List<ExercizeFullDto>();
+            var exercizes = await _exercizeRepository.GetExercizes();
+            foreach (var exercize in exercizes)
+            {
+               exercizesDto.Add(_mapper.Map<ExercizeFullDto>(exercize));
+            }
+            return exercizesDto;
         }
 
         /// <inheritdoc/>
         public async Task<ExercizeFullDto> GetExercizeById(int id)
         {
-            return await _exercizeRepository.GetExerciseById(id);
+            var exercize = await _exercizeRepository.GetExerciseById(id);
+            return _mapper.Map<ExercizeFullDto>(exercize);
         }
 
         /// <inheritdoc/>
         public async Task<DifficultyLevelFullDto> GetDifficultyLevelById(int id)
         {
-            return await _exercizeRepository.GetDifficultyLevelById(id);
+            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(id);
+            return _mapper.Map<DifficultyLevelFullDto>(difficultyLevel);
         }
     }
 }
