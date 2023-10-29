@@ -1,0 +1,41 @@
+@import "../App/vars";
+@import "../App/reset";
+@import "../App/base";
+
+
+header {
+    color: #fff;
+    font-weight: 700px;
+    padding: 10px;
+    background-color: $brand-color;
+    display: flex;
+    justify-content: space-between;
+
+    nav {
+        display: flex;
+        align-self: center;
+    }
+    .logo {
+        font-family: "Genos", sans-serif;
+        color: #fff;
+        font-weight: 700;
+        font-size: 48px;
+    }
+
+    .header__list {
+        display: flex;
+    }
+
+    .header__list-item {
+        font-size: 24px;
+        margin-right: 50px;
+    }
+
+    .header__list-item a{
+        color: #fff;
+    }
+
+    .header__list-item a:hover{
+        text-decoration: underline;
+    }
+}
