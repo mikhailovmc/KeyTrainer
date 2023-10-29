@@ -1,0 +1,36 @@
+@import "./../App/vars";
+
+.card {
+    background: linear-gradient(to bottom right, $brand-color, rgb(157, 36, 255));
+    width: 250px;
+    padding: 20px 0;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+
+
+    .card__top {
+        padding: 0 0 20px 0;
+        border-bottom: 1px solid #fff;
+    }
+
+    .card__body {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+
+        .card__percent {
+            font-size: 35px;
+            margin-bottom: 20px;
+        }
+
+        .card__number {
+            font-size: 25px;
+        }
+    }
+
+    .card__footer {
+        padding-top: 20px;
+        border-top: 1px solid #fff;
+    }
+}

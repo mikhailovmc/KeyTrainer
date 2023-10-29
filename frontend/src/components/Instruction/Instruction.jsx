@@ -1,6 +1,6 @@
 const Instruction = () => {
     return (
-        <div>СТРАНЦИА С ИНСТРУКИЦИЕй</div>
+        <div></div>
     );
 }
  

@@ -19,7 +19,7 @@ const Authorization = () => {
     }
     return (
         <>
-            <Header/>
+            <Header links={[{text: "Инструкция", route: "/instruction"}, {text: "Регистрация", route: "/registration"}]}/>
             <div className="logPage">
                 
                 <form className="form" action="">
@@ -42,7 +42,7 @@ const Authorization = () => {
                     </label>
                     
 
-                    <button className="button" type="submit">Зарегистрироваться</button>
+                    <button className="button" type="submit">Войти</button>
                 </form>
                 
             </div>

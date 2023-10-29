@@ -21,7 +21,7 @@ const Registration = () => {
 
     return (
         <>
-            <Header/>
+            <Header links={[{text: "Инструкция", route: "/instruction"}, {text: "Авторизироваться", route: "/login"}]}/>
             <div className="logPage">
                 
                 <form className="form" action="">

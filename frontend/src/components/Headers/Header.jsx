@@ -5,30 +5,27 @@ import { Link } from "react-router-dom";
 import "./style.scss"
 
 
-const Header = () => {
+const Header = (props) => {
+    const links = [...props.links]; 
+    const showLinks = () => {
+        return links.map(link => {
+            return (
+                <li key={link.text} className="header__list-item">
+                    <Link to={link.route}>
+                        {link.text}
+                    </Link>
+                </li>
+            )
+        })    
+    }
+
     return (
         
         <header>
-            
             <div className="logo">KeyGym</div>
             <nav>
                 <ul className="header__list">
-                    <li className="header__list-item">
-                        <Link to={"/instruction"}>
-                            Инструкция
-                        </Link>
-                    </li>
-                    <li className="header__list-item">
-                        <Link to={"/login"}>
-                            Авторизация
-                        </Link>
-                    </li>
-                    <li className="header__list-item">
-                        <Link to={"/registration"}>
-                            Регистрация
-                        </Link>
-                        
-                    </li>
+                    {links && showLinks()}
                 </ul>
             </nav>
         </header>

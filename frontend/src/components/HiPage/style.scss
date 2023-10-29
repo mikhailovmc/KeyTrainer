@@ -1,0 +1,32 @@
+.hello-page {
+    padding: 100px 0;
+    
+    color: #fff;
+    background-color: #265299;
+    height: 100vh;
+    text-align: center;
+
+    .hello-page__title {
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 48px;
+        margin-bottom: 30px;
+        width: 50%;
+    }
+
+    .hello-page__text {
+        font-size: 32px;
+        margin-bottom: 50px;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hello-page__button a {
+        color: #fff;
+        background-color: #459830;
+        padding: 20px;
+        font-size: 25px;
+        border-radius: 10px;
+    }
+}
