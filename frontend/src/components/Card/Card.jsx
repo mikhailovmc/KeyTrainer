@@ -1,6 +1,9 @@
 import "./style.scss"
 
-const Card = () => {
+const Card = (exercises) => {
+    console.log("Вывод упражнений в card", exercises);
+
+    
     return (
         <div className="card">
             <div className="card__top">Длина: ZZZ символов</div>
