@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "../Headers/Header";
 import "./style.scss";
 import pic from "./img/eye.png";
+import { Navigate, json } from "react-router-dom";
 
 
 const Registration = () => {
@@ -14,24 +15,56 @@ const Registration = () => {
     const [login, setLogin] = useState();
     const [password, setPassword] = useState();
 
-     const  registration = async (event) => {
+
+    
+
+
+    
+
+    // for(let [name, value] of formData) {
+    //     alert(`${name} = ${value}`); // key1=value1, потом key2=value2
+    //     }
+
+    const  registration = async (event) => {
         event.preventDefault();
-        const userData = {
-                login,
-                password
-            }
-        console.log(userData)
+
+        // let userDatal = {
+        //     login: login,
+        //     password: password
+        // }
+    
+        // console.log(userDatal)
+        // const jsonUser = JSON.stringify(userDatal);
+
+        let userData = new FormData()
+        userData.append('login', login)
+        userData.append('password', password)
+        
+        // console.log(userData.login, '44')
+
+        const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            body: userData
+        });
+        console.log("Ответ сервера в авторизации", responceFromServer)
+
+       
+        // try {
 
 
-        try {
-            const responce = await axios.post('https://localhost:5001/api/User/Registrations', {
-            login,
-            password
-            })
-            console.log(responce)
-        } catch (error) {
-            alert(error)
-        }
+
+        // //     const responce = await axios.post('https://localhost:5001/api/User/Register', {
+        // //         Login: login,
+        // //         Password: password
+        // //     })
+        // //     console.log(responce)
+        // //     Navigate('/exercises')
+        // // } catch (error) {
+        // //     alert(error)
+        // // }
 
     }
 
@@ -49,7 +82,7 @@ const Registration = () => {
             <Header links={[{text: "Инструкция", route: "/instruction"}, {text: "Авторизироваться", route: "/login"}]}/>
             <div className="logPage">
                 
-                <form className="form" action="">
+                <form className="form" id="formElem" onSubmit={registration}>
                     <div className="form__title">Зарегистрироваться</div>
 
                     <label className="form__label">
@@ -59,7 +92,7 @@ const Registration = () => {
                     
                     <label className="form__label password__label">
                         Пароль:
-                        <input className="input password-input" type={passwordType}  placeholder="Пароль" onChange={e => {setPassword(e.target.value)}}/>
+                        <input className="input password-input" type={passwordType} name="password" placeholder="Пароль" onChange={e => {setPassword(e.target.value)}}/>
                         <div className={passwordType==="password" ? "password__btn" :" password__btn active"} onClick={togglePassword}><img src={pic} alt="Посмотреть пароль" /></div>
                     </label>
 
@@ -72,7 +105,7 @@ const Registration = () => {
                                 <img src={pic} alt="Посмотреть пароль" /></div>
                     </label>
 
-                    <button className="button" onClick={registration}>Зарегистрироваться</button>
+                    <button className="button" type="submit" onSubmit={registration}>Зарегистрироваться</button>
                 </form>
                 
             </div>

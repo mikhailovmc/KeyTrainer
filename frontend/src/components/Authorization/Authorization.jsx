@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+
 import Header from "../Headers/Header";
 import "./style.scss";
 import pic from "./img/eye.png";
@@ -29,19 +29,19 @@ const Authorization = () => {
 
 
 
-    // const checkLogin = () => {
-    //     const responceFromServer = fetch('https://localhost:5001/api/User/Login', {
-    //         method: "POST",
-    //         headers: {
-    //             'Content-Type': 'application/json;charset=utf-8'
-    //         },
-    //         body: JSON.stringify(user)
-    //     });
-    //     console.log("Ответ сервера в авторизации", responceFromServer)
-    //     let result = responceFromServer.json();
-    //     console.log(result);
-    //     setResponce(result);
-    // }
+    const checkLogin = () => {
+        const responceFromServer = fetch('https://localhost:5001/api/User/Lo', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(user)
+        });
+        console.log("Ответ сервера в авторизации", responceFromServer)
+        let result = responceFromServer.json();
+        console.log(result);
+        setResponce(result);
+    }
 
     const togglePassword =()=>{
       if(passwordType==="password")

@@ -2,13 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import Card from "../Card/Card";
 import Header from "../Headers/Header";
 import useFetch from "../useFetch/useFetch";
-import { getExercises } from "./../../helpers/links";
+import { getExercise } from "./../../helpers/links";
 
 import "./style.scss"
 
 const ExercisePage = () => {
 
-    // // const {data, isLoading, error} = useFetch(getExercises);
+    const {data, isLoading, error} = useFetch(getExercise + '/1');
+    console.log(data)
     // const {data, isLoading, error} = useQuery(['exercises'], () => fetch(
     //     'https://jsonplaceholder.typicode.com/todos/1')
     //     .then(responce => responce.json()), 
