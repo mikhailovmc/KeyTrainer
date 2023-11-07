@@ -1,61 +1,78 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import Header from "../Headers/Header";
-import "./style.scss";
+import UserHeader from "../Headers/UserHeader";
 import pic from "./img/eye.png";
-import { Navigate, json } from "react-router-dom";
+import "./style.scss";
 
 
 const Registration = () => {
 
     const [passwordType, setPasswordType] = useState("password");
-    // const [passwordInput, setPasswordInput] = useState("");
     
     const [login, setLogin] = useState();
     const [password, setPassword] = useState();
-
-
+    const [repeatPassword, setRepeatPassword] = useState();
+    const navigate = useNavigate();
+    
+    const checkLogin = (login) => {
+        const regex = /^[a-z0-9_-]{4,10}$/;
+        if(regex.test(login)) {
+            return true;
+        } else {
+            alert('Логин не соответсвует')
+            return false;
+        }      
+    }
+    
+    const checkPassword = (password) => {
+        const regex = /^[a-z0-9_-]{4,10}$/;
+        if (regex.test(password)) {
+            return true;
+        } else alert('Логин не соответсвует')
+    }
     
 
-
-    
-
-    // for(let [name, value] of formData) {
-    //     alert(`${name} = ${value}`); // key1=value1, потом key2=value2
-    //     }
 
     const  registration = async (event) => {
         event.preventDefault();
 
-        // let userDatal = {
-        //     login: login,
-        //     password: password
-        // }
-    
-        // console.log(userDatal)
-        // const jsonUser = JSON.stringify(userDatal);
-
-        let userData = new FormData()
-        userData.append('login', login)
-        userData.append('password', password)
+        checkLogin(login);
         
-        // console.log(userData.login, '44')
+        let userData = new FormData();
 
-        const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
+        if(password === repeatPassword) {
+            userData.append('login', login)
+            userData.append('password', password)
+            return true
+        } else {
+            alert("Пароли не совпадают");
+        }
+
+        
+        try {
+            const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
             body: userData
-        });
-        console.log("Ответ сервера в авторизации", responceFromServer)
+            });
 
-       
+            if(responceFromServer.ok) {
+                navigate('/exercises')
+            }
+            console.log("Ответ сервера в авторизации", responceFromServer)
+
+        } catch (error) {
+            alert(error)
+        }
+        
+
+        
+     
         // try {
-
-
-
         // //     const responce = await axios.post('https://localhost:5001/api/User/Register', {
         // //         Login: login,
         // //         Password: password
@@ -79,7 +96,7 @@ const Registration = () => {
 
     return (
         <>
-            <Header links={[{text: "Инструкция", route: "/instruction"}, {text: "Авторизироваться", route: "/login"}]}/>
+            <UserHeader links={[{text: "Инструкция", route: "/instruction"}, {text: "Авторизироваться", route: "/login"}]}/>
             <div className="logPage">
                 
                 <form className="form" id="formElem" onSubmit={registration}>
@@ -98,7 +115,7 @@ const Registration = () => {
 
                     <label className="form__label password__label">
                         Повторите пароль:
-                        <input className="input password-input" type={passwordType}  placeholder="Подтвердите пароль" />
+                        <input className="input password-input" type={passwordType}  placeholder="Подтвердите пароль" onChange={e => {setRepeatPassword(e.target.value)}}/>
                         <div 
                             className={passwordType==="password" ? "password__btn" :" password__btn active"} 
                             onClick={togglePassword}>

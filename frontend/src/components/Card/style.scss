@@ -15,17 +15,26 @@
     }
 
     .card__body {
+        position: relative;
         display: flex;
         flex-direction: column;
         padding: 20px 0;
 
         .card__percent {
-            font-size: 35px;
-            margin-bottom: 20px;
+            font-size: 50px;
+            margin-top: 70px;
+            font-weight: 700;
         }
 
         .card__number {
             font-size: 25px;
+            margin-top: 70px;
+        }
+
+        .card__img {
+            position: absolute;
+            width: 200px;
+            left: 25px;
         }
     }
 

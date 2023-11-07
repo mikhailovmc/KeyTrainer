@@ -1,0 +1,81 @@
+@import "./../App/vars";
+
+.changeDifficult {
+    padding: 50px 0;
+
+
+    .changeDifficult__title {
+        margin-bottom: 30px;
+        font-weight: 700;
+        font-size: 30px;
+    }
+
+    .changeDifficult__form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    
+        .changeDifficult__text {
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .changeDifficult__zone {
+            display: flex;
+
+            .changeDifficult__zone > label {
+                margin-right: 30px;  
+            }
+
+            .inner--label {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-right: 20px;
+            }
+
+            .input-checkbox {
+                width: 25px;
+                height: 25px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .changeDifficult__label {
+            margin-bottom: 20px;
+            font-size: 20px;
+    
+            .input {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+    
+            .input-text {
+                width: 100px;
+                padding: 5px;
+                margin-left: 20px;
+                border: 1px solid $brand-color;
+            }
+        }
+
+        .changeDifficult__id {
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .buttons-wrapper {
+            display: flex;
+            gap: 40px;
+        }
+    
+    }
+
+    .button {
+        padding: 20px;
+        color: #fff;
+        background-color: $brand-color;
+        font-size: 20px;
+    }
+}

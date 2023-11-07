@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Header from "../Headers/Header";
+import UserHeader from "../Headers/UserHeader";
 import "./style.scss";
 import pic from "./img/eye.png";
 
@@ -54,7 +54,7 @@ const Authorization = () => {
 
     return (
         <>
-            <Header links={[{text: "Инструкция", route: "/instruction"}, {text: "Регистрация", route: "/registration"}]}/>
+            <UserHeader links={[{text: "Инструкция", route: "/instruction"}, {text: "Регистрация", route: "/registration"}]}/>
             <div className="logPage">
                 
                 <form className="form" action="">
