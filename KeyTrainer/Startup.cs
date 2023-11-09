@@ -43,8 +43,8 @@ namespace KeyTrainer
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Implement Swagger UI",
-                    Description = "A simple example to Implement Swagger UI",
+                    Title = "KeyTrainer Swagger UI",
+                    Description = "Api клавиатурного тренажера - KeyGym",
                 });
             });
         }
@@ -60,10 +60,16 @@ namespace KeyTrainer
                 .AsSelf()
                 .InstancePerRequest();
 
+            builder.RegisterType<StatisticsController>()
+                .AsSelf()
+                .InstancePerRequest();
+
             builder.RegisterType<UserBusiness>().As<IUserBusiness>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<ExercizeBusiness>().As<IExercizeBusiness>();
             builder.RegisterType<ExercizeRepository>().As<IExercizeRepository>();
+            builder.RegisterType<StatisticsBusiness>().As<IStatisticsBusiness>();
+            builder.RegisterType<StatisticsRepository>().As<IStatisticsRepository>();
 
 
             builder.RegisterType<KeyTrainerDbContext>()

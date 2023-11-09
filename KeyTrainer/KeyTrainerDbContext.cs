@@ -23,7 +23,6 @@ namespace KeyTrainer
         public KeyTrainerDbContext()
         {
             Database.EnsureCreated();
-            Console.WriteLine("EnsureCreated");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

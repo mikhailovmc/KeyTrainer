@@ -49,6 +49,5 @@ namespace KeyTrainer.Repositories
             return _keyTrainerDbContext.DifficultyLevel
                 .FirstOrDefault(difficultyLevel => difficultyLevel.Id == id);
         }
-
     }
 }
