@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Card from "../Card/Card";
 import AdminHeader from "../Headers/AdminHeader";
-import useFetch from "../useFetch/useFetch";
+import useFetch from "../../useFetch/useFetch";
 import { getExercise } from "./../../helpers/links";
 
 import "./style.scss"

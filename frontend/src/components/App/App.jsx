@@ -28,7 +28,8 @@ function App() {
           <Route path="/create/" element={<CreateLevel/>}/>
           <Route path="/login" element={<Authorization/>}/>
           <Route path="/registration" element={<Registration/>}/>
-          <Route path="/exercise" element={<ExercisePage/>}/>
+          <Route path="/admin/exercise" element={<ExercisePage/>}/>
+          <Route path="/user/exercise" element={<ExercisePage/>}/>
         </Routes>
        
       </BrowserRouter>
