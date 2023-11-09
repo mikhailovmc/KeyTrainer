@@ -14,28 +14,24 @@ const Authorization = () => {
     const [password, setPassword] = useState();
 
     const [responce, setResponce] = useState();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     // const [user, setUser] = useState();  
     
-    const user = {
-        login: login,
-        password: password
-    }
-    console.log(user);
-
-    
-
-
+    let userData = new FormData();
 
 
     const checkLogin = () => {
+
+        userData.append('login', login);
+        userData.append('password', password);
+
         const responceFromServer = fetch('https://localhost:5001/api/User/Lo', {
             method: "POST",
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'multipart/form-data'
             },
-            body: JSON.stringify(user)
+            body: userData
         });
         console.log("Ответ сервера в авторизации", responceFromServer)
         let result = responceFromServer.json();
@@ -62,7 +58,7 @@ const Authorization = () => {
 
                     <label className="form__label">
                         Логин:
-                        <input className="input" type="text" name="login" placeholder="Логин" onChange={e => setLogin(e.target.value)} required pattern="/^[a-z0-9_-]{3,16}$/"/>
+                        <input className="input" type="text" name="login" placeholder="Логин" onChange={e => setLogin(e.target.value)} required />
                     </label>
                     
                     <label className="form__label password__label">

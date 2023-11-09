@@ -16,9 +16,9 @@ const Registration = () => {
     const [repeatPassword, setRepeatPassword] = useState();
     const navigate = useNavigate();
     
-    const checkLogin = (login) => {
+    const checkUserInput = (data) => {
         const regex = /^[a-z0-9_-]{4,10}$/;
-        if(regex.test(login)) {
+        if(regex.test(data)) {
             return true;
         } else {
             alert('Логин не соответсвует')
@@ -26,62 +26,49 @@ const Registration = () => {
         }      
     }
     
-    const checkPassword = (password) => {
-        const regex = /^[a-z0-9_-]{4,10}$/;
-        if (regex.test(password)) {
-            return true;
-        } else alert('Логин не соответсвует')
-    }
+    // const checkPassword = (password) => {
+    //     const regex = /^[a-z0-9_-]{4,10}$/;
+    //     if (regex.test(password)) {
+    //         return true;
+    //     } else {
+    //         alert('Логин не соответсвует');
+    //         return false;
+    //     }
+    // }
     
 
 
     const  registration = async (event) => {
         event.preventDefault();
-
-        checkLogin(login);
         
         let userData = new FormData();
 
         if(password === repeatPassword) {
             userData.append('login', login)
             userData.append('password', password)
-            return true
         } else {
             alert("Пароли не совпадают");
         }
 
-        
-        try {
-            const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            body: userData
-            });
-
-            if(responceFromServer.ok) {
-                navigate('/exercises')
+        if(checkUserInput(login) && checkUserInput(password)) {
+            try {
+                const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: userData
+                });
+    
+                if(responceFromServer.ok) {
+                    navigate('/login')
+                }
+                console.log("Ответ сервера в авторизации", responceFromServer)
+    
+            } catch (error) {
+                alert(error)
             }
-            console.log("Ответ сервера в авторизации", responceFromServer)
-
-        } catch (error) {
-            alert(error)
-        }
-        
-
-        
-     
-        // try {
-        // //     const responce = await axios.post('https://localhost:5001/api/User/Register', {
-        // //         Login: login,
-        // //         Password: password
-        // //     })
-        // //     console.log(responce)
-        // //     Navigate('/exercises')
-        // // } catch (error) {
-        // //     alert(error)
-        // // }
+        }  
 
     }
 
