@@ -1,42 +1,40 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserHeader from "../Headers/UserHeader";
+import AuthContext from "../../context/AuthProvider";
 import "./style.scss";
 import pic from "./img/eye.png";
 
 const Authorization = () => {
 
+    const navigate = useNavigate();
+    const { setAuthData } = useContext(AuthContext);
     const [passwordType, setPasswordType] = useState("password");
-
     const [login, setLogin] = useState();
     const [password, setPassword] = useState();
 
-    const [responce, setResponce] = useState();
-    const navigate = useNavigate();
-    // const dispatch = useDispatch();
-
-    // const [user, setUser] = useState();  
-    
     let userData = new FormData();
 
+    const checkLogin = async (event) => {
+        event.preventDefault();
+        setAuthData("login");
 
-    const checkLogin = async () => {
+        // userData.append('login', login);
+        // userData.append('password', password);
 
-        userData.append('login', login);
-        userData.append('password', password);
+        // const responceFromServer = await fetch('https://localhost:5001/api/User/Lo', {
+        //     method: "POST",
+        //     // headers: {
+        //     //     'Content-Type': 'multipart/form-data'
+        //     // },
+        //     body: userData
+        // });
+        // console.log("Ответ сервера в авторизации", responceFromServer)
 
-        const responceFromServer = await fetch('https://localhost:5001/api/User/Lo', {
-            method: "POST",
-            // headers: {
-            //     'Content-Type': 'multipart/form-data'
-            // },
-            body: userData
-        });
-        console.log("Ответ сервера в авторизации", responceFromServer)
-
-        if(responceFromServer.ok) {
-            navigate("/exercises")
-        }
+        // if(responceFromServer.ok) {
+            
+        //     navigate("/exercise")
+        // }
     }
 
     const togglePassword =()=>{

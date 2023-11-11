@@ -1,10 +1,13 @@
-import Card from "../Card/UserCard";
-import AdminHeader from "../Headers/AdminHeader";
+import UserCard from "../Card/UserCard";
+import AdminCard from "../Card/AdminCard";
+import UserHeader from "../Headers/UserHeader";
 import useFetch from "../../useFetch/useFetch";
+import AuthContext from "../../context/AuthProvider";
 import { getExercise } from "./../../helpers/links";
 
 import "./style.scss"
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AdminHeader from "../Headers/AdminHeader";
 
 const ExercisePage = () => {
 
@@ -16,7 +19,8 @@ const ExercisePage = () => {
             hard: ''
         }
     );
-    const [data, setData] = useState(
+
+    const [dataUser, setDataUser] = useState(
         [
             {
                 id: 1,
@@ -42,26 +46,63 @@ const ExercisePage = () => {
         ]   
     );
 
-    const easy = [];
-    const medium = [];
-    const hard = [];
+    const [dataAdmin, setDataAdmin] = useState(
+        [
+            {
+                id: 1,
+                time: "00:00",
+                erorrs: 3,
+                length: 20,
+                difficult: 1
+            },
+            {
+                id: 2,
+                time: "00:00",
+                erorrs: 5,
+                length: 50,
+                difficult: 2
+            },
+            {
+                id: 3,
+                time: "00:00",
+                erorrs: 4,
+                length: 70,
+                difficult: 3
+            }
+        ]   
+    );
 
-    data.map(exercises => {
-        if(exercises.difficult === 1) easy.push(exercises)
-        if(exercises.difficult === 2) medium.push(exercises);
-        if(exercises.difficult === 3) hard.push(exercises);     
+    const { auth } = useContext(AuthContext);
+
+    const easyUser = [];
+    const mediumUser = [];
+    const hardUser = [];
+
+    const easyAdmin = [];
+    const mediumAdmin = [];
+    const hardAdmin = [];
+
+    const [sortedExerciseUser, setSortedExerciseUser] = useState(easyUser);
+    const [sortedExerciseAdmin, setSortedExerciseAdmin] = useState(easyAdmin);
+
+    dataUser.map(exercises => {
+        if(exercises.difficult === 1) easyUser.push(exercises)
+        if(exercises.difficult === 2) mediumUser.push(exercises);
+        if(exercises.difficult === 3) hardUser.push(exercises);     
     })
 
-    const [sortedExercise, setSortedExercise] = useState(easy);
-     
-    // const easy = [];
-    // const medium = [];
-    // const hard = [];
-    
+    dataAdmin.map(exercises => {
+        if(exercises.difficult === 1) easyAdmin.push(exercises)
+        if(exercises.difficult === 2) mediumAdmin.push(exercises);
+        if(exercises.difficult === 3) hardAdmin.push(exercises);     
+    })
+
+
     const handlerClick = (param) => {
 
         if(param.id === "1") {
-            setSortedExercise(easy);
+            setSortedExerciseUser(easyUser);
+            setSortedExerciseAdmin(easyAdmin);
             setClassFilter({
                 easy: 'active',
                 medium: '',
@@ -70,7 +111,8 @@ const ExercisePage = () => {
         }
         
         if(param.id === "2") {
-            setSortedExercise(medium);
+            setSortedExerciseUser(mediumUser);
+            setSortedExerciseAdmin(mediumAdmin);
             setClassFilter({
                 easy: '',
                 medium: 'active',
@@ -79,7 +121,8 @@ const ExercisePage = () => {
         }
         
         if(param.id === "3") {
-            setSortedExercise(hard);  
+            setSortedExerciseUser(hardUser);
+            setSortedExerciseAdmin(hardAdmin);  
             setClassFilter({
                 easy: '',
                 medium: '',
@@ -89,19 +132,16 @@ const ExercisePage = () => {
         
     }
     
+    console.log("Проверка на админа", auth.isAdmin)
     
-
-    // const {data, isLoading, error} = useQuery(['exercises'], () => fetch(
-    //     'https://jsonplaceholder.typicode.com/todos/1')
-    //     .then(responce => responce.json()), 
-    // )
+    const title = auth.isAdmin === false ? "Упражнения" : "Редактирование упражнений";
 
     return (
         <>
-        <AdminHeader/>
-        
+        {auth.isAdmin === false ? <UserHeader/> : <AdminHeader/>}
+           
         <div className="exercise">
-            <p className="exercise__title">Упражнения</p>
+            <p className="exercise__title">{title}</p>
             <div className="exercise__wrapper">
                 <div className="exercise__level">
                     <div className={`exercise__difficult ${classFilter.easy}`} id="1" onClick={e => {handlerClick(e.target)}}>Легкий уровень</div>
@@ -110,7 +150,11 @@ const ExercisePage = () => {
                 </div>
              
                 <div className="exercise__container"> 
-                    {data ? <Card exercises={sortedExercise}/> : <h1>Data not found</h1>}
+                    {
+                        auth.isAdmin === false ? 
+                        dataUser ? <UserCard exercises={sortedExerciseUser} /> : <h1>Data not found</h1> :
+                        dataAdmin ? <AdminCard exercises={sortedExerciseAdmin} /> : <h1>Data not found</h1>
+                    }
                 </div>
             </div>
             

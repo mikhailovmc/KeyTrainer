@@ -7,9 +7,8 @@ const UserCard = ({exercises}) => {
 
     const showExercises = () => {
         return exercises.map(exercise => {
-            console.log(exercise, "Вывод одного упражнения")
             return (
-                <Link to={`/create/${exercise.id}`} key={exercise.id} className="card">
+                <Link to={`/keyboard/${exercise.id}`} key={exercise.id} className="card">
                     <div className="card__top">Длина: {exercise.length} символов</div>
                     <div className="card__body">
                         <img className="card__img"src={pic} alt="" />

@@ -1,8 +1,15 @@
+import { useContext } from "react"
 import { Link } from "react-router-dom";
-
+import AuthContext from "../../context/AuthProvider";
 import "./style.scss"
 
 const AdminHeader = () => {
+
+    const { setAuthData } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        setAuthData(null)
+    }
     return (
         <header>
             <div className="logo">KeyGym</div>
@@ -20,7 +27,7 @@ const AdminHeader = () => {
                                     Редактировать сложность
                                 </Link>
 
-                                <Link to="/admin/exercise">
+                                <Link to="/exercise">
                                     Все упражнения
                                 </Link>
                             </div>
@@ -28,7 +35,7 @@ const AdminHeader = () => {
                     </li>
 
                     <li className="header__list-item">
-                        <Link to="/admin/statistic">
+                        <Link to="/statistic">
                             Статистика
                         </Link>
                     </li>
@@ -43,10 +50,8 @@ const AdminHeader = () => {
                         Администратор
                     </li>
 
-                    <li className="header__list-item">
-                        <Link to="/login">
-                            Выйти
-                        </Link>
+                    <li className="header__list-item cursor" onClick={handleLogOut}>
+                        Выйти
                     </li>
                 </ul>
             </nav>

@@ -1,23 +1,18 @@
-
+import { useContext } from "react"
 import { Link } from "react-router-dom";
-
+import AuthContext from "../../context/AuthProvider";
 
 import "./style.scss"
 
 
-const Header = (props) => {
-    const links = [...props.links]; 
-    const showLinks = () => {
-        return links.map(link => {
-            return (
-                <li key={link.text} className="header__list-item">
-                    <Link to={link.route}>
-                        {link.text}
-                    </Link>
-                </li>
-            )
-        })    
+const Header = () => {
+
+    const { setAuthData, auth } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        setAuthData(null);
     }
+
 
     return (
         
@@ -25,7 +20,25 @@ const Header = (props) => {
             <div className="logo">KeyGym</div>
             <nav>
                 <ul className="header__list">
-                    {links && showLinks()}
+                    <li className="header__list-item">
+                        <Link to="/exercise">
+                            Все упражнения
+                        </Link>
+                    </li>
+
+                    <li className="header__list-item">
+                        <Link to="/statistic">
+                            Статистика
+                        </Link>
+                    </li>
+
+                    <li className="header__list-item">
+                        UserName
+                    </li>
+
+                    <li className="header__list-item cursor" onClick={handleLogOut}>
+                        Выйти
+                    </li>
                 </ul>
             </nav>
         </header>

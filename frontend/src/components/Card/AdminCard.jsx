@@ -7,17 +7,16 @@ const AdminCard = ({exercises}) => {
 
     const showExercises = () => {
         return exercises.map(exercise => {
-            console.log(exercise, "Вывод одного упражнения")
             return (
                 <Link to={`/create/${exercise.id}`} key={exercise.id} className="card">
-                    <div className="card__top">Длина: {exercise.length} символов</div>
+                    <div className="card__top">№ {exercise.id}</div>
                     <div className="card__body">
-                        <img className="card__img"src={pic} alt="" />
-                        <span className="card__percent">{exercise.percent}%</span>
-                        <span className="card__number">№{exercise.id}</span>
+                        <span className="card__text">Длина: {exercise.length} символов</span>
+                        <span className="card__text">Макс. ошибок: {exercise.erorrs}</span>
+                        <span className="card__text">Время на выполнение: {exercise.time}</span>
                     </div>
                     <div className="card__footer">
-                        Наилучшее время: {exercise.bestTime}
+                        Редактировать
                     </div>
                 </Link>
             )

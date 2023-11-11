@@ -1,5 +1,6 @@
 import "./style.scss";
-const InputText = () => {
+
+const InputField = () => {
     return (
         <form action="">
 			<input 
@@ -12,4 +13,4 @@ const InputText = () => {
     );
 }
  
-export default InputText;
+export default InputField;

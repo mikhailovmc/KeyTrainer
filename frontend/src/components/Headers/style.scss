@@ -29,14 +29,24 @@ header {
     .header__list-item {
         font-size: 24px;
         margin-right: 50px;
+        
     }
 
     .header__list-item a{
         color: #fff;
+        
+    }
+
+    .cursor {
+      cursor: pointer;
+    }
+
+    .cursor:hover {
+      text-decoration: underline;
     }
 
     .header__list-item a:hover{
-        text-decoration: underline;
+      text-decoration: underline;
     }
 
     .dropbtn {
