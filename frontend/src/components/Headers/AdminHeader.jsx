@@ -20,7 +20,7 @@ const AdminHeader = () => {
                                     Редактировать сложность
                                 </Link>
 
-                                <Link to="/exercise">
+                                <Link to="/admin/exercise">
                                     Все упражнения
                                 </Link>
                             </div>
@@ -28,7 +28,7 @@ const AdminHeader = () => {
                     </li>
 
                     <li className="header__list-item">
-                        <Link to="/admin-statistic">
+                        <Link to="/admin/statistic">
                             Статистика
                         </Link>
                     </li>
@@ -44,7 +44,9 @@ const AdminHeader = () => {
                     </li>
 
                     <li className="header__list-item">
-                        Выйти
+                        <Link to="/login">
+                            Выйти
+                        </Link>
                     </li>
                 </ul>
             </nav>

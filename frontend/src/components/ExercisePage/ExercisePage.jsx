@@ -1,5 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import Card from "../Card/Card";
+import Card from "../Card/UserCard";
 import AdminHeader from "../Headers/AdminHeader";
 import useFetch from "../../useFetch/useFetch";
 import { getExercise } from "./../../helpers/links";
@@ -10,6 +9,13 @@ import { useState } from "react";
 const ExercisePage = () => {
 
     // const {data, isLoading, error} = useFetch(getExercise);
+    const [classFilter, setClassFilter] = useState(
+        {
+            easy: 'active',
+            medium: '',
+            hard: ''
+        }
+    );
     const [data, setData] = useState(
         [
             {
@@ -36,19 +42,9 @@ const ExercisePage = () => {
         ]   
     );
 
-    const [sortedExercise, setSortedExercise] = useState(data);
-    const [classFilter, setClassFilter] = useState(
-        {
-            easy: '',
-            medium: '',
-            hard: ''
-        }
-    );
-    
     const easy = [];
     const medium = [];
     const hard = [];
-    
 
     data.map(exercises => {
         if(exercises.difficult === 1) easy.push(exercises)
@@ -56,9 +52,15 @@ const ExercisePage = () => {
         if(exercises.difficult === 3) hard.push(exercises);     
     })
 
+    const [sortedExercise, setSortedExercise] = useState(easy);
+     
+    // const easy = [];
+    // const medium = [];
+    // const hard = [];
+    
     const handlerClick = (param) => {
 
-        if(param.id == 1) {
+        if(param.id === "1") {
             setSortedExercise(easy);
             setClassFilter({
                 easy: 'active',
@@ -67,7 +69,7 @@ const ExercisePage = () => {
             }); 
         }
         
-        if(param.id == 2) {
+        if(param.id === "2") {
             setSortedExercise(medium);
             setClassFilter({
                 easy: '',
@@ -76,7 +78,7 @@ const ExercisePage = () => {
             });
         }
         
-        if(param.id == 3) {
+        if(param.id === "3") {
             setSortedExercise(hard);  
             setClassFilter({
                 easy: '',

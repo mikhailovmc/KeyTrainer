@@ -54,9 +54,9 @@ const Registration = () => {
             try {
                 const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
+                // headers: {
+                //     'Content-Type': 'multipart/form-data'
+                // },
                 body: userData
                 });
     

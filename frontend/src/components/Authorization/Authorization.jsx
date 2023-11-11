@@ -1,10 +1,8 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import UserHeader from "../Headers/UserHeader";
 import "./style.scss";
 import pic from "./img/eye.png";
-
-import { useDispatch } from "react-redux";
 
 const Authorization = () => {
 
@@ -14,6 +12,7 @@ const Authorization = () => {
     const [password, setPassword] = useState();
 
     const [responce, setResponce] = useState();
+    const navigate = useNavigate();
     // const dispatch = useDispatch();
 
     // const [user, setUser] = useState();  
@@ -21,27 +20,27 @@ const Authorization = () => {
     let userData = new FormData();
 
 
-    const checkLogin = () => {
+    const checkLogin = async () => {
 
         userData.append('login', login);
         userData.append('password', password);
 
-        const responceFromServer = fetch('https://localhost:5001/api/User/Lo', {
+        const responceFromServer = await fetch('https://localhost:5001/api/User/Lo', {
             method: "POST",
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
+            // headers: {
+            //     'Content-Type': 'multipart/form-data'
+            // },
             body: userData
         });
         console.log("Ответ сервера в авторизации", responceFromServer)
-        let result = responceFromServer.json();
-        console.log(result);
-        setResponce(result);
+
+        if(responceFromServer.ok) {
+            navigate("/exercises")
+        }
     }
 
     const togglePassword =()=>{
-      if(passwordType==="password")
-      {
+      if(passwordType==="password") {
        setPasswordType("text")
        return;
       }
@@ -73,7 +72,7 @@ const Authorization = () => {
                     </label>
                     
 
-                    <button className="button" type="submit" onClick={() => dispatch(login(login, password))}>Войти</button>
+                    <button className="button" type="submit" onClick={checkLogin}>Войти</button>
                 </form>
                 
             </div>

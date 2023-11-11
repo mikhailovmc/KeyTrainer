@@ -1,8 +1,8 @@
 import "./style.scss"
 import pic from "./img/Ellipse.svg"
 import { Link } from "react-router-dom";
-const Card = ({exercises}) => {
 
+const AdminCard = ({exercises}) => {
     console.log("Вывод упражнений в card", exercises);
 
     const showExercises = () => {
@@ -32,4 +32,4 @@ const Card = ({exercises}) => {
     )
 }
  
-export default Card;
+export default AdminCard;
