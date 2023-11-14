@@ -5,8 +5,8 @@ import AuthContext from "../../context/AuthProvider";
 import "./style.scss"
 
 
-const Header = () => {
-
+const Header = ({ login }) => {
+    console.log(login)
     const { setAuthData, auth } = useContext(AuthContext);
 
     const handleLogOut = () => {
@@ -33,7 +33,7 @@ const Header = () => {
                     </li>
 
                     <li className="header__list-item">
-                        UserName
+                        {login}
                     </li>
 
                     <li className="header__list-item cursor" onClick={handleLogOut}>

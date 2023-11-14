@@ -34,7 +34,6 @@ function App() {
             <Route path="/create/:id" element={<CreateLevel/>}/>
             <Route path="/create/" element={<CreateLevel/>}/>
             <Route path="/exercise" element={<ExercisePage/>}/>
-            <Route path="/user/exercise" element={<ExercisePage/>}/>
             <Route path="/keyboard/:id" element={<KeyboardPage/>}/>
           </Route>
 

@@ -132,13 +132,15 @@ const ExercisePage = () => {
         
     }
     
-    console.log("Проверка на админа", auth.isAdmin)
+    console.log("Проверка на админа", auth)
     
     const title = auth.isAdmin === false ? "Упражнения" : "Редактирование упражнений";
 
     return (
         <>
-        {auth.isAdmin === false ? <UserHeader/> : <AdminHeader/>}
+        {auth.isAdmin === false ? 
+            <UserHeader login={auth.data}/> : 
+            <AdminHeader/>}
            
         <div className="exercise">
             <p className="exercise__title">{title}</p>

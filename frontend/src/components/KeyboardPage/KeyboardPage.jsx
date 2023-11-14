@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+import useFetch from "../../useFetch/useFetch";
 import Keyboard from "./Keyboard/Keyboard";
 import InputField from "./InputField/InputField";
 import Results from "../KeyboardPage/Results/Results";
@@ -5,7 +7,9 @@ import UserHeader from "../Headers/UserHeader";
 import PracticeText from "../KeyboardPage/PracticeText/PracticeText";
 
 const KeyboardPage = () => {
-
+    const {id} = useParams();
+    console.log(id)
+    const {data: application, isLoading, error} = useFetch();
     return (
         <>
             <UserHeader />

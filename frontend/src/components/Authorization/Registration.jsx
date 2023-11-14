@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { checkLogin, checkPassword } from "./validator";
 import axios from "axios";
 
 import UserHeader from "../Headers/UserHeader";
@@ -16,28 +17,6 @@ const Registration = () => {
     const [repeatPassword, setRepeatPassword] = useState();
     const navigate = useNavigate();
     
-    const checkUserInput = (data) => {
-        const regex = /^[a-z0-9_-]{4,10}$/;
-        if(regex.test(data)) {
-            return true;
-        } else {
-            alert('Логин не соответсвует')
-            return false;
-        }      
-    }
-    
-    // const checkPassword = (password) => {
-    //     const regex = /^[a-z0-9_-]{4,10}$/;
-    //     if (regex.test(password)) {
-    //         return true;
-    //     } else {
-    //         alert('Логин не соответсвует');
-    //         return false;
-    //     }
-    // }
-    
-
-
     const  registration = async (event) => {
         event.preventDefault();
         
@@ -50,7 +29,7 @@ const Registration = () => {
             alert("Пароли не совпадают");
         }
 
-        if(checkUserInput(login) && checkUserInput(password)) {
+        if(checkLogin(login) && checkPassword(password)) {
             try {
                 const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
                 method: 'POST',
