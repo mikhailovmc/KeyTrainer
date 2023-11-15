@@ -6,17 +6,20 @@ import "./style.scss"
 
 
 const Header = ({ login }) => {
-    console.log(login)
+
     const { setAuthData, auth } = useContext(AuthContext);
 
     const handleLogOut = () => {
         setAuthData(null);
     }
 
+    
 
-    return (
-        
-        <header>
+    return ( 
+        <>
+            {
+            (auth.data !== null) ? 
+            <header>
             <div className="logo">KeyGym</div>
             <nav>
                 <ul className="header__list">
@@ -41,7 +44,29 @@ const Header = ({ login }) => {
                     </li>
                 </ul>
             </nav>
-        </header>
+            </header> 
+            :
+            <header>
+            <div className="logo">KeyGym</div>
+            <nav>
+                <ul className="header__list">
+                    <li className="header__list-item">
+                        <Link to="/registration">
+                           Регистрация
+                        </Link>
+                    </li>
+
+                    <li className="header__list-item">
+                        <Link to="/login">
+                            Авторизация
+                        </Link>
+                    </li>
+                </ul>
+            </nav>
+            </header>
+        }
+        </>
+        
     );
 }
  

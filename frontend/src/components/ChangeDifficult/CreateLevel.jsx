@@ -1,33 +1,60 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { getExercises } from "../../helpers/links";
+import useFetch from "../../useFetch/useFetch";
 import AdminHeader from "../Headers/AdminHeader";
 import "./style.scss"
 
 const CreateLevel = () => {
+    
+    
 
-    const [difficult, setDifficult] = useState();
-    const [errors, setErrors] = useState();
-    const [time, setTime] = useState();
-    const zone = []
+    const [idDifficultyLevel, setIdDifficultyLevel] = useState();
+    const [countOfErrors, setCountOfErrors] = useState();
+    const [maxTime, setMaxTime] = useState();
+    const [text, setText] = useState();
+    const [zone, setZone] = useState({
+        zones: [],
+        listOfZones: []
+    });
 
-    const chooseZone = (id) => {
-        zone.push(id);
+
+    const chooseZone = (e) => {
+        const { value, checked } = e.target;
+        const { zones } = zone;
+        console.log(checked)
+
+        console.log(`${value} is ${checked}`);
+
+        if (checked) {
+            setZone({
+                zones: [...zones, value],
+                listOfZones: [...zones, value]
+            });
+        } else {
+            setZone({
+                zones: zones.filter(e => e !== value),
+                listOfZones: zones.filter(e => e !== value)
+            })
+        }
     }
-
-    console.log(zone)
 
     const handleSave = (e) => {
         e.preventDefault()
         let exerciseData = new FormData();
 
-        exerciseData.append('difficult', difficult);
-        exerciseData.append('errors', errors);
-        exerciseData.append('time', time);
+        exerciseData.append('idDifficultyLevel', idDifficultyLevel);
+        exerciseData.append('countOfErrors', countOfErrors);
+        exerciseData.append('maxTime', maxTime);
+        exerciseData.append('text', text);
+        exerciseData.append('listOfZones', zone.listOfZones);
 
         const data = {
-            difficult,
-            errors,
-            time, 
-            zone
+            idDifficultyLevel,
+            countOfErrors,
+            maxTime,
+            text, 
+            listOfZones: zone.listOfZones
         }
         console.log(data)
     }
@@ -40,63 +67,63 @@ const CreateLevel = () => {
             <div className="changeDifficult">
                 
                 <form className="changeDifficult__form" action="">
-                    <p className="changeDifficult__title">Создание / Редактирование упражнения</p>
-                    <p className="changeDifficult__id">ID упражнения:</p>
+                    <p className="changeDifficult__title">Создание упражнения</p>
                     <p className="changeDifficult__text">Выбор уровня сложности:</p>
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" id="easy" onChange={e => setDifficult(e.target.id)}/>
+                        <input className="input" name="difficult" type="radio" data-id="1" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                         Легкий
                     </label>
                     
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" id="medium" onChange={e => setDifficult(e.target.id)}/>
+                        <input className="input" name="difficult" type="radio" data-id="2" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                         Средний
                     </label>
 
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" id="hard" onChange={e => setDifficult(e.target.id)}/>
+                        <input className="input" name="difficult" type="radio" data-id="3" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                         Сложный
                     </label>
 
                     <p className="changeDifficult__text">Выбор зон клавиатуры:</p>
                     <div className="changeDifficult__zone">
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" id="1" onClick={e => chooseZone(e.target.id)}/>
+                            <input className="input-checkbox" type="checkbox" value="1" onClick={chooseZone}/>
                             1
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" id="2" onClick={e => chooseZone(e.target.id)}/>
+                            <input className="input-checkbox" type="checkbox" value="2" onClick={chooseZone}/>
                             2
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" id="3" onClick={e => chooseZone(e.target.id)}/>
+                            <input className="input-checkbox" type="checkbox" value="3" onClick={chooseZone}/>
                             3
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" id="4" onClick={e => chooseZone(e.target.id)}/>
+                            <input className="input-checkbox" type="checkbox" value="4" onClick={chooseZone}/>
                             4
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" id="5" onClick={e => chooseZone(e.target.id)}/>
+                            <input className="input-checkbox" type="checkbox" value="5" onClick={chooseZone}/>
                             Пробел
                         </label>
                     </div>
 
-                    
+                    <p className="changeDifficult__text">Текст для упражнения:</p>
+                    <textarea className="textarea" name="" id="" cols="30" rows="10" onChange={e => setText(e.target.value)}></textarea>
 
                     
                     <label className="changeDifficult__label">
                         Допустимое количество ошибок:
-                        <input className="input-text" type="number" onChange={e => setErrors(e.target.value)}/>
+                        <input className="input-text" type="number"  onChange={e => setCountOfErrors(e.target.value)}/>
                     </label>
 
                     <label className="changeDifficult__label">
                         Время на выполнение:
-                        <input className="input-text" type="number" onChange={e => setTime(e.target.value)}/>
+                        <input className="input-text" type="number"  onChange={e => setMaxTime(e.target.value)}/>
                     </label>
 
                     <div className="buttons-wrapper">

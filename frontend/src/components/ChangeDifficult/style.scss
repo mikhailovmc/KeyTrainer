@@ -40,6 +40,8 @@
                 height: 25px;
                 margin-bottom: 10px;
             }
+
+            
         }
 
         .changeDifficult__label {
@@ -58,6 +60,16 @@
                 margin-left: 20px;
                 border: 1px solid $brand-color;
             }
+
+            
+        }
+
+        .textarea {
+            padding: 10px;
+            border: 1px solid black;
+            width: 500px;
+            margin-bottom: 30px;
+            font-size: 18px;
         }
 
         .changeDifficult__id {

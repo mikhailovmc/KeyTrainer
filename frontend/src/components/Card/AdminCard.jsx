@@ -1,5 +1,5 @@
 import "./style.scss"
-import pic from "./img/Ellipse.svg"
+
 import { Link } from "react-router-dom";
 
 const AdminCard = ({exercises}) => {
@@ -8,12 +8,12 @@ const AdminCard = ({exercises}) => {
     const showExercises = () => {
         return exercises.map(exercise => {
             return (
-                <Link to={`/create/${exercise.id}`} key={exercise.id} className="card">
+                <Link to={`/changeLevel/${exercise.id}`} key={exercise.id} className="card">
                     <div className="card__top">№ {exercise.id}</div>
                     <div className="card__body">
                         <span className="card__text">Длина: {exercise.length} символов</span>
-                        <span className="card__text">Макс. ошибок: {exercise.erorrs}</span>
-                        <span className="card__text">Время на выполнение: {exercise.time}</span>
+                        <span className="card__text">Макс. ошибок: {exercise.countOfErrors}</span>
+                        <span className="card__text">Время на выполнение: {exercise.maxTime}</span>
                     </div>
                     <div className="card__footer">
                         Редактировать

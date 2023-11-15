@@ -10,6 +10,7 @@ import CreateLevel from '../ChangeDifficult/CreateLevel';
 import KeyboardPage from '../KeyboardPage/KeyboardPage';
 
 import './App.scss';
+import ChangeLevel from '../ChangeDifficult/ChangeLevel';
 
 function App() {
     // const {data, isLoading, error} = useQuery(['exercises'], () => fetch(
@@ -31,8 +32,8 @@ function App() {
 
           <Route path='/' element={<PrivateRoute/>}>
             <Route path="/difficult" element={<ChangeDifficult/>}/>
-            <Route path="/create/:id" element={<CreateLevel/>}/>
-            <Route path="/create/" element={<CreateLevel/>}/>
+            <Route path="/create" element={<CreateLevel/>}/>
+            <Route path="/changeLevel/:id" element={<ChangeLevel/>}/>
             <Route path="/exercise" element={<ExercisePage/>}/>
             <Route path="/keyboard/:id" element={<KeyboardPage/>}/>
           </Route>

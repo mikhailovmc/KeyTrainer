@@ -4,9 +4,9 @@ import AuthContext from "./../context/AuthProvider";
 
 const PrivateRoute = () => {
     const { auth } = useContext(AuthContext);
-    const { loading } = auth
-    console.log(auth.data)
-    console.log(loading)
+    const { loading } = auth;
+    // console.log(auth.data)
+    // console.log(loading)
 
     if (loading) {
         return (<p>Loading...</p>)

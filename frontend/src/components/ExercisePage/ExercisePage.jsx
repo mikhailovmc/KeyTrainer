@@ -3,7 +3,7 @@ import AdminCard from "../Card/AdminCard";
 import UserHeader from "../Headers/UserHeader";
 import useFetch from "../../useFetch/useFetch";
 import AuthContext from "../../context/AuthProvider";
-import { getExercise } from "./../../helpers/links";
+import { getExercises } from "./../../helpers/links";
 
 import "./style.scss"
 import { useContext, useState } from "react";
@@ -11,7 +11,8 @@ import AdminHeader from "../Headers/AdminHeader";
 
 const ExercisePage = () => {
 
-    // const {data, isLoading, error} = useFetch(getExercise);
+    // const {data, isLoading, error} = useFetch(getExercises);
+    // console.log(data)
     const [classFilter, setClassFilter] = useState(
         {
             easy: 'active',
@@ -27,21 +28,21 @@ const ExercisePage = () => {
                 bestTime: "00:00",
                 percent: 0,
                 length: 20,
-                difficult: 1
+                idDifficultyLevel: 1
             },
             {
                 id: 2,
                 bestTime: "00:00",
                 percent: 0,
                 length: 50,
-                difficult: 2
+                idDifficultyLevel: 2
             },
             {
                 id: 3,
                 bestTime: "00:00",
                 percent: 50,
                 length: 70,
-                difficult: 3
+                idDifficultyLevel: 3
             }
         ]   
     );
@@ -50,30 +51,31 @@ const ExercisePage = () => {
         [
             {
                 id: 1,
-                time: "00:00",
-                erorrs: 3,
+                maxTime: "00:00",
+                countOfErrors: 3,
                 length: 20,
-                difficult: 1
+                idDifficultyLevel: 1
             },
             {
                 id: 2,
-                time: "00:00",
-                erorrs: 5,
+                maxTime: "00:00",
+                countOfErrors: 5,
                 length: 50,
-                difficult: 2
+                idDifficultyLevel: 2
             },
             {
                 id: 3,
-                time: "00:00",
-                erorrs: 4,
+                maxTime: "00:00",
+                countOfErrors: 4,
                 length: 70,
-                difficult: 3
+                idDifficultyLevel: 3
             }
         ]   
     );
 
     const { auth } = useContext(AuthContext);
-
+    console.log("Проверка на админа", auth)
+    
     const easyUser = [];
     const mediumUser = [];
     const hardUser = [];
@@ -86,15 +88,15 @@ const ExercisePage = () => {
     const [sortedExerciseAdmin, setSortedExerciseAdmin] = useState(easyAdmin);
 
     dataUser.map(exercises => {
-        if(exercises.difficult === 1) easyUser.push(exercises)
-        if(exercises.difficult === 2) mediumUser.push(exercises);
-        if(exercises.difficult === 3) hardUser.push(exercises);     
+        if(exercises.idDifficultyLevel === 1) easyUser.push(exercises)
+        if(exercises.idDifficultyLevel === 2) mediumUser.push(exercises);
+        if(exercises.idDifficultyLevel === 3) hardUser.push(exercises);     
     })
 
     dataAdmin.map(exercises => {
-        if(exercises.difficult === 1) easyAdmin.push(exercises)
-        if(exercises.difficult === 2) mediumAdmin.push(exercises);
-        if(exercises.difficult === 3) hardAdmin.push(exercises);     
+        if(exercises.idDifficultyLevel === 1) easyAdmin.push(exercises)
+        if(exercises.idDifficultyLevel === 2) mediumAdmin.push(exercises);
+        if(exercises.idDifficultyLevel === 3) hardAdmin.push(exercises);     
     })
 
 
@@ -132,7 +134,7 @@ const ExercisePage = () => {
         
     }
     
-    console.log("Проверка на админа", auth)
+    
     
     const title = auth.isAdmin === false ? "Упражнения" : "Редактирование упражнений";
 

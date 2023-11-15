@@ -17,24 +17,25 @@ const Authorization = () => {
 
     const checkLogin = async (event) => {
         event.preventDefault();
-        setAuthData("login");
 
-        // userData.append('login', login);
-        // userData.append('password', password);
+        userData.append('login', login);
+        userData.append('password', password);
 
-        // const responceFromServer = await fetch('https://localhost:5001/api/User/Lo', {
-        //     method: "POST",
-        //     // headers: {
-        //     //     'Content-Type': 'multipart/form-data'
-        //     // },
-        //     body: userData
-        // });
-        // console.log("Ответ сервера в авторизации", responceFromServer)
+        const responceFromServer = await fetch('https://localhost:5001/api/User/Login', {
+            method: "POST",
+            // headers: {
+            //     'Content-Type': 'multipart/form-data'
+            // },
+            body: userData
+        });
+        console.log("Ответ сервера в авторизации", responceFromServer)
 
-        // if(responceFromServer.ok) {
-            
-        //     navigate("/exercise")
-        // }
+        if(responceFromServer.ok) {
+            console.log("Этот логин я посылаю для сохранения",login)
+            setAuthData(login, "admin");;
+            navigate("/exercise");
+        }
+        
     }
 
     const togglePassword =()=>{
