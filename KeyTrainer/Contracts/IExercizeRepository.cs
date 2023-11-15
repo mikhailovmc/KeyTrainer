@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KeyTrainer.Dto;
 using KeyTrainer.Models;
 
 namespace KeyTrainer.Contracts
@@ -30,5 +31,26 @@ namespace KeyTrainer.Contracts
         /// <param name="id">Id уровня сложности</param>
         /// <returns>Уровень сложности</returns>
         Task<DifficultyLevel> GetDifficultyLevelById(int id);
+
+        /// <summary>
+        /// Обновить уровень сложности
+        /// </summary>
+        /// <param name="difficultyLevelFullDto">ДТО уровня сложности</param>
+        /// <returns>Уровень сложности</returns>
+        Task UpdateDifficultyLevel(DifficultyLevel difficultyLevel);
+
+        /// <summary>
+        /// Добавить упражнение
+        /// </summary>
+        /// <param name="exercizeFullDto">ДТО упражнения</param>
+        /// <returns>Упражнение</returns>
+        Task AddExercize(Exercize exercize);
+
+        /// <summary>
+        /// Редактировать упражнение
+        /// </summary>
+        /// <param name="exercizeFullDto">ДТО упражнения</param>
+        /// <returns>Упражнение</returns>
+        Task UpdateExercize(Exercize exercize);
     }
 }

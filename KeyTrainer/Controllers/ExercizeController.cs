@@ -58,10 +58,52 @@ namespace KeyTrainer.Controllers
         [Route("GetDifficultyLevel/{id}")]
         public async Task<DifficultyLevelFullDto> GetDifficultyLevel(int id)
         {
-            var exercizes = await _exercizeBusiness.GetDifficultyLevelById(id);
-            if (exercizes == null)
-                throw new Exception("Не удалось получить упражнение!");
-            return exercizes;
+            var difficultyLevel = await _exercizeBusiness.GetDifficultyLevelById(id);
+            if (difficultyLevel == null)
+                throw new Exception("Не удалось получить уровень сложности!");
+            return difficultyLevel;
+        }
+
+        /// <summary>
+        /// Редактировать уровень сложности
+        /// </summary>
+        /// <returns>Обновленный уровень сложности</returns>
+        [HttpPost]
+        [Route("UpdateDifficultyLevel")]
+        public async Task<DifficultyLevelFullDto> UpdateDifficultyLevel(DifficultyLevelFullDto difficultyLevelDto)
+        {
+            var difficultyLevel = await _exercizeBusiness.UpdateDifficultyLevel(difficultyLevelDto);
+            if (difficultyLevel == null)
+                throw new Exception("Не удалось обновить уровень сложности!");
+            return difficultyLevel;
+        }
+
+        /// <summary>
+        /// Добавить упражнение (вручную)
+        /// </summary>
+        /// <returns>Добавленное упражнение</returns>
+        [HttpPost]
+        [Route("AddExercize")]
+        public async Task<ExercizeFullDto> AddExercize(ExercizeFullDto exercizeDto)
+        {
+            var exercize = await _exercizeBusiness.AddExercize(exercizeDto);
+            if (exercize == null)
+                throw new Exception("Не удалось добавить упражнение!");
+            return exercize;
+        }
+
+        /// <summary>
+        /// Редактировать упражнение
+        /// </summary>
+        /// <returns>Обновленное упражнение</returns>
+        [HttpPost]
+        [Route("UpdateExercize")]
+        public async Task<ExercizeFullDto> UpdateExercize(ExercizeFullDto exercizeDto)
+        {
+            var exercize = await _exercizeBusiness.UpdateExercize(exercizeDto);
+            if (exercize == null)
+                throw new Exception("Не удалось редактировать упражнение!");
+            return exercize;
         }
     }
 }

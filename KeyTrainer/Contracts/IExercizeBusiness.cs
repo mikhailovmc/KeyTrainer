@@ -30,5 +30,26 @@ namespace KeyTrainer.Contracts
         /// <param name="id">Id уровня сложности</param>
         /// <returns>Уровень сложности</returns>
         Task<DifficultyLevelFullDto> GetDifficultyLevelById(int id);
+
+        /// <summary>
+        /// Редактировать уровень сложности
+        /// </summary>
+        /// <param name="difficultyLevelFullDto">ДТО уровня сложности</param>
+        /// <returns>Уровень сложности</returns>
+        Task<DifficultyLevelFullDto> UpdateDifficultyLevel(DifficultyLevelFullDto difficultyLevelFullDto);
+
+        /// <summary>
+        /// Добавить упражнение
+        /// </summary>
+        /// <param name="exercizeFullDto">ДТО упражнения</param>
+        /// <returns>Упражнение</returns>
+        Task<ExercizeFullDto> AddExercize(ExercizeFullDto exercizeFullDto);
+
+        /// <summary>
+        /// Редактировать упражнение
+        /// </summary>
+        /// <param name="exercizeFullDto">ДТО упражнения</param>
+        /// <returns>Упражнение</returns>
+        Task<ExercizeFullDto> UpdateExercize(ExercizeFullDto exercizeFullDto);
     }
 }

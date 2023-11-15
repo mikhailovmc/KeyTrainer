@@ -26,13 +26,15 @@ namespace KeyTrainer.Utils
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
                 .ForMember(dest => dest.CountOfErrors, opt => opt.MapFrom(src => src.CountOfErrors))
                 .ForMember(dest => dest.MaxTime, opt => opt.MapFrom(src => src.MaxTime))
-                .ForMember(dest => dest.IdDifficultyLevel, opt => opt.MapFrom(src => src.IdDifficultyLevel));
+                .ForMember(dest => dest.IdDifficultyLevel, opt => opt.MapFrom(src => src.IdDifficultyLevel))
+                .ReverseMap();
 
             CreateMap<DifficultyLevel, DifficultyLevelFullDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.MaxLength, opt => opt.MapFrom(src => src.MaxLength))
                 .ForMember(dest => dest.CountOfErrors, opt => opt.MapFrom(src => src.CountOfErrors))
-                .ForMember(dest => dest.ListOfZones, opt => opt.MapFrom(src => src.ListOfZones));
+                .ForMember(dest => dest.ListOfZones, opt => opt.MapFrom(src => src.ListOfZones))
+                .ReverseMap();
 
             CreateMap<Statistics, StatisticsFullDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))

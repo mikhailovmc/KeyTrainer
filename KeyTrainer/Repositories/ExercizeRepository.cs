@@ -49,5 +49,26 @@ namespace KeyTrainer.Repositories
             return _keyTrainerDbContext.DifficultyLevel
                 .FirstOrDefault(difficultyLevel => difficultyLevel.Id == id);
         }
+
+        /// <inheritdoc/>
+        public async Task UpdateDifficultyLevel(DifficultyLevel difficultyLevel)
+        {
+            _keyTrainerDbContext.DifficultyLevel.Update(difficultyLevel);
+            await _keyTrainerDbContext.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task AddExercize(Exercize exercize)
+        {
+            await _keyTrainerDbContext.Exercize.AddAsync(exercize);
+            await _keyTrainerDbContext.SaveChangesAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task UpdateExercize(Exercize exercize)
+        {
+            _keyTrainerDbContext.Exercize.Update(exercize);
+            await _keyTrainerDbContext.SaveChangesAsync();
+        }
     }
 }

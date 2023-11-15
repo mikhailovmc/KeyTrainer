@@ -50,5 +50,64 @@ namespace KeyTrainer.Business
             var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(id);
             return _mapper.Map<DifficultyLevelFullDto>(difficultyLevel);
         }
+
+        /// <inheritdoc/>
+        public async Task<DifficultyLevelFullDto> UpdateDifficultyLevel(DifficultyLevelFullDto difficultyLevelFullDto)
+        {
+            var oldDifficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelFullDto.Id);
+            
+            if (oldDifficultyLevel == null)
+            {
+                return null;
+            }
+
+            var difficultyLevel = _mapper.Map<DifficultyLevel>(difficultyLevelFullDto);
+            await _exercizeRepository.UpdateDifficultyLevel(difficultyLevel);
+            var newDifficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelFullDto.Id);
+            return _mapper.Map<DifficultyLevelFullDto>(newDifficultyLevel);
+        }
+
+        /// <inheritdoc/>
+        public async Task<ExercizeFullDto> AddExercize(ExercizeFullDto exercizeFullDto)
+        {
+            var exercize = _mapper.Map<Exercize>(exercizeFullDto);
+            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercize.IdDifficultyLevel);
+
+            if (difficultyLevel == null ||
+                exercize.Text.Length > difficultyLevel.MaxLength ||
+                exercize.CountOfErrors > difficultyLevel.CountOfErrors)
+            {
+                return null;
+            }
+
+            await _exercizeRepository.AddExercize(exercize);
+            var newExercize = await _exercizeRepository.GetExerciseById(exercize.Id);
+            return _mapper.Map<ExercizeFullDto>(newExercize);
+        }
+
+        /// <inheritdoc/>
+        public async Task<ExercizeFullDto> UpdateExercize(ExercizeFullDto exercizeFullDto)
+        {
+            var oldExercize = await _exercizeRepository.GetExerciseById(exercizeFullDto.Id);
+
+            if (oldExercize == null)
+            {
+                return null;
+            }
+
+            var exercize = _mapper.Map<Exercize>(exercizeFullDto);
+            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercize.IdDifficultyLevel);
+
+            if (difficultyLevel == null ||
+                exercize.Text.Length > difficultyLevel.MaxLength ||
+                exercize.CountOfErrors > difficultyLevel.CountOfErrors)
+            {
+                return null;    
+            }
+
+            await _exercizeRepository.UpdateExercize(exercize);
+            var newExercize = await _exercizeRepository.GetExerciseById(exercize.Id);
+            return _mapper.Map<ExercizeFullDto>(newExercize);
+        }
     }
 }
