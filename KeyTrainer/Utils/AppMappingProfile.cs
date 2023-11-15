@@ -16,6 +16,7 @@ namespace KeyTrainer.Utils
         public AppMappingProfile()
         {
             CreateMap<UserDto, User>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Login, opt => opt.MapFrom(src => src.Login))
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ReverseMap();

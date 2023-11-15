@@ -11,6 +11,11 @@ namespace KeyTrainer.Dto
     public class UserDto
     {
         /// <summary>
+        /// Id пользователя
+        /// </summary>
+        public int? Id { get; set; }
+
+        /// <summary>
         /// Логин
         /// </summary>
         public string Login { get; set; }

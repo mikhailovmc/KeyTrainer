@@ -37,6 +37,7 @@ namespace KeyTrainer.Business
         {
             if (userDto.Login == "admin" && userDto.Password == "admin")
             {
+                userDto.Id = null;
                 return userDto;
             }
             else
