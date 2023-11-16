@@ -37,5 +37,12 @@ namespace KeyTrainer.Contracts
         /// <param name="id">Id упражнения</param>
         /// <returns>Статистика пользователя</returns>
         Task<IEnumerable<StatisticsFullDto>> GetStatisticsByExercizeId(int id);
+
+        /// <summary>
+        /// Добавить статистику
+        /// </summary>
+        /// <param name="statisticsFullDto">ДТО статистики</param>
+        /// <returns>Статистика пользователя</returns>
+        Task<StatisticsFullDto> AddStatistics(StatisticsSendDto statisticsSendDto);
     }
 }

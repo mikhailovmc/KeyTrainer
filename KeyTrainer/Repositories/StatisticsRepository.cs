@@ -79,5 +79,12 @@ namespace KeyTrainer.Repositories
                 })
                 .ToList();
         }
+
+        /// <inheritdoc/>
+        public async Task AddStatistics(Statistics statistics)
+        {
+            _keyTrainerDbContext.Statistics.Add(statistics);
+            await _keyTrainerDbContext.SaveChangesAsync();
+        }
     }
 }

@@ -15,13 +15,16 @@ namespace KeyTrainer.Business
     public class StatisticsBusiness : IStatisticsBusiness
     {
         private readonly IStatisticsRepository _statisticsRepository;
+        private readonly IExercizeRepository _exercizeRepository;
         private readonly IMapper _mapper;
 
         public StatisticsBusiness(
             IStatisticsRepository statisticsRepository,
+            IExercizeRepository exercizeRepository,
             IMapper mapper)
         {
             _statisticsRepository = statisticsRepository;
+            _exercizeRepository = exercizeRepository;
             _mapper = mapper;
         }
 
@@ -66,6 +69,34 @@ namespace KeyTrainer.Business
                 statisticsDto.Add(_mapper.Map<StatisticsFullDto>(stats));
             }
             return statisticsDto;
+        }
+
+        /// <inheritdoc/>
+        public async Task<StatisticsFullDto> AddStatistics(StatisticsSendDto statisticsSendDto)
+        {
+            var exercize = await _exercizeRepository.GetExerciseById(statisticsSendDto.IdExercize);
+
+            var lengthPercentage = (int)(((double)statisticsSendDto.Length / (double)exercize.Text.Length) * 100);
+
+            var accuracy = (int)((1 - ((double)statisticsSendDto.CountOfErrors / (double)exercize.Text.Length)) * 100);
+
+            int typingSpeed = exercize.Text.Length / statisticsSendDto.Time;
+
+            var statisticsFullDto = new StatisticsFullDto
+            {
+                Status = statisticsSendDto.Status,
+                LengthPercentage = lengthPercentage,
+                Accuracy = accuracy,
+                TypingSpeed = typingSpeed,
+                IdUser = statisticsSendDto.IdUser,
+                IdExercize = statisticsSendDto.IdExercize
+            };
+
+            var statistics = _mapper.Map<Statistics>(statisticsFullDto); 
+            await _statisticsRepository.AddStatistics(statistics);
+
+            var newStatistics = await _statisticsRepository.GetStatisticsById(statistics.Id);
+            return _mapper.Map<StatisticsFullDto>(newStatistics);
         }
     }
 }

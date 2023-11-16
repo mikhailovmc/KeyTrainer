@@ -43,7 +43,8 @@ namespace KeyTrainer.Utils
                 .ForMember(dest => dest.Accuracy, opt => opt.MapFrom(src => src.Accuracy))
                 .ForMember(dest => dest.TypingSpeed, opt => opt.MapFrom(src => src.TypingSpeed))
                 .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser))
-                .ForMember(dest => dest.IdExercize, opt => opt.MapFrom(src => src.IdExercize));
+                .ForMember(dest => dest.IdExercize, opt => opt.MapFrom(src => src.IdExercize))
+                .ReverseMap();
         }
     }
 }

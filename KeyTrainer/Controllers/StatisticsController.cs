@@ -78,5 +78,20 @@ namespace KeyTrainer.Controllers
                 throw new Exception("Не удалось получить статистику упражнения!");
             return statistics;
         }
+
+        /// <summary>
+        /// Добавить статистику
+        /// </summary>
+        /// <param name="statisticsSendDto">ДТО статистики</param>
+        /// <returns>Статистика упражнения</returns>
+        [HttpPost]
+        [Route("AddStatistics")]
+        public async Task<StatisticsFullDto> AddStatistics(StatisticsSendDto statisticsSendDto)
+        {
+            var statistics = await _statisticsBusiness.AddStatistics(statisticsSendDto);
+            if (statistics == null)
+                throw new Exception("Не удалось добавить статистику упражнения!");
+            return statistics;
+        }
     }
 }
