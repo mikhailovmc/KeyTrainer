@@ -1,16 +1,54 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../../useFetch/useFetch";
 import { getExercisesById } from "../../helpers/links";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminHeader from "../Headers/AdminHeader";
 
 const ChangeLevel = () => {
 
     const {id} = useParams();
     console.log(id)
-    const {data: exercise, isLoading, error} = useFetch(getExercisesById + '/' + id);
+
+    const [exercise, setExercise] = useState();
+    // const {data: exercise, isLoading, error} = useFetch(getExercisesById + '/' + id);
+    
+    async function getData() {
+        try {
+            const responce = await fetch(getExercisesById + '/' + id, {
+                method: "GET",
+            })
+            console.log(responce)
+            console.log(responce.json())
+            .then(res => res.json())
+            .then(exercise => {
+                setExercise(exercise)
+            })
+        } catch (e) {
+            alert(e)
+        }
+    }
 
     console.log(exercise)
+
+    
+        
+    
+    // fetch(getExercisesById + '/' + id, {
+    //     method: "GET",
+    // })
+    // .then(res => res.json())
+    // .then(exercise => {
+    //     setExercise(exercise)
+    // })
+
+
+    useEffect(() => {
+        
+    }, [])
+    
+    console.log(exercise)
+
+
     const [difficult, setDifficult] = useState();
     const [errors, setErrors] = useState();
     const [time, setTime] = useState();

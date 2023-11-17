@@ -31,8 +31,8 @@ const Authorization = () => {
         console.log("Ответ сервера в авторизации", responceFromServer)
 
         if(responceFromServer.ok) {
-            console.log("Этот логин я посылаю для сохранения",login)
-            setAuthData(login, "admin");;
+            let result = await responceFromServer.json()
+            result.id === null ? setAuthData(login, "admin") : setAuthData(login, "user");
             navigate("/exercise");
         }
         

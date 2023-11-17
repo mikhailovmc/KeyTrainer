@@ -7,7 +7,9 @@ const useFetch = (url) => {
     const [error, setError] = useState(null);
 
     useEffect(()=>{
-        fetch(url).then((res) => {
+        fetch(url, {
+            method: "GET"
+        }).then((res) => {
             if(!res.ok) {
                 throw Error('Could not fetch the data for that resource');
             }

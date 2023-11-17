@@ -40,6 +40,7 @@ const Registration = () => {
                 });
     
                 if(responceFromServer.ok) {
+                    
                     navigate('/login')
                 }
                 console.log("Ответ сервера в авторизации", responceFromServer)

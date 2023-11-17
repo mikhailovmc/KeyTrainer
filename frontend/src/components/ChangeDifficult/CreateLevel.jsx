@@ -39,7 +39,7 @@ const CreateLevel = () => {
         }
     }
 
-    const handleSave = (e) => {
+    const handleSave = async (e) => {
         e.preventDefault()
         let exerciseData = new FormData();
 
@@ -57,6 +57,24 @@ const CreateLevel = () => {
             listOfZones: zone.listOfZones
         }
         console.log(data)
+
+        try {
+            const responceFromServer = await fetch('https://localhost:5001/api/Exercize/AddExercize', {
+            method: 'POST',
+            // headers: {
+            //     'Content-Type': 'multipart/form-data'
+            // },
+            body: exerciseData
+            });
+
+            if(responceFromServer.ok) {
+                // navigate('/login')
+            }
+            console.log("Ответ сервера в авторизации", responceFromServer)
+
+        } catch (error) {
+            alert(error)
+        }
     }
 
 
