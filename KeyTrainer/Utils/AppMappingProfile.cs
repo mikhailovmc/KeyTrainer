@@ -45,6 +45,14 @@ namespace KeyTrainer.Utils
                 .ForMember(dest => dest.IdUser, opt => opt.MapFrom(src => src.IdUser))
                 .ForMember(dest => dest.IdExercize, opt => opt.MapFrom(src => src.IdExercize))
                 .ReverseMap();
+
+            CreateMap<Exercize, ExercizeSendDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.CountOfErrors, opt => opt.MapFrom(src => src.CountOfErrors))
+                .ForMember(dest => dest.MaxTime, opt => opt.MapFrom(src => src.MaxTime))
+                .ForMember(dest => dest.IdDifficultyLevel, opt => opt.MapFrom(src => src.IdDifficultyLevel))
+                .ReverseMap();
         }
     }
 }
