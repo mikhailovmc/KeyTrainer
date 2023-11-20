@@ -84,7 +84,7 @@ namespace KeyTrainer.Controllers
         /// <returns>Добавленное упражнение</returns>
         [HttpPost]
         [Route("AddExercize")]
-        public async Task<ExercizeFullDto> AddExercize(ExercizeFullDto exercizeDto)
+        public async Task<ExercizeFullDto> AddExercize(ExercizeSendDto exercizeDto)
         {
             var exercize = await _exercizeBusiness.AddExercize(exercizeDto);
             if (exercize == null)
@@ -98,11 +98,25 @@ namespace KeyTrainer.Controllers
         /// <returns>Обновленное упражнение</returns>
         [HttpPost]
         [Route("UpdateExercize")]
-        public async Task<ExercizeFullDto> UpdateExercize(ExercizeFullDto exercizeDto)
+        public async Task<ExercizeFullDto> UpdateExercize(ExercizeSendDto exercizeSendDto)
         {
-            var exercize = await _exercizeBusiness.UpdateExercize(exercizeDto);
+            var exercize = await _exercizeBusiness.UpdateExercize(exercizeSendDto);
             if (exercize == null)
                 throw new Exception("Не удалось редактировать упражнение!");
+            return exercize;
+        }
+
+        /// <summary>
+        /// Создать упражнение
+        /// </summary>
+        /// <returns>Созданное упражнение</returns>
+        [HttpPost]
+        [Route("GenerateExercize")]
+        public async Task<ExercizeSendDto> GenerateExercize()
+        {
+            var exercize = await _exercizeBusiness.GenerateExercize();
+            if (exercize == null)
+                throw new Exception("Не удалось создать упражнение!");
             return exercize;
         }
     }

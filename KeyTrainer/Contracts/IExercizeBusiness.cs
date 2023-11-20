@@ -41,15 +41,21 @@ namespace KeyTrainer.Contracts
         /// <summary>
         /// Добавить упражнение
         /// </summary>
-        /// <param name="exercizeFullDto">ДТО упражнения</param>
+        /// <param name="exercizeSendDto">ДТО упражнения</param>
         /// <returns>Упражнение</returns>
-        Task<ExercizeFullDto> AddExercize(ExercizeFullDto exercizeFullDto);
+        Task<ExercizeFullDto> AddExercize(ExercizeSendDto exercizeSendDto);
 
         /// <summary>
         /// Редактировать упражнение
         /// </summary>
-        /// <param name="exercizeFullDto">ДТО упражнения</param>
+        /// <param name="exercizeSendDto">ДТО упражнения</param>
         /// <returns>Упражнение</returns>
-        Task<ExercizeFullDto> UpdateExercize(ExercizeFullDto exercizeFullDto);
+        Task<ExercizeFullDto> UpdateExercize(ExercizeSendDto exercizeSendDto);
+
+        /// <summary>
+        /// Создать упражнение
+        /// </summary>
+        /// <returns>Упражнение</returns>
+        Task<ExercizeSendDto> GenerateExercize();
     }
 }
