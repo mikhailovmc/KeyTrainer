@@ -1,0 +1,27 @@
+.instruction {
+    padding: 50px;
+
+    &__title {
+        font-weight: 700;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    &__text {
+        margin-bottom: 30px;
+    }
+
+    &__list {
+        list-style: decimal;
+
+        li {
+            margin-bottom: 10px;
+        }
+        
+    }
+
+    &__list li {
+        margin-bottom: 10px;
+    }
+
+}

@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { getExercises } from "../../helpers/links";
-import useFetch from "../../useFetch/useFetch";
+import { useNavigate } from "react-router-dom";
+import { addExercise } from "../../helpers/links";
+
 import AdminHeader from "../Headers/AdminHeader";
 import "./style.scss"
 
 const CreateLevel = () => {
     
-    
-
     const [idDifficultyLevel, setIdDifficultyLevel] = useState();
     const [countOfErrors, setCountOfErrors] = useState();
     const [maxTime, setMaxTime] = useState();
@@ -17,14 +15,12 @@ const CreateLevel = () => {
         zones: [],
         listOfZones: []
     });
+    const navigate = useNavigate();
 
 
     const chooseZone = (e) => {
         const { value, checked } = e.target;
         const { zones } = zone;
-        console.log(checked)
-
-        console.log(`${value} is ${checked}`);
 
         if (checked) {
             setZone({
@@ -59,7 +55,7 @@ const CreateLevel = () => {
         console.log(data)
 
         try {
-            const responceFromServer = await fetch('https://localhost:5001/api/Exercize/AddExercize', {
+            const responceFromServer = await fetch(addExercise, {
             method: 'POST',
             // headers: {
             //     'Content-Type': 'multipart/form-data'
@@ -68,7 +64,7 @@ const CreateLevel = () => {
             });
 
             if(responceFromServer.ok) {
-                // navigate('/login')
+                navigate('/exercise')
             }
             console.log("Ответ сервера в авторизации", responceFromServer)
 

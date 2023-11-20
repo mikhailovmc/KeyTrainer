@@ -35,6 +35,23 @@ const Header = ({ login }) => {
                         </Link>
                     </li>
 
+                    <div className="dropdown">
+                        <span className="dropbtn">Справка</span>
+                        <div className="dropdown-content">
+                            <Link to="/site-instruction">
+                                Инструкция по сайту
+                            </Link>
+                                
+                            <Link to="/instruction">
+                                Правила выполнения упражнения
+                            </Link>
+
+                            <Link to="/creators">
+                                Создатели
+                            </Link>
+                        </div>
+                    </div>
+
                     <li className="header__list-item">
                         {login}
                     </li>

@@ -2,15 +2,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PrivateRoute from '../PrivateRoute';
 import Authorization from "../Authorization/Authorization";
 import Registration from "../Authorization/Registration";
-import Instruction from "../Instruction/Instruction";
+import Instruction from "../Spravka/Instruction/Instruction";
 import ExercisePage from "../ExercisePage/ExercisePage";
 import HiPage from '../HiPage/HiPage';
 import ChangeDifficult from '../ChangeDifficult/ChangeDifficult';
 import CreateLevel from '../ChangeDifficult/CreateLevel';
 import KeyboardPage from '../KeyboardPage/KeyboardPage';
-
-import './App.scss';
 import ChangeLevel from '../ChangeDifficult/ChangeLevel';
+import Creators from '../Spravka/Creators/Creators';
+import SiteInstruction from '../Spravka/SiteInstruction/SiteInstruction';
 
 function App() {
     // const {data, isLoading, error} = useQuery(['exercises'], () => fetch(
@@ -29,6 +29,8 @@ function App() {
           <Route path="/login" element={<Authorization/>}/>
           <Route path="/registration" element={<Registration/>}/>
           <Route path="/instruction" element={<Instruction/>}/>
+          <Route path="/creators" element={<Creators/>}/>
+          <Route path="/site-instruction" element={<SiteInstruction/>}/>
 
           <Route path='/' element={<PrivateRoute/>}>
             <Route path="/difficult" element={<ChangeDifficult/>}/>
@@ -36,6 +38,9 @@ function App() {
             <Route path="/changeLevel/:id" element={<ChangeLevel/>}/>
             <Route path="/exercise" element={<ExercisePage/>}/>
             <Route path="/keyboard/:id" element={<KeyboardPage/>}/>
+
+            
+            
           </Route>
 
           

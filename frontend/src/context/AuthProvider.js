@@ -16,15 +16,10 @@ export const AuthProvider = ({ children }) => {
         console.log("Это итоговые данные после обработки", auth)
     };
 
-    // const setAuthIsAdmin = (status) => {
-    //     if(status === "admin") setAuth({
-    //         ...auth,
-    //         isAdmin: true});
-    // };
 
     useEffect(() => {
-        setAuth({ loading: false, 
-            // isAdmin: false,
+        setAuth({ 
+            loading: false, 
             isAdmin: JSON.parse(window.localStorage.getItem('authIsAdmin')), 
             data: JSON.parse(window.localStorage.getItem('authData'))});
     }, []);
