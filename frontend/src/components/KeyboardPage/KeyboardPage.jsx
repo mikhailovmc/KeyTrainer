@@ -5,19 +5,27 @@ import InputField from "./InputField/InputField";
 import Results from "../KeyboardPage/Results/Results";
 import UserHeader from "../Headers/UserHeader";
 import PracticeText from "../KeyboardPage/PracticeText/PracticeText";
+import { useState } from "react";
 
 const KeyboardPage = () => {
     const {id} = useParams();
-    console.log(id)
+
     const {data: application, isLoading, error} = useFetch();
+
+    const [pressedKey, setPressedKey] = useState();
+
+    const handleLetter = (letter) => {
+        setPressedKey(letter)
+ 
+    }
     return (
         <>
             <UserHeader />
             <div className="container">
                 <Results/>
                 <PracticeText/>
-                <InputField/>
-                <Keyboard/>  
+                <InputField handleLetter={handleLetter}/>
+                <Keyboard pressedKey={pressedKey}/>  
             </div>
         </>
     );

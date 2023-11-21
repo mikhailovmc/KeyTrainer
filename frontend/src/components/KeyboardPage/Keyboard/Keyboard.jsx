@@ -1,67 +1,86 @@
+import { useEffect, useState } from "react";
 import "./style.scss";
 
-const Keyboard = () => {
+const Keyboard = ({ pressedKey }) => {
+
+	const [letters, setLetters] = useState([]);
+	console.log(pressedKey)
+	console.log(letters)
+	useEffect(() => {
+		const allWithClass = Array.from(document.querySelectorAll('[data-letters]'));
+		setLetters(allWithClass)
+		console.log(allWithClass)
+		
+	}, []);
+
+	const letter = letters.find(x => x.dataset.letters.includes(pressedKey));
+		console.log(letter)
+		if(letter) {
+			letter.classList.add('hint')
+		}
+	
+	
     return (
         <div className="keyboard">
 			<div className="line">
-				<div>Ё</div>
-				<div>1</div>
-				<div>2</div>
-				<div>3</div>
-				<div>4</div>
-				<div>5</div>
-				<div>6</div>
-				<div>7</div>
-				<div>8</div>
-				<div>9</div>
-				<div>0</div>
-				<div>-</div>
-				<div>+</div>
-				<div className="backspace">Backspace</div>
+				<div data-letters="Ёё">Ё</div>
+				<div data-letters="1">1</div>
+				<div data-letters="2">2</div>
+				<div data-letters="3">3</div>
+				<div data-letters="4">4</div>
+				<div data-letters="5">5</div>
+				<div data-letters="6">6</div>
+				<div data-letters="7">7</div>
+				<div data-letters="8">8</div>
+				<div data-letters="9">9</div>
+				<div data-letters="0">0</div>
+				<div data-letters="-">-</div>
+				<div data-letters="+">+</div>
+				<div data-letters="Backspace" className="backspace">Backspace</div>
 			</div>
 			<div className="line">
-				<div className="tab">Tab</div>
-				<div>Й</div>
-				<div>Ц</div>
-				<div>У</div>
-				<div>К</div>
-				<div>Е</div>
-				<div className="hint">Н</div>
-				<div>Г</div>
-				<div>Ш</div>
-				<div>Щ</div>
-				<div>З</div>
-				<div>Х</div>
-				<div>Ъ</div>
-				<div>\</div>
+				<div className="tab" data-letters="Tab">Tab</div>
+				<div data-letters="Йй">Й</div>
+				<div data-letters="Цц">Ц</div>
+				<div data-letters="Уу">У</div>
+				<div data-letters="Кк">К</div>
+				<div data-letters="Ее">Е</div>
+				<div data-letters="Нн"className="hint" >Н</div>
+				<div data-letters="Гг">Г</div>
+				<div data-letters="Шш">Ш</div>
+				<div data-letters="Щщ">Щ</div>
+				<div data-letters="Зз">З</div>
+				<div data-letters="Хх">Х</div>
+				<div data-letters="Ъъ">Ъ</div>
+				<div data-letters="">\</div>
 			</div>
 			<div className="line">
-				<div className="caps">Caps Lock</div>
-				<div>Ф</div>
-				<div>Ы</div>
-				<div>В</div>
-				<div>А</div>
-				<div>П</div>
-				<div>Р</div>
-				<div>О</div>
-				<div>Л</div>
-				<div>Д</div>
-				<div>Ж</div>
-				<div>Э</div>
-				<div className="enter">Enter</div>
+				<div data-letters="CapsLock"className="caps">Caps Lock</div>
+				<div data-letters="Фф">Ф</div>
+				<div data-letters="Ыы">Ы</div>
+				<div data-letters="Вв">В</div>
+				<div data-letters="Аа">А</div>
+				<div data-letters="Пп">П</div>
+				<div data-letters="Рр">Р</div>
+				<div data-letters="Оо">О</div>
+				<div data-letters="Лл">Л</div>
+				<div data-letters="Дд">Д</div>
+				<div data-letters="Жж">Ж</div>
+				<div data-letters="Ээ">Э</div>
+				<div data-letters="Enter" className="enter">Enter</div>
 			</div>
 			<div className="line">
 				<div className="shift">Shift</div>
-				<div>Я</div>
-				<div>Ч</div>
-				<div>С</div>
-				<div>М</div>
-				<div>И</div>
-				<div>Т</div>
-				<div>Ь</div>
-				<div>Б</div>
-				<div>Ю</div>
-				<div>. <sup>,</sup></div>
+				<div data-letters="Яя">Я</div>
+				<div data-letters="Чч">Ч</div>
+				<div data-letters="Сс">С</div>
+				<div data-letters="Мм">М</div>
+				<div data-letters="Ии">И</div>
+				<div data-letters="Тт">Т</div>
+				<div data-letters="Ьь">Ь</div>
+				<div data-letters="Бб">Б</div>
+				<div data-letters="Юю">Ю</div>
+				<div data-letters=".,">. <sup>,</sup></div>
 				<div className="shift">Shift</div>
 			</div>
 			<div className="line">
