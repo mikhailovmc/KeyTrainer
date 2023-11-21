@@ -1,23 +1,13 @@
 import { useEffect, useState } from "react";
 import "./style.scss";
 
-const Keyboard = ({ pressedKey }) => {
+const Keyboard = ({ collectCollection }) => {
 
-	const [letters, setLetters] = useState([]);
-	console.log(pressedKey)
-	console.log(letters)
 	useEffect(() => {
-		const allWithClass = Array.from(document.querySelectorAll('[data-letters]'));
-		setLetters(allWithClass)
-		console.log(allWithClass)
-		
+		const allLetters = Array.from(document.querySelectorAll('[data-letters]'));
+		const allSpecs = Array.from(document.querySelectorAll('[data-specs]'));
+		collectCollection(allLetters, allSpecs)
 	}, []);
-
-	const letter = letters.find(x => x.dataset.letters.includes(pressedKey));
-		console.log(letter)
-		if(letter) {
-			letter.classList.add('hint')
-		}
 	
 	
     return (
@@ -36,16 +26,16 @@ const Keyboard = ({ pressedKey }) => {
 				<div data-letters="0">0</div>
 				<div data-letters="-">-</div>
 				<div data-letters="+">+</div>
-				<div data-letters="Backspace" className="backspace">Backspace</div>
+				<div data-specs="Backspace" className="backspace">Backspace</div>
 			</div>
 			<div className="line">
-				<div className="tab" data-letters="Tab">Tab</div>
+				<div className="tab" data-specs="Tab">Tab</div>
 				<div data-letters="Йй">Й</div>
 				<div data-letters="Цц">Ц</div>
 				<div data-letters="Уу">У</div>
 				<div data-letters="Кк">К</div>
 				<div data-letters="Ее">Е</div>
-				<div data-letters="Нн"className="hint" >Н</div>
+				<div data-letters="Нн">Н</div>
 				<div data-letters="Гг">Г</div>
 				<div data-letters="Шш">Ш</div>
 				<div data-letters="Щщ">Щ</div>
@@ -55,7 +45,7 @@ const Keyboard = ({ pressedKey }) => {
 				<div data-letters="">\</div>
 			</div>
 			<div className="line">
-				<div data-letters="CapsLock"className="caps">Caps Lock</div>
+				<div data-specs="CapsLock"className="caps">Caps Lock</div>
 				<div data-letters="Фф">Ф</div>
 				<div data-letters="Ыы">Ы</div>
 				<div data-letters="Вв">В</div>
@@ -67,10 +57,10 @@ const Keyboard = ({ pressedKey }) => {
 				<div data-letters="Дд">Д</div>
 				<div data-letters="Жж">Ж</div>
 				<div data-letters="Ээ">Э</div>
-				<div data-letters="Enter" className="enter">Enter</div>
+				<div data-specs="Enter" className="enter">Enter</div>
 			</div>
 			<div className="line">
-				<div className="shift">Shift</div>
+				<div className="shift" data-specs="Shift">Shift</div>
 				<div data-letters="Яя">Я</div>
 				<div data-letters="Чч">Ч</div>
 				<div data-letters="Сс">С</div>
@@ -81,11 +71,11 @@ const Keyboard = ({ pressedKey }) => {
 				<div data-letters="Бб">Б</div>
 				<div data-letters="Юю">Ю</div>
 				<div data-letters=".,">. <sup>,</sup></div>
-				<div className="shift">Shift</div>
+				<div className="shift" data-specs="Shift">Shift</div>
 			</div>
 			<div className="line">
-				<div className="space"></div>
-				<div className="alt">Alt</div>
+				<div className="space" data-specs="space"></div>
+				<div className="alt" data-specs="Alt">Alt</div>
 			</div>
 		</div>
     );

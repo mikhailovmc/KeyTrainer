@@ -14,18 +14,26 @@ const KeyboardPage = () => {
 
     const [pressedKey, setPressedKey] = useState();
 
+    const [letters, setLetters] = useState([]);
+	const [specs, setSpecs] = useState([]);
+
     const handleLetter = (letter) => {
         setPressedKey(letter)
- 
     }
+
+    const collectCollection = (letters, specs) => {
+        setLetters(letters);
+        setSpecs(specs)
+    }
+
     return (
         <>
             <UserHeader />
             <div className="container">
                 <Results/>
                 <PracticeText/>
-                <InputField handleLetter={handleLetter}/>
-                <Keyboard pressedKey={pressedKey}/>  
+                {letters && specs && <InputField handleLetter={handleLetter} letters={letters} specs={specs}/>}
+                <Keyboard collectCollection={collectCollection}/>  
             </div>
         </>
     );
