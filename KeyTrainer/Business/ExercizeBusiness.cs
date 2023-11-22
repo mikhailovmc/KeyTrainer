@@ -45,6 +45,21 @@ namespace KeyTrainer.Business
         }
 
         /// <inheritdoc/>
+        public async Task<ExercizeSendDto> GetExercizeForEditingById(int id)
+        {
+            var exercize = await _exercizeRepository.GetExerciseById(id);
+            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercize.IdDifficultyLevel);
+            return new ExercizeSendDto()
+            {
+                IdDifficultyLevel = difficultyLevel.Id,
+                ListOfZones = difficultyLevel.ListOfZones,
+                Text = exercize.Text,
+                CountOfErrors = difficultyLevel.CountOfErrors,
+                MaxTime = exercize.MaxTime
+            }; 
+        }
+
+        /// <inheritdoc/>
         public async Task<DifficultyLevelFullDto> GetDifficultyLevelById(int id)
         {
             var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(id);

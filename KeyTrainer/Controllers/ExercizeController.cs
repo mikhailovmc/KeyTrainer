@@ -50,6 +50,21 @@ namespace KeyTrainer.Controllers
         }
 
         /// <summary>
+        /// Получить упражнение для редактирования по его Id
+        /// </summary>
+        /// <param name="id">Id упражнения</param>
+        /// <returns>Упражнение</returns>
+        [HttpGet]
+        [Route("GetExercizeForEditing/{id}")]
+        public async Task<ExercizeSendDto> GetExercizeForEditing(int id)
+        {
+            var exercize = await _exercizeBusiness.GetExercizeForEditingById(id);
+            if (exercize == null)
+                throw new Exception("Не удалось получить упражнение!");
+            return exercize;
+        }
+
+        /// <summary>
         /// Получить уровень сложности по его Id
         /// </summary>
         /// <param name="id">Id уровня сложности</param>

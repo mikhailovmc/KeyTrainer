@@ -25,6 +25,13 @@ namespace KeyTrainer.Contracts
         Task<ExercizeFullDto> GetExercizeById(int id);
 
         /// <summary>
+        /// Получить упражнение для редактирования по его Id
+        /// </summary>
+        /// <param name="id">Id упражнения</param>
+        /// <returns>Упражнение</returns>
+        Task<ExercizeSendDto> GetExercizeForEditingById(int id);
+
+        /// <summary>
         /// Получить уровень сложности по его Id
         /// </summary>
         /// <param name="id">Id уровня сложности</param>
