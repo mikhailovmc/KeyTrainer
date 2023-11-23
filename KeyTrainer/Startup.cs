@@ -96,7 +96,7 @@ namespace KeyTrainer
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:3000", "https://localhost:3000",
-                    "https://localhost:5001")
+                    "https://localhost:5001", "http://25.50.56.20:8080", "https://25.50.56.20:8080")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials());
