@@ -51,6 +51,7 @@ namespace KeyTrainer.Business
             var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercize.IdDifficultyLevel);
             return new ExercizeSendDto()
             {
+                Id = exercize.Id,
                 IdDifficultyLevel = difficultyLevel.Id,
                 ListOfZones = difficultyLevel.ListOfZones,
                 Text = exercize.Text,
