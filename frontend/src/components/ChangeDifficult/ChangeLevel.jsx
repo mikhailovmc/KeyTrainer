@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../../useFetch/useFetch";
-import { getExercisesById } from "../../helpers/links";
+import { getLevelForEditing } from "../../helpers/links";
 
 import { useEffect, useState } from "react";
 import AdminHeader from "../Headers/AdminHeader";
@@ -10,7 +10,7 @@ const ChangeLevel = () => {
 
     const {id} = useParams();
 
-    const {data:exercise, isLoading, error} = useFetch(getExercisesById + '/' + id);
+    const {data:exercise, isLoading, error} = useFetch(getLevelForEditing + id);
 
     
     console.log(exercise)

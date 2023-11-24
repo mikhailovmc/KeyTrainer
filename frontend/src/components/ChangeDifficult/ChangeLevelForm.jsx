@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { updateExercize } from "../../helpers/links";
+import { useNavigate } from "react-router-dom";
 
 const ChangeLevelForm = ({exercise}) => {
 
@@ -7,9 +9,18 @@ const ChangeLevelForm = ({exercise}) => {
     const [maxTime, setMaxTime] = useState(exercise.maxTime);
     const [text, setText] = useState(exercise.text);
     const [zone, setZone] = useState({
-        zones: [],
-        listOfZones: []
+        zones: [...exercise.listOfZones],
+        listOfZones: [...exercise.listOfZones]
     });
+    // const [checkedZone, setCheckedZone] = useState({
+    //     zone1: false,
+    //     zone2: false,
+    //     zone3: false,
+    //     zone4: false,
+    //     zone5: false
+    // });
+    const navigate = useNavigate();
+
 
     const chooseZone = (e) => {
         const { value, checked } = e.target;
@@ -28,11 +39,29 @@ const ChangeLevelForm = ({exercise}) => {
         }
     }
 
-    const handleSave = (e) => {
+    // useEffect(()=> {
+    //     exercise.listOfZones.map(numberZone => {
+    //         if(numberZone === "1") {
+    //             console.log("Я в 1")
+    //             setCheckedZone({...checkedZone,zone1: "!checkedZone.zone1"});
+    //             console.log(checkedZone)
+    //         }
+            
+    //         // if(numberZone === "2") setCheckedZone({...checkedZone,zone2: true});
+    //         // if(numberZone === "3") setCheckedZone({...checkedZone,zone3: true});
+    //         // if(numberZone === "4") setCheckedZone({...checkedZone,zone4: true});
+    //         // if(numberZone === "5") setCheckedZone({...checkedZone,zone5: true});
+            
+    //     }) 
+    // }, [])
+
+    console.log(zone.zones)
+    const  handleSave = async (e) => {
         e.preventDefault()
         
         let exerciseData = new FormData();
 
+        exerciseData.append('id', exercise.id);
         exerciseData.append('idDifficultyLevel', idDifficultyLevel);
         exerciseData.append('countOfErrors', countOfErrors);
         exerciseData.append('maxTime', maxTime);
@@ -40,6 +69,7 @@ const ChangeLevelForm = ({exercise}) => {
         exerciseData.append('listOfZones', zone.listOfZones);
 
         const data = {
+            id: exercise.id,
             text,
             idDifficultyLevel,
             countOfErrors,
@@ -47,6 +77,21 @@ const ChangeLevelForm = ({exercise}) => {
             listOfZones: zone.listOfZones
         }
         console.log(data)
+
+        try {
+            const responceFromServer = await fetch(updateExercize, {
+                method: 'POST',
+                body: exerciseData
+            });
+
+            if(responceFromServer.ok) {
+                navigate('/exercise')
+            }
+            console.log("Ответ сервера в авторизации", responceFromServer)
+
+        } catch (error) {
+            alert(error)
+        }
     }
 
     return (
@@ -72,27 +117,27 @@ const ChangeLevelForm = ({exercise}) => {
             <p className="changeDifficult__text">Выбор зон клавиатуры:</p>
             <div className="changeDifficult__zone">
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" value="1" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("1")}  value="1" onClick={chooseZone}/>
                     1
                 </label>
 
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" value="2" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("2")} value="2" onClick={chooseZone}/>
                     2
                 </label>
 
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" value="3" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("3")} value="3" onClick={chooseZone}/>
                     3
                 </label>
 
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" value="4" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("4")} value="4" onClick={chooseZone}/>
                     4
                 </label>
 
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" value="5" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("5")} value="5" onClick={chooseZone}/>
                     Пробел
                 </label>
             </div>

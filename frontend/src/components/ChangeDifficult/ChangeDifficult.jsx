@@ -2,7 +2,8 @@ import { useState } from "react";
 import AdminHeader from "../Headers/AdminHeader";
 
 import "./style.scss"
-
+import useFetch from "./../../useFetch/useFetch"
+import { getDifficultyLevel } from "../../helpers/links";
 
 const ChangeDifficult = () => {
 
@@ -14,6 +15,8 @@ const ChangeDifficult = () => {
         zones: [],
         listOfZones: []
     });
+
+    const {data, isLoading, error} = useFetch(getDifficultyLevel + 1)
 
     const chooseZone = (e) => {
         const { value, checked } = e.target;
