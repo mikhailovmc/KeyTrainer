@@ -154,51 +154,70 @@ namespace KeyTrainer.Business
         {
             var keyboardZones = new Dictionary<string, char[]>()
             {
-                {
-                    "1", new char[] {'1', '2', '0', '-', '=',
-                                   'й', 'з', 'х', 'ъ',
-                                   'ф', 'ж', 'э',
-                                   'я', '.'}
-                },
+                { "11", new char[] {'1', '2', '0', '-', '='} },
 
-                {
-                    "2", new char[] { '3', '9',
-                                    'ц', 'щ',
-                                    'ы', 'д',
-                                    'ч', 'ю'}
-                },
+                { "12", new char[] {'й', 'з', 'х', 'ъ'} },
 
-                {
-                    "3", new char[] { '4', '8',
-                                    'у', 'ш',
-                                    'в', 'л',
-                                    'с', 'б'}
-                },
+                { "13", new char[] {'ф', 'ж', 'э'} },
 
-                {
-                    "4", new char[] { '5', '6', '7',
-                                    'к', 'е', 'н', 'г',
-                                    'а', 'п', 'р', 'о',
-                                    'м', 'и', 'т', 'ь'}
+                { "14", new char[] {'я', '.'} },
 
-                },
+                { "21", new char[] {'3', '9'} },
 
-                {
-                    "5", new char[] { ' ' }
-                }
+                { "22", new char[] {'ц', 'щ'} },
+
+                { "23", new char[] {'ы', 'д'} },
+
+                { "24", new char[] {'ч', 'ю'} },
+
+                { "31", new char[] {'4', '8'} },
+
+                { "32", new char[] {'у', 'ш'} },
+
+                { "33", new char[] {'в', 'л'} },
+
+                { "34", new char[] {'с', 'б'} },
+
+                { "41", new char[] {'5', '6', '7'} },
+
+                { "42", new char[] {'к', 'е', 'н', 'г'} },
+
+                { "43", new char[] {'а', 'п', 'р', 'о'} },
+
+                { "44", new char[] { 'м', 'и', 'т', 'ь'} },
+
+                { "51", new char[] { ' ' } }
             };
 
             Random random = new Random();
             var difficultyLevelId = random.Next(1, 4);
             var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelId);
 
+            var rows = new List<int>();
+            for (int i = 0; i < difficultyLevelId; i++)
+            {
+                rows.Add(random.Next(1, 4));
+            }
+
             var exercizeText = "";
-            while (exercizeText.Length < difficultyLevel.MaxLength - difficultyLevel.ListOfZones.Length)
+            while (exercizeText.Length < difficultyLevel.MaxLength - difficultyLevel.ListOfZones.Length - rows.Count)
             {
                 foreach (var zone in difficultyLevel.ListOfZones)
                 {
-                    keyboardZones.TryGetValue(zone, out var keys);
-                    exercizeText += keys[random.Next(0, keys.Length)];
+                    foreach (var row in rows)
+                    {
+                        keyboardZones.TryGetValue(zone + row, out var keys);
+                        if (keys != null)
+                        {
+                            exercizeText += keys[random.Next(0, keys.Length)];
+                        }
+                    }
+
+                    var spaseChance = random.Next(0, 7);
+                    if (spaseChance / 3 == 0)
+                    {
+                        exercizeText += ' ';
+                    }
                 }
             }
 
@@ -208,7 +227,7 @@ namespace KeyTrainer.Business
                 ListOfZones = difficultyLevel.ListOfZones,
                 Text = exercizeText,
                 CountOfErrors = difficultyLevel.CountOfErrors,
-                MaxTime = exercizeText.Length
+                MaxTime = exercizeText.Length + exercizeText.Length / rows.Count
             };
         }
     }

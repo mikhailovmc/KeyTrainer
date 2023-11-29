@@ -56,11 +56,8 @@ const CreateLevel = () => {
 
         try {
             const responceFromServer = await fetch(addExercise, {
-            method: 'POST',
-            // headers: {
-            //     'Content-Type': 'multipart/form-data'
-            // },
-            body: exerciseData
+                method: 'POST',
+                body: exerciseData
             });
 
             if(responceFromServer.ok) {
