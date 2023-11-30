@@ -4,18 +4,21 @@ export const getExercises = 'https://localhost:5001/api/Exercize/GetExercizes';
 // Получение всех упражнений по ID
 export const getExercisesById = 'https://localhost:5001/api/Exercize/GetExercize';
 
+// Получение нового автоматического упражнения
+export const getAutoExercise = "https://localhost:5001/api/Exercize/UpdateExercize";
+
 // Получение упражнения для редактирования по ID
 export const getLevelForEditing = 'https://localhost:5001/api/Exercize/GetExercizeForEditing/';
 
 // Получение уровней сложности
 export const getDifficultyLevel = 'https://localhost:5001/api/Exercize/GetDifficultyLevel/';
 
-
 // Отправка нового упражнения на сервер
 export const addExercise = "https://localhost:5001/api/Exercize/AddExercize";
 
 // Отправка отредактированного упражнения на сервер
 export const updateExercize = "https://localhost:5001/api/Exercize/UpdateExercize";
+
 
 // Получение данных об уровнях сложности
 // export const addExercise = "https://localhost:5001/api/Exercize/GetDifficultyLevel/{id}";

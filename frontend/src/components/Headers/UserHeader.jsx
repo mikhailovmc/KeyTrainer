@@ -13,7 +13,6 @@ const Header = ({ login }) => {
         setAuthData(null);
     }
 
-    
 
     return ( 
         <>
