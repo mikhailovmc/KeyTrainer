@@ -21,7 +21,7 @@ const Authorization = () => {
         userData.append('login', login);
         userData.append('password', password);
 
-        const responceFromServer = await fetch('https://localhost:5001/api/User/Login', {
+        const responceFromServer = await fetch('/api/User/Login', {
             method: "POST",
             // headers: {
             //     'Content-Type': 'multipart/form-data'

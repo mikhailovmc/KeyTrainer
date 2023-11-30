@@ -31,7 +31,7 @@ const Registration = () => {
 
         if(checkLogin(login) && checkPassword(password)) {
             try {
-                const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
+                const responceFromServer = await fetch('/api/User/Register', {
                 method: 'POST',
                 // headers: {
                 //     'Content-Type': 'multipart/form-data'
