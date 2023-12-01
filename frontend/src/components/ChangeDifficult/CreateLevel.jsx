@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addExercise } from "../../helpers/links";
+import { addExercise, getAutoExercise } from "../../helpers/links";
 
 import AdminHeader from "../Headers/AdminHeader";
 import "./style.scss"
 
 const CreateLevel = () => {
-    
+    // const [currentExercise, setCurrentExercise] = useState();
+
     const [idDifficultyLevel, setIdDifficultyLevel] = useState();
     const [countOfErrors, setCountOfErrors] = useState();
     const [maxTime, setMaxTime] = useState();
@@ -70,6 +71,28 @@ const CreateLevel = () => {
         }
     }
 
+    const useCreateAuto = async (e) => {
+        e.preventDefault();
+        
+        const responceFromServer = await fetch(getAutoExercise, {
+            method: "GET",
+        });
+        console.log("Ответ сервера в авторизации", responceFromServer)
+
+        if(responceFromServer.ok) {
+            const result = await responceFromServer.json();
+            setIdDifficultyLevel(result.idDifficultyLevel)
+            setCountOfErrors(result.countOfErrors)
+            setMaxTime(result.maxTime)
+            setText(result.text)
+            setZone({
+                zones: [result.listOfZones],
+                listOfZones: [result.listOfZones]
+            })
+        }
+
+    }
+
 
     return (
         <>
@@ -124,21 +147,21 @@ const CreateLevel = () => {
                     </div>
 
                     <p className="changeDifficult__text">Текст для упражнения:</p>
-                    <textarea className="textarea" name="" id="" cols="30" rows="10" onChange={e => setText(e.target.value)}></textarea>
+                    <textarea className="textarea" name="" id="" required cols="30" rows="10" onChange={e => setText(e.target.value)}></textarea>
 
                     
                     <label className="changeDifficult__label">
                         Допустимое количество ошибок:
-                        <input className="input-text" type="number"  onChange={e => setCountOfErrors(e.target.value)}/>
+                        <input className="input-text" type="number" required  onChange={e => setCountOfErrors(e.target.value)}/>
                     </label>
 
                     <label className="changeDifficult__label">
                         Время на выполнение:
-                        <input className="input-text" type="number"  onChange={e => setMaxTime(e.target.value)}/>
+                        <input className="input-text" type="number" required onChange={e => setMaxTime(e.target.value)}/>
                     </label>
 
                     <div className="buttons-wrapper">
-                        <button className="button">Создать упражнения автоматически</button>
+                        <button className="button"onClick={useCreateAuto}>Создать упражнения автоматически</button>
                         <button className="button" onClick={handleSave}>Сохранить</button>
                     </div>
                     
