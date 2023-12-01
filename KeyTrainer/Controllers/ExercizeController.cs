@@ -125,7 +125,7 @@ namespace KeyTrainer.Controllers
         /// Создать упражнение
         /// </summary>
         /// <returns>Созданное упражнение</returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GenerateExercize")]
         public async Task<ExercizeSendDto> GenerateExercize()
         {
