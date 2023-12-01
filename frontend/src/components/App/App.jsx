@@ -11,6 +11,7 @@ import KeyboardPage from '../KeyboardPage/KeyboardPage';
 import ChangeLevel from '../ChangeDifficult/ChangeLevel';
 import Creators from '../Spravka/Creators/Creators';
 import SiteInstruction from '../Spravka/SiteInstruction/SiteInstruction';
+import SiteInstructionAdmin from '../Spravka/SiteInstruction/SiteInstructionAdmin';
 
 function App() {
     // const {data, isLoading, error} = useQuery(['exercises'], () => fetch(
@@ -31,6 +32,7 @@ function App() {
           <Route path="/instruction" element={<Instruction/>}/>
           <Route path="/creators" element={<Creators/>}/>
           <Route path="/site-instruction" element={<SiteInstruction/>}/>
+          <Route path="/site-instruction/admin" element={<SiteInstructionAdmin/>}/>
 
           <Route path='/' element={<PrivateRoute/>}>
             <Route path="/difficult" element={<ChangeDifficult/>}/>

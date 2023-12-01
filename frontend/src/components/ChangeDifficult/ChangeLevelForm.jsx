@@ -3,17 +3,32 @@ import { updateExercize, getAutoExercise } from "../../helpers/links";
 import { useNavigate } from "react-router-dom";
 
 const ChangeLevelForm = ({exercise}) => {
-    const [currentExercise, setCurrentExercise] = useState(exercise)
-    const [idDifficultyLevel, setIdDifficultyLevel] = useState(currentExercise.idDifficultyLevel);
-    const [countOfErrors, setCountOfErrors] = useState(currentExercise.countOfErrors);
-    const [maxTime, setMaxTime] = useState(currentExercise.maxTime);
-    const [text, setText] = useState(currentExercise.text);
+    const [flag, setFlag] = useState(true);
+    const [currentExercise, setCurrentExercise] = useState(exercise);
+
+    const [idDifficultyLevel, setIdDifficultyLevel] = useState();
+    const [countOfErrors, setCountOfErrors] = useState();
+    const [maxTime, setMaxTime] = useState();
+    const [text, setText] = useState();
     const [zone, setZone] = useState({
         zones: [...currentExercise.listOfZones],
         listOfZones: [...currentExercise.listOfZones]
     });
+    useEffect(() => {
+        setIdDifficultyLevel(currentExercise.idDifficultyLevel);
+        setCountOfErrors(currentExercise.countOfErrors);
+        setMaxTime(currentExercise.maxTime);
+        setText(currentExercise.text);
+        setZone({
+            zones: [...currentExercise.listOfZones],
+            listOfZones: [...currentExercise.listOfZones]
+        })
+    }, [flag])
+    
+
     const navigate = useNavigate();
 
+    console.log(currentExercise)
 
     const chooseZone = (e) => {
         const { value, checked } = e.target;
@@ -32,18 +47,20 @@ const ChangeLevelForm = ({exercise}) => {
         }
     }
 
-    const handleCreateAuto = async (e) => {
-        e.preventDefault()
+    const useCreateAuto = async (e) => {
+        e.preventDefault();
+        let result;
         const responceFromServer = await fetch(getAutoExercise, {
-            method: "POST",
+            method: "GET",
         });
         console.log("Ответ сервера в авторизации", responceFromServer)
 
         if(responceFromServer.ok) {
-            let result = await responceFromServer.json()
-            console.log(result)
-            setCurrentExercise(result);
+            result = await responceFromServer.json();
+            setCurrentExercise(result)
+            setFlag(flag => !flag)
         }
+
     }
     
     const  handleSave = async (e) => {
@@ -147,7 +164,7 @@ const ChangeLevelForm = ({exercise}) => {
             </label>
 
             <div className="buttons-wrapper">
-                <button className="button" onClick={handleCreateAuto}>Создать упражнения автоматически</button>
+                <button className="button" onClick={useCreateAuto}>Создать упражнения автоматически</button>
                 <button className="button" onClick={handleSave}>Сохранить</button>
             </div>
                         

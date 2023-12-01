@@ -34,11 +34,22 @@ const AdminHeader = () => {
                         </div>    
                     </li>
 
-                    <li className="header__list-item">
-                        <Link to="/statistic">
-                            Статистика
-                        </Link>
-                    </li>
+                    <div className="dropdown">
+                        <span className="dropbtn">Справка</span>
+                        <div className="dropdown-content">
+                            <Link to="/site-instruction/admin">
+                                Инструкция по сайту
+                            </Link>
+                                
+                            <Link to="/instruction">
+                                Правила выполнения упражнения
+                            </Link>
+
+                            <Link to="/creators">
+                                Разработчики
+                            </Link>
+                        </div>
+                    </div>
 
                     <li className="header__list-item">
                         <Link to="/information">

@@ -46,7 +46,7 @@ const Header = ({ login }) => {
                             </Link>
 
                             <Link to="/creators">
-                                Создатели
+                                Разработчики
                             </Link>
                         </div>
                     </div>

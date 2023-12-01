@@ -5,7 +5,7 @@ export const getExercises = 'https://localhost:5001/api/Exercize/GetExercizes';
 export const getExercisesById = 'https://localhost:5001/api/Exercize/GetExercize';
 
 // Получение нового автоматического упражнения
-export const getAutoExercise = "https://localhost:5001/api/Exercize/UpdateExercize";
+export const getAutoExercise = "https://localhost:5001/api/Exercize/GenerateExercize";
 
 // Получение упражнения для редактирования по ID
 export const getLevelForEditing = 'https://localhost:5001/api/Exercize/GetExercizeForEditing/';
