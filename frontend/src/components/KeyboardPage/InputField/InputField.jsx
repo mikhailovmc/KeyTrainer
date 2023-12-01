@@ -1,6 +1,24 @@
 import "./style.scss";
 
-const InputField = ({handleLetter, letters, specs}) => {
+const InputField = ({handleLetter, letters, specs, party}) => {
+
+	function press (letter) {
+        console.log(letter);
+		const string = party.strings[party.currentStringIndex];
+		const mustLetter = string[party.currentPressedIndex];
+
+		console.log(letter, mustLetter);
+
+		if (letter === mustLetter) {
+			party.currentPressedIndex++
+		} else party.errors++;
+
+		viewUpdate()
+    }
+
+	function viewUpdate () {
+
+    }
 
 	function keydownHandler(event) {
 		event.preventDefault();
@@ -9,11 +27,17 @@ const InputField = ({handleLetter, letters, specs}) => {
 
 		if(letter) {
 			letter.classList.add('hint');
+			press(event.key);
 			return;
 		}
 
 		if (event.key === " ") {
 			event.key = "space";
+			press('')
+		}
+
+		if (event.key === "Enter") {
+			press('\n')
 		}
 
 		const ownSpec = specs.filter(x => x.dataset.specs === event.key);
@@ -31,6 +55,7 @@ const InputField = ({handleLetter, letters, specs}) => {
 
 		if(letter) {
 			letter.classList.remove('hint');
+			press(event.key);
 			return;
 		}
 

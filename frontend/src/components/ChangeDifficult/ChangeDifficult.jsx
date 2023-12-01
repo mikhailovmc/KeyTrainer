@@ -7,6 +7,10 @@ import { getDifficultyLevel } from "../../helpers/links";
 
 const ChangeDifficult = () => {
 
+    const {data: easy, isLoading1, error1} = useFetch(getDifficultyLevel + 1)
+    const {data: medium, isLoading2, error2} = useFetch(getDifficultyLevel +2)
+    const {data: difficult, isLoading3, error3} = useFetch(getDifficultyLevel + 3)
+
     const [idDifficultyLevel, setIdDifficultyLevel] = useState();
     const [countOfErrors, setCountOfErrors] = useState();
     const [maxTime, setMaxTime] = useState();
@@ -16,7 +20,7 @@ const ChangeDifficult = () => {
         listOfZones: []
     });
 
-    const {data, isLoading, error} = useFetch(getDifficultyLevel + 1)
+    const exercise = easy;
 
     const chooseZone = (e) => {
         const { value, checked } = e.target;
@@ -40,13 +44,12 @@ const ChangeDifficult = () => {
             <AdminHeader/>
 
             <div className="changeDifficult">
-                
-                {/* <form className="changeDifficult__form" action="">
+                <form className="changeDifficult__form" action="">
                     <p className="changeDifficult__title">Редактирование уровня сложности</p>
 
                     <p className="changeDifficult__text">Выбор уровня сложности:</p>
                     <label className="changeDifficult__label">
-                    <input className="input" name="difficult" type="radio" defaultChecked={exercise.idDifficultyLevel === 1 ? "true" : ""} data-id="1" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                        <input className="input" name="difficult" type="radio" defaultChecked={exercise.idDifficultyLevel === 1 ? "true" : ""} data-id="1" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                         Легкий
                     </label>
                                 
@@ -63,47 +66,47 @@ const ChangeDifficult = () => {
                     <p className="changeDifficult__text">Выбор зон клавиатуры:</p>
                     <div className="changeDifficult__zone">
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="1" onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("1")}  value="1" onClick={chooseZone}/>
                             1
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="2" onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("2")} value="2" onClick={chooseZone}/>
                             2
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="3" onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("3")} value="3" onClick={chooseZone}/>
                             3
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="4" onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("4")} value="4" onClick={chooseZone}/>
                             4
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="5" onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" defaultChecked={exercise.listOfZones.includes("5")} value="5" onClick={chooseZone}/>
                             Пробел
                         </label>
                     </div>
 
-                    
-
-                    
                     <label className="changeDifficult__label">
-                        Максимальное количество ошибок:
-                        <input className="input-text" type="number" />
+                        Допустимое количество ошибок:
+                        <input className="input-text" type="number"  defaultValue={exercise.countOfErrors} onChange={e => setCountOfErrors(e.target.value)}/>
                     </label>
 
                     <label className="changeDifficult__label">
                         Максимальная длина упражнения:
-                        <input className="input-text" type="number" />
+                        <input className="input-text" type="number"   onChange={e => setMaxTime(e.target.value)}/>
                     </label>
 
-                    <button className="button">Сохранить</button>
+                    <div className="buttons-wrapper">
+                        <button className="button" >Сохранить</button>
+                    </div>
+                            
 
-                </form> */}
+                </form>
             </div>
         </>
         
