@@ -40,8 +40,8 @@ const ChangeDifficultForm = ({exercise}) => {
     // }    
 
     return (
-        // <form className="changeDifficult__form" action="">
-        //     <p className="changeDifficult__title">Редактирование уровня сложности</p>
+        <form className="changeDifficult__form" action="">
+        {/* //     <p className="changeDifficult__title">Редактирование уровня сложности</p>
 
         //     <p className="changeDifficult__text">Выбор уровня сложности:</p>
         //     <label className="changeDifficult__label">
@@ -99,13 +99,8 @@ const ChangeDifficultForm = ({exercise}) => {
 
         //     <div className="buttons-wrapper">
         //         <button className="button" >Сохранить</button>
-        //     </div>
-                            
-
-        // </form>
-        <div>
-
-        </div>
+        //     </div> */}
+        </form>
     );
 }
  

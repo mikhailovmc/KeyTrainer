@@ -52,12 +52,6 @@ const AdminHeader = () => {
                     </div>
 
                     <li className="header__list-item">
-                        <Link to="/information">
-                            Справка
-                        </Link>
-                    </li>
-
-                    <li className="header__list-item">
                         Администратор
                     </li>
 

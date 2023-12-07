@@ -2,33 +2,29 @@ import { useEffect, useState } from "react";
 import { updateExercize, getAutoExercise } from "../../helpers/links";
 import { useNavigate } from "react-router-dom";
 
-const ChangeLevelForm = ({exercise}) => {
+const ChangeLevelForm = ({exercise, getNewExercise}) => {
     const [flag, setFlag] = useState(true);
-    const [currentExercise, setCurrentExercise] = useState(exercise);
+    // const [currentExercise, setCurrentExercise] = useState(exercise);
 
-    const [idDifficultyLevel, setIdDifficultyLevel] = useState();
-    const [countOfErrors, setCountOfErrors] = useState();
-    const [maxTime, setMaxTime] = useState();
-    const [text, setText] = useState();
+    const [idDifficultyLevel, setIdDifficultyLevel] = useState(exercise.idDifficultyLevel);
+    const [countOfErrors, setCountOfErrors] = useState(exercise.countOfErrors);
+    const [maxTime, setMaxTime] = useState(exercise.maxTime);
+    const [text, setText] = useState(exercise.text);
     const [zone, setZone] = useState({
-        zones: [...currentExercise.listOfZones],
-        listOfZones: [...currentExercise.listOfZones]
+        zones: [...exercise.listOfZones],
+        listOfZones: [...exercise.listOfZones]
     });
     useEffect(() => {
-        setIdDifficultyLevel(currentExercise.idDifficultyLevel);
-        setCountOfErrors(currentExercise.countOfErrors);
-        setMaxTime(currentExercise.maxTime);
-        setText(currentExercise.text);
+        setIdDifficultyLevel(exercise.idDifficultyLevel);
+        setCountOfErrors(exercise.countOfErrors);
+        setMaxTime(exercise.maxTime);
+        setText(exercise.text);
         setZone({
-            zones: [...currentExercise.listOfZones],
-            listOfZones: [...currentExercise.listOfZones]
+            zones: [...exercise.listOfZones],
+            listOfZones: [...exercise.listOfZones]
         })
     }, [flag])
-    
-
     const navigate = useNavigate();
-
-    console.log(currentExercise)
 
     const chooseZone = (e) => {
         const { value, checked } = e.target;
@@ -49,6 +45,7 @@ const ChangeLevelForm = ({exercise}) => {
 
     const useCreateAuto = async (e) => {
         e.preventDefault();
+        setFlag(flag => !flag)
         let result;
         const responceFromServer = await fetch(getAutoExercise, {
             method: "GET",
@@ -57,15 +54,13 @@ const ChangeLevelForm = ({exercise}) => {
 
         if(responceFromServer.ok) {
             result = await responceFromServer.json();
-            setCurrentExercise(result)
+            getNewExercise(result)
             setFlag(flag => !flag)
         }
 
     }
     
     const  handleSave = async (e) => {
-        e.preventDefault();
-        
         let exerciseData = new FormData();
 
         exerciseData.append('id', exercise.id);
@@ -104,63 +99,58 @@ const ChangeLevelForm = ({exercise}) => {
     return (
         <form className="changeDifficult__form" action="">
             <p className="changeDifficult__title">Редактирование упражнения</p>
-            <p className="changeDifficult__id">ID упражнения: {currentExercise.id}</p>
+            <p className="changeDifficult__id">ID упражнения: {exercise.id ?  exercise.id : "новое упражнение"}</p>
             <p className="changeDifficult__text">Выбор уровня сложности:</p>
             <label className="changeDifficult__label">
-                <input className="input" name="difficult" type="radio" defaultChecked={currentExercise.idDifficultyLevel === 1 ? "true" : ""} data-id="1" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                <input className="input" name="difficult" type="radio" defaultChecked={idDifficultyLevel === 1} data-id="1" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                 Легкий
             </label>
                         
             <label className="changeDifficult__label">
-                <input className="input" name="difficult" type="radio"  defaultChecked={currentExercise.idDifficultyLevel === 2 ? "true" : ""} data-id="2" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                <input className="input" name="difficult" type="radio"  defaultChecked={idDifficultyLevel === 2} data-id="2" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                 Средний
             </label>
 
             <label className="changeDifficult__label">
-                <input className="input" name="difficult" type="radio"  defaultChecked={currentExercise.idDifficultyLevel === 3 ? "true" : ""} data-id="3" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                <input className="input" name="difficult" type="radio"  defaultChecked={idDifficultyLevel === 3} data-id="3" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                 Сложный
             </label>
 
             <p className="changeDifficult__text">Выбор зон клавиатуры:</p>
             <div className="changeDifficult__zone">
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" defaultChecked={currentExercise.listOfZones.includes("1")}  value="1" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={zone.listOfZones.includes("1")}  value="1" onClick={chooseZone}/>
                     1
                 </label>
 
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" defaultChecked={currentExercise.listOfZones.includes("2")} value="2" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={zone.listOfZones.includes("2")} value="2" onClick={chooseZone}/>
                     2
                 </label>
 
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" defaultChecked={currentExercise.listOfZones.includes("3")} value="3" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={zone.listOfZones.includes("3")} value="3" onClick={chooseZone}/>
                     3
                 </label>
 
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" defaultChecked={currentExercise.listOfZones.includes("4")} value="4" onClick={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" defaultChecked={zone.listOfZones.includes("4")} value="4" onClick={chooseZone}/>
                     4
-                </label>
-
-                <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" defaultChecked={currentExercise.listOfZones.includes("5")} value="5" onClick={chooseZone}/>
-                    Пробел
                 </label>
             </div>
 
                         
             <p className="changeDifficult__text">Текст для упражнения:</p>
-            <textarea className="textarea" name="" id="" cols="30" rows="10" defaultValue={currentExercise.text} onChange={e => setText(e.target.value)}></textarea>
+            <textarea className="textarea" name="" id="" cols="30" rows="10"  required defaultValue={text} onChange={e => setText(e.target.value)}></textarea>
                         
             <label className="changeDifficult__label">
                 Допустимое количество ошибок:
-                <input className="input-text" type="number"  defaultValue={currentExercise.countOfErrors} onChange={e => setCountOfErrors(e.target.value)}/>
+                <input className="input-text" type="number"  required defaultValue={countOfErrors} onChange={e => setCountOfErrors(e.target.value)}/>
             </label>
 
             <label className="changeDifficult__label">
                 Время на выполнение:
-                <input className="input-text" type="number" defaultValue={currentExercise.maxTime}  onChange={e => setMaxTime(e.target.value)}/>
+                <input className="input-text" type="number" required defaultValue={maxTime}  onChange={e => setMaxTime(e.target.value)}/>
             </label>
 
             <div className="buttons-wrapper">
