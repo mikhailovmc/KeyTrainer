@@ -98,7 +98,9 @@ namespace KeyTrainer.Business
                 return null;
             }
 
-            foreach (var zone in exercizeSendDto.ListOfZones)
+            var listOfZones = exercizeSendDto.ListOfZones.First().Split(',');
+
+            foreach (var zone in listOfZones)
             {
                 if (!difficultyLevel.ListOfZones.Contains(zone))
                 {
