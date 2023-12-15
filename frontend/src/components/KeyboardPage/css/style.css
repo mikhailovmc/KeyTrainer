@@ -1,0 +1,69 @@
+.results {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.results-title {
+  display: flex;
+  font-family: "PT Mono", monospace;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #5C8DCB;
+}
+
+.indicators {
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid #D9D9D9;
+  margin-bottom: 35px;
+  justify-content: space-between;
+}
+
+.indicator {
+  display: flex;
+  font-size: 12px;
+  font-family: "PT Mono", monospace;
+  border-right: 1px solid #D9D9D9;
+  padding: 10px 15px;
+}
+
+.indicator:last-child {
+  border-right: none;
+}
+
+.indicator__icon {
+  margin-right: 5px;
+}
+
+.indicator__icon {
+  color: #0070ff;
+}
+
+.indicator__icon--errors {
+  color: #e50909;
+}/*# sourceMappingURL=style.css.map */ font-size: 10px;
+}
+.keyboard .line .shift {
+  width: 113px;
+  text-align: left;
+  color: #95a0a4;
+  font-size: 10px;
+}
+.keyboard .line .shift:last-child {
+  text-align: right;
+}
+.keyboard .line .space {
+  margin-left: 200px;
+  width: 312px;
+  text-align: right;
+  color: #95a0a4;
+  font-size: 10px;
+}
+.keyboard .line .alt {
+  width: 88px;
+  text-align: right;
+  color: #95a0a4;
+  font-size: 10px;
+  margin-right: auto;
+}/*# sourceMappingURL=style.css.map */

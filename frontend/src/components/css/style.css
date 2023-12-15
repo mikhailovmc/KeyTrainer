@@ -1,0 +1,137 @@
+.changeDifficult {
+  padding: 50px 0;
+}
+.changeDifficult .changeDifficult__title {
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 30px;
+}
+.changeDifficult .changeDifficult__form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__text {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__zone {
+  display: flex;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__zone .changeDifficult__zone > label {
+  margin-right: 30px;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__zone .inner--label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__zone .input-checkbox {
+  width: 25px;
+  height: 25px;
+  margin-bottom: 10px;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__label {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__label .input {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__label .input-text {
+  width: 100px;
+  padding: 5px;
+  margin-left: 20px;
+  border: 1px solid #6095EA;
+}
+.changeDifficult .changeDifficult__form .textarea {
+  padding: 10px;
+  border: 1px solid black;
+  width: 500px;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+.changeDifficult .changeDifficult__form .changeDifficult__id {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.changeDifficult .changeDifficult__form .buttons-wrapper {
+  display: flex;
+  gap: 40px;
+}
+.changeDifficult .button {
+  padding: 20px;
+  color: #fff;
+  background-color: #6095EA;
+  font-size: 20px;
+}/*# sourceMappingURL=style.css.map */ение цвета выпадающих ссылок при наведении курсора */
+  /* Показать выпадающее меню при наведении курсора */
+  /* Изменение цвета фона кнопки раскрывающегося списка при отображении содержимого раскрывающегося списка */
+}
+header nav {
+  display: flex;
+  align-self: center;
+}
+header .logo {
+  font-family: "Genos", sans-serif;
+  color: #fff;
+  font-weight: 700;
+  font-size: 48px;
+}
+header .header__list {
+  display: flex;
+}
+header .header__list-item {
+  font-size: 24px;
+  margin-right: 50px;
+}
+header .header__list-item a {
+  color: #fff;
+}
+header .cursor {
+  cursor: pointer;
+}
+header .cursor:hover {
+  text-decoration: underline;
+}
+header .header__list-item a:hover {
+  text-decoration: underline;
+}
+header .dropbtn {
+  color: white;
+  padding: 16px;
+  font-size: 24px;
+  border: none;
+}
+header .dropdown {
+  position: relative;
+  display: inline-block;
+}
+header .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+header .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  display: block;
+}
+header .dropdown-content a:hover {
+  background-color: #ddd;
+}
+header .dropdown:hover .dropdown-content {
+  display: block;
+}
+header .dropdown:hover .dropbtn {
+  background-color: rgba(55, 56, 144, 0.551);
+}/*# sourceMappingURL=style.css.map */

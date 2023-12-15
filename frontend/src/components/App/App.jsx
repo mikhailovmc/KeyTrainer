@@ -32,9 +32,10 @@ function App() {
           <Route path="/instruction" element={<Instruction/>}/>
           <Route path="/creators" element={<Creators/>}/>
           <Route path="/site-instruction" element={<SiteInstruction/>}/>
-          <Route path="/site-instruction/admin" element={<SiteInstructionAdmin/>}/>
+          
 
           <Route path='/' element={<PrivateRoute/>}>
+            <Route path="/site-instruction/admin" element={<SiteInstructionAdmin/>}/>
             <Route path="/difficult" element={<ChangeDifficult/>}/>
             <Route path="/create" element={<CreateLevel/>}/>
             <Route path="/changeLevel/:id" element={<ChangeLevel/>}/>

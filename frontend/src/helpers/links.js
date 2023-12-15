@@ -19,6 +19,9 @@ export const addExercise = "https://localhost:5001/api/Exercize/AddExercize";
 // Отправка отредактированного упражнения на сервер
 export const updateExercize = "https://localhost:5001/api/Exercize/UpdateExercize";
 
+// Отправка отредактированного уровня сложности на сервер
+export const updateDifficultLevel = "https://localhost:5001/api/Exercize/UpdateDifficultLevel";
+
 
 // Получение данных об уровнях сложности
 // export const addExercise = "https://localhost:5001/api/Exercize/GetDifficultyLevel/{id}";

@@ -74,35 +74,23 @@ const CreateLevel = () => {
     }
 
     const useCreateAuto = async (e) => {       
-        // const responceFromServer = await fetch(getAutoExercise, {
-        //     method: "GET",
-        // });
-        // console.log("Ответ сервера в авторизации", responceFromServer)
+        const responceFromServer = await fetch(getAutoExercise, {
+            method: "GET",
+        });
+        console.log("Ответ сервера в авторизации", responceFromServer)
 
-        // if(responceFromServer.ok) {
-        //     const result = await responceFromServer.json();
-        //     setIdDifficultyLevel(result.idDifficultyLevel)
-        //     setCountOfErrors(result.countOfErrors)
-        //     setMaxTime(result.maxTime)
-        //     setText(result.text)
-        //     setZone({
-        //         zones: [...result.listOfZones],
-        //         listOfZones: [...result.listOfZones]
-        //     })
-        //     setFlag(flag => !flag)
-        // }
-        // const {data:exercise, isLoading, error} = useFetch(getAutoExercise);
-        
+        if(responceFromServer.ok) {
+            const result = await responceFromServer.json();
+            setIdDifficultyLevel(result.idDifficultyLevel)
+            setCountOfErrors(result.countOfErrors)
+            setMaxTime(result.maxTime)
+            setText(result.text)
+            setZone({
+                zones: [...result.listOfZones],
+                listOfZones: [...result.listOfZones]
+            })
+        }    
     }
-
-    useEffect(() => {
-        console.log(typeof(idDifficultyLevel))
-        // if (idDifficultyLevel === 1) arrayDif.push(1);
-        // if (idDifficultyLevel === 2) arrayDif.push(2);
-        // if (idDifficultyLevel === 3) arrayDif.push(3);
-
-        // console.log(arrayDif)
-    }, [flag])
 
     return (
         <>
@@ -113,39 +101,39 @@ const CreateLevel = () => {
                     <p className="changeDifficult__title">Создание упражнения</p>
                     <p className="changeDifficult__text">Выбор уровня сложности:</p>
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" data-id="1" defaultChecked={idDifficultyLevel === 1} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                        <input className="input" name="difficult" type="radio" data-id="1" checked={idDifficultyLevel === 1} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                         Легкий
                     </label>
                     
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" data-id="2"  defaultChecked={idDifficultyLevel === 2} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                        <input className="input" name="difficult" type="radio" data-id="2"  checked={idDifficultyLevel === 2} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                         Средний
                     </label>
 
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" data-id="3"  defaultChecked={idDifficultyLevel === 3} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                        <input className="input" name="difficult" type="radio" data-id="3"  checked={idDifficultyLevel === 3} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
                         Сложный
                     </label>
 
                     <p className="changeDifficult__text">Выбор зон клавиатуры:</p>
                     <div className="changeDifficult__zone">
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="1" defaultChecked={zone.listOfZones.includes("1")} onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" value="1" checked={zone.listOfZones.includes("1")} onChange={chooseZone}/>
                             1
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="2" defaultChecked={zone.listOfZones.includes("2")} onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" value="2" checked={zone.listOfZones.includes("2")} onChange={chooseZone}/>
                             2
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="3" defaultChecked={zone.listOfZones.includes("3")} onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" value="3" checked={zone.listOfZones.includes("3")} onChange={chooseZone}/>
                             3
                         </label>
 
                         <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="4" defaultChecked={zone.listOfZones.includes("4")} onClick={chooseZone}/>
+                            <input className="input-checkbox" type="checkbox" value="4" checked={zone.listOfZones.includes("4")} onChange={chooseZone}/>
                             4
                         </label>
                     </div>
