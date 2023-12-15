@@ -10,6 +10,8 @@ const ChangeDifficult = () => {
     const {data: easy, isLoading1, error1} = useFetch(getDifficultyLevel + 1);
     const {data: middle, isLoading2, error2} = useFetch(getDifficultyLevel + 2);
     const {data: hard, isLoading3, error3} = useFetch(getDifficultyLevel + 3);
+
+    
     return ( 
         <>
             <AdminHeader/>

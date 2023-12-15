@@ -12,23 +12,22 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
     const [countOfErrors, setCountOfErrors] = useState(currentDifficult.countOfErrors);
     const [maxLength, setMaxLength] = useState(currentDifficult.maxLength);
     const [zone, setZone] = useState({
-        zones: [currentDifficult.listOfZones],
-        listOfZones: [currentDifficult.listOfZones]
+        zones: [...currentDifficult.listOfZones],
+        listOfZones: [...currentDifficult.listOfZones]
     });
     
     const navigate = useNavigate();
     
-    
-    if (idDifficultyLevel == 2) {  
-        console.log(middle + ' пришло среднее упражнение')
-        setCurrentDifficult(middle);
+    const changeState = (difficult) => {
+        setCurrentDifficult(difficult)
+        setIdDifficultyLevel(difficult.id);
+        setCountOfErrors(difficult.countOfErrors);
+        setMaxLength(difficult.maxLength);
+        setZone({
+            zones: [...difficult.listOfZones],
+            listOfZones: [...difficult.listOfZones]
+        })
     }
-
-    if (idDifficultyLevel == 3) {    
-        console.log(hard + ' пришло hard упражнение')
-        setCurrentDifficult(hard);
-    }
-   
 
     const chooseZone = (e) => {
         const { value, checked } = e.target;
@@ -71,11 +70,11 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
             });
 
             if(responceFromServer.ok) {
-                alert('Сложность успешно редактирована')
+                const result = await responceFromServer.json()
+                alert('Сложность успешно редактирована');
                 navigate('/exercise')
             }
-            console.log("Ответ сервера в авторизации", responceFromServer)
-
+            // console.log("Ответ сервера в авторизации", responceFromServer)
         } catch (error) {
             alert(error)
         }
@@ -89,30 +88,30 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
             <label className="changeDifficult__label">
                 <input className="input" name="difficult" type="radio" defaultChecked={idDifficultyLevel === 1} data-id="1" onChange={e => {
                     setIdDifficultyLevel(e.target.dataset.id);
-                    setCurrentDifficult(easy);
+                    changeState(easy);
                     }}/>
                 Легкий
             </label>
                                 
             <label className="changeDifficult__label">
-                <input className="input" name="difficult" type="radio"  checked={idDifficultyLevel === 2 } data-id="2" onChange={e => {
+                <input className="input" name="difficult" type="radio"  defaultChecked={idDifficultyLevel === 2 } data-id="2" onChange={e => {
                     setIdDifficultyLevel(e.target.dataset.id);
-                    setCurrentDifficult(middle);
+                    changeState(middle);
                     }}/>
                 Средний
             </label>
 
             <label className="changeDifficult__label">
-                <input className="input" name="difficult" type="radio"  checked={idDifficultyLevel === 3 } data-id="3" onChange={e => {
+                <input className="input" name="difficult" type="radio"  defaultChecked={idDifficultyLevel === 3 } data-id="3" onChange={e => {
                     setIdDifficultyLevel(e.target.dataset.id)
-                    setCurrentDifficult(hard);}}/>
+                    changeState(hard);}}/>
                 Сложный
             </label>
 
             <p className="changeDifficult__text">Выбор зон клавиатуры:</p>
             <div className="changeDifficult__zone">
                 <label className="changeDifficult__label inner--label">
-                    <input className="input-checkbox" type="checkbox" value="1" defaultChecked={zone.listOfZones.includes("1")} onChange={chooseZone}/>
+                    <input className="input-checkbox" type="checkbox" value="1" checked={zone.listOfZones.includes("1")} onChange={chooseZone}/>
                     1
                 </label>
 

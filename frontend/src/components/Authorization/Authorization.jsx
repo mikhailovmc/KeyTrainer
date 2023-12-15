@@ -23,9 +23,6 @@ const Authorization = () => {
 
         const responceFromServer = await fetch('https://localhost:5001/api/User/Login', {
             method: "POST",
-            // headers: {
-            //     'Content-Type': 'multipart/form-data'
-            // },
             body: userData
         });
         console.log("Ответ сервера в авторизации", responceFromServer)

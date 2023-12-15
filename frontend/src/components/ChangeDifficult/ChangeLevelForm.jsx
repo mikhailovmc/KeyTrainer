@@ -14,7 +14,6 @@ const ChangeLevelForm = ({exercise}) => {
     });
     const navigate = useNavigate();
 
-
     const chooseZone = (e) => {
         const { value, checked } = e.target;
         const { zones } = zone;
@@ -31,30 +30,8 @@ const ChangeLevelForm = ({exercise}) => {
             })
         }
     }
-
-    const useCreateAuto = async (e) => {
-        e.preventDefault();
-
-        const responceFromServer = await fetch(getAutoExercise, {
-            method: "GET",
-        });
-        console.log("Ответ сервера в авторизации", responceFromServer)
-
-        if(responceFromServer.ok) {
-            const result = await responceFromServer.json();
-            setIdDifficultyLevel(result.idDifficultyLevel);
-            setCountOfErrors(result.countOfErrors);
-            setMaxTime(result.maxTime);
-            setText(result.text);
-            setZone({
-                zones: [...result.listOfZones],
-                listOfZones: [...result.listOfZones]
-            })
-        }
-
-    }
     
-    const  handleSave = async (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
         let exerciseData = new FormData();
 
@@ -82,6 +59,7 @@ const ChangeLevelForm = ({exercise}) => {
             });
 
             if(responceFromServer.ok) {
+                alert('Упражнение успешно редактировано');
                 navigate('/exercise')
             }
             console.log("Ответ сервера в авторизации", responceFromServer)
@@ -97,17 +75,17 @@ const ChangeLevelForm = ({exercise}) => {
             <p className="changeDifficult__id">ID упражнения: {exercise.id ?  exercise.id : "новое упражнение"}</p>
             <p className="changeDifficult__text">Выбор уровня сложности:</p>
             <label className="changeDifficult__label">
-                <input className="input" name="difficult" type="radio" defaultChecked={idDifficultyLevel === 1} data-id="1" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                <input className="input" name="difficult" type="radio" value="1" checked={idDifficultyLevel == 1 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
                 Легкий
             </label>
                         
             <label className="changeDifficult__label">
-                <input className="input" name="difficult" type="radio"  checked={idDifficultyLevel === 2} data-id="2" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                <input className="input" name="difficult" type="radio"  value="2" checked={idDifficultyLevel == 2 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
                 Средний
             </label>
 
             <label className="changeDifficult__label">
-                <input className="input" name="difficult" type="radio"  checked={idDifficultyLevel === 3} data-id="3" onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                <input className="input" name="difficult" type="radio"  value="3" checked={idDifficultyLevel == 3 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
                 Сложный
             </label>
 
@@ -149,7 +127,6 @@ const ChangeLevelForm = ({exercise}) => {
             </label>
 
             <div className="buttons-wrapper">
-                <button className="button" onClick={useCreateAuto}>Создать упражнения автоматически</button>
                 <button className="button" onClick={handleSave}>Сохранить</button>
             </div>
                         

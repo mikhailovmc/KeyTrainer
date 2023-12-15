@@ -6,7 +6,6 @@ import AdminHeader from "../Headers/AdminHeader";
 import "./style.scss"
 
 const CreateLevel = () => {
-    // const [currentExercise, setCurrentExercise] = useState();
 
     const [idDifficultyLevel, setIdDifficultyLevel] = useState();
     const [countOfErrors, setCountOfErrors] = useState();
@@ -16,8 +15,7 @@ const CreateLevel = () => {
         zones: [],
         listOfZones: []
     });
-    const [difficult, setDifficult] = useState({})
-    const [flag, setFlag] = useState(false);
+
     const navigate = useNavigate();
     
 
@@ -38,6 +36,29 @@ const CreateLevel = () => {
         }
     }
 
+    const useCreateAuto = async (e) => {     
+        e.preventDefault();
+  
+        const responceFromServer = await fetch(getAutoExercise, {
+            method: "GET",
+        });
+        console.log("Ответ сервера в авторизации", responceFromServer)
+
+        if(responceFromServer.ok) {
+            const result = await responceFromServer.json();
+            console.log(result)
+            setIdDifficultyLevel(result.idDifficultyLevel)
+            setCountOfErrors(result.countOfErrors)
+            setMaxTime(result.maxTime);
+            setZone({
+                zones: [...result.listOfZones],
+                listOfZones: [...result.listOfZones]
+            })
+            setText(result.text)
+            
+        }    
+    }
+
     const handleSave = async (e) => {
         e.preventDefault()
         let exerciseData = new FormData();
@@ -46,7 +67,7 @@ const CreateLevel = () => {
         exerciseData.append('countOfErrors', countOfErrors);
         exerciseData.append('maxTime', maxTime);
         exerciseData.append('text', text);
-        exerciseData.append('listOfZones', zone.listOfZones);
+        exerciseData.append('listOfZones', [...zone.listOfZones]);
 
         const data = {
             idDifficultyLevel,
@@ -64,33 +85,20 @@ const CreateLevel = () => {
             });
 
             if(responceFromServer.ok) {
+                alert('Упражнение успешно создано');
                 navigate('/exercise')
             }
             console.log("Ответ сервера в авторизации", responceFromServer)
 
+            if(!responceFromServer.ok) {
+                const result = await responceFromServer.json();
+                console.log(result);
+            }
+
         } catch (error) {
             alert(error)
         }
-    }
-
-    const useCreateAuto = async (e) => {       
-        const responceFromServer = await fetch(getAutoExercise, {
-            method: "GET",
-        });
-        console.log("Ответ сервера в авторизации", responceFromServer)
-
-        if(responceFromServer.ok) {
-            const result = await responceFromServer.json();
-            setIdDifficultyLevel(result.idDifficultyLevel)
-            setCountOfErrors(result.countOfErrors)
-            setMaxTime(result.maxTime)
-            setText(result.text)
-            setZone({
-                zones: [...result.listOfZones],
-                listOfZones: [...result.listOfZones]
-            })
-        }    
-    }
+    }  
 
     return (
         <>
@@ -101,17 +109,17 @@ const CreateLevel = () => {
                     <p className="changeDifficult__title">Создание упражнения</p>
                     <p className="changeDifficult__text">Выбор уровня сложности:</p>
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" data-id="1" checked={idDifficultyLevel === 1} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                        <input className="input" name="difficult" type="radio" value="1" checked={idDifficultyLevel == 1 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
                         Легкий
                     </label>
                     
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" data-id="2"  checked={idDifficultyLevel === 2} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                        <input className="input" name="difficult" type="radio" value="2"  checked={idDifficultyLevel == 2 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
                         Средний
                     </label>
 
                     <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" data-id="3"  checked={idDifficultyLevel === 3} onChange={e => setIdDifficultyLevel(e.target.dataset.id)}/>
+                        <input className="input" name="difficult" type="radio" value="3"  checked={idDifficultyLevel == 3 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
                         Сложный
                     </label>
 
@@ -139,17 +147,17 @@ const CreateLevel = () => {
                     </div>
 
                     <p className="changeDifficult__text">Текст для упражнения:</p>
-                    <textarea className="textarea" name="" id="" required cols="30" rows="10" defaultValue={text} onChange={e => setText(e.target.value)}></textarea>
+                    <textarea className="textarea" name="" id="" required cols="30" rows="10" value={text} onChange={e => setText(e.target.value)}></textarea>
 
                     
                     <label className="changeDifficult__label">
                         Допустимое количество ошибок:
-                        <input className="input-text" type="number" required  defaultValue={countOfErrors} onChange={e => setCountOfErrors(e.target.value)}/>
+                        <input className="input-text" type="number" required  value={countOfErrors} onChange={e => setCountOfErrors(e.target.value)}/>
                     </label>
 
                     <label className="changeDifficult__label">
                         Время на выполнение:
-                        <input className="input-text" type="number" required defaultValue={maxTime} onChange={e => setMaxTime(e.target.value)}/>
+                        <input className="input-text" type="number" required value={maxTime} onChange={e => setMaxTime(e.target.value)}/>
                     </label>
 
                     <div className="buttons-wrapper">
