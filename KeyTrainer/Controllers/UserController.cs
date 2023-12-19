@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using KeyTrainer.Contracts;
 using KeyTrainer.Dto;
@@ -26,12 +27,15 @@ namespace KeyTrainer.Controllers
         /// <exception cref="Exception">Исключение: уже зарегистрированный пользователь</exception>
         [HttpPost]
         [Route("Register")]
-        public async Task Register(UserDto userData)
+        public async Task<IActionResult> Register(UserDto userData)
         {
-            var user = await _userBusiness.Authorize(userData);
-            if (user != null)
-                throw new Exception("Данный пользователь уже зарегистрирован!");
             await _userBusiness.Register(userData);
+            if (_userBusiness.GetErrors.Any())
+            {
+                return StatusCode(500, _userBusiness.GetErrors);
+            }
+
+            return Ok();
         }
 
         /// <summary>
@@ -41,12 +45,15 @@ namespace KeyTrainer.Controllers
         /// <exception cref="Exception">Исключение: пользователь не найден</exception>
         [HttpPost]
         [Route("Login")]
-        public async Task<UserDto> Login(UserDto userData)
+        public async Task<IActionResult> Login(UserDto userData)
         {
             var user = await _userBusiness.Authorize(userData);
-            if (user == null)
-                throw new Exception("Пользователь не найден!");
-            return user;
+            if (_userBusiness.GetErrors.Any())
+            {
+                return StatusCode(500, _userBusiness.GetErrors);
+            }
+
+            return Ok(user);
         }
     }
 }

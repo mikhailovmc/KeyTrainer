@@ -11,7 +11,7 @@ namespace KeyTrainer.Controllers
     /// Контроллер для работы с пользователями
     /// </summary>
     [Route("api/Statistics")]
-    public class StatisticsController
+    public class StatisticsController : ControllerBase
     {
         private readonly IStatisticsBusiness _statisticsBusiness;
 
@@ -26,12 +26,12 @@ namespace KeyTrainer.Controllers
         /// <returns>Список статистики</returns>
         [HttpGet]
         [Route("GetStatistics")]
-        public async Task<IEnumerable<StatisticsFullDto>> GetStatistics()
+        public async Task<IActionResult> GetStatistics()
         {
             var statistics = await _statisticsBusiness.GetStatistics();
             if (statistics == null)
-                throw new Exception("Не удалось получить статистику!");
-            return statistics;
+                return StatusCode(500, "Ошибка 18 - Записи статистики не найдены");
+            return Ok(statistics);
         }
 
         /// <summary>
@@ -41,12 +41,12 @@ namespace KeyTrainer.Controllers
         /// <returns>Статистика</returns>
         [HttpGet]
         [Route("GetStatistics/{id}")]
-        public async Task<StatisticsFullDto> GetStatistics(int id)
+        public async Task<IActionResult> GetStatistics(int id)
         {
             var statistics = await _statisticsBusiness.GetStatisticsById(id);
             if (statistics == null)
-                throw new Exception("Не удалось получить статистику!");
-            return statistics;
+                return StatusCode(500, "Ошибка 19 - Запись статистики не найдена");
+            return Ok(statistics);
         }
 
         /// <summary>
@@ -56,12 +56,12 @@ namespace KeyTrainer.Controllers
         /// <returns>Статистика пользователя</returns>
         [HttpGet]
         [Route("GetStatisticsByUserId/{id}")]
-        public async Task<IEnumerable<StatisticsFullDto>> GetStatisticsByUserId(int id)
+        public async Task<IActionResult> GetStatisticsByUserId(int id)
         {
             var statistics = await _statisticsBusiness.GetStatisticsByUserId(id);
             if (statistics == null)
-                throw new Exception("Не удалось получить статистику пользователя!");
-            return statistics;
+                return StatusCode(500, "Ошибка 20 - Записи статистики пользователя не найдены");
+            return Ok(statistics);
         }
 
         /// <summary>
@@ -71,12 +71,12 @@ namespace KeyTrainer.Controllers
         /// <returns>Статистика упражнения</returns>
         [HttpGet]
         [Route("GetStatisticsByExercizeId/{id}")]
-        public async Task<IEnumerable<StatisticsFullDto>> GetStatisticsByExercizeId(int id)
+        public async Task<IActionResult> GetStatisticsByExercizeId(int id)
         {
             var statistics = await _statisticsBusiness.GetStatisticsByExercizeId(id);
             if (statistics == null)
-                throw new Exception("Не удалось получить статистику упражнения!");
-            return statistics;
+                return StatusCode(500, "Ошибка 21 - Записи статистики упражнения не найдены");
+            return Ok(statistics);
         }
 
         /// <summary>

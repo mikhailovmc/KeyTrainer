@@ -11,6 +11,11 @@ namespace KeyTrainer.Contracts
     /// </summary>
     public interface IExercizeBusiness
     {
+        // <summary>
+        /// Получить список ошибок
+        /// </summary>
+        IEnumerable<string> GetErrors { get; }
+
         /// <summary>
         /// Получить список упражнений по уровням сложности
         /// </summary>

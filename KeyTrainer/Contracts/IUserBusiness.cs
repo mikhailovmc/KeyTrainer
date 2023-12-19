@@ -13,6 +13,11 @@ namespace KeyTrainer.Contracts
     public interface IUserBusiness
     {
         /// <summary>
+        /// Получить список ошибок
+        /// </summary>
+        IEnumerable<string> GetErrors { get; }
+
+        /// <summary>
         /// Зарегистрировать пользователя
         /// </summary>
         /// <param name="userRegisterDto"> ДТО пользователя для регистрации </param>

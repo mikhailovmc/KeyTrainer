@@ -14,147 +14,7 @@ namespace KeyTrainer.Business
     /// </summary>
     public class ExercizeBusiness : IExercizeBusiness
     {
-        private readonly IExercizeRepository _exercizeRepository;
-        private readonly IMapper _mapper;
-
-        public ExercizeBusiness(
-            IExercizeRepository exercizeRepository,
-            IMapper mapper)
-        {
-            _exercizeRepository = exercizeRepository;
-            _mapper = mapper;
-        }
-
-        /// <inheritdoc/>
-        public async Task<IEnumerable<ExercizeFullDto>> GetExercizes()
-        {
-            var exercizesDto = new List<ExercizeFullDto>();
-            var exercizes = await _exercizeRepository.GetExercizes();
-            foreach (var exercize in exercizes)
-            {
-                exercizesDto.Add(_mapper.Map<ExercizeFullDto>(exercize));
-            }
-            return exercizesDto;
-        }
-
-        /// <inheritdoc/>
-        public async Task<ExercizeFullDto> GetExercizeById(int id)
-        {
-            var exercize = await _exercizeRepository.GetExerciseById(id);
-            return _mapper.Map<ExercizeFullDto>(exercize);
-        }
-
-        /// <inheritdoc/>
-        public async Task<ExercizeSendDto> GetExercizeForEditingById(int id)
-        {
-            var exercize = await _exercizeRepository.GetExerciseById(id);
-            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercize.IdDifficultyLevel);
-            return new ExercizeSendDto()
-            {
-                Id = exercize.Id,
-                IdDifficultyLevel = difficultyLevel.Id,
-                ListOfZones = difficultyLevel.ListOfZones,
-                Text = exercize.Text,
-                CountOfErrors = difficultyLevel.CountOfErrors,
-                MaxTime = exercize.MaxTime
-            }; 
-        }
-
-        /// <inheritdoc/>
-        public async Task<DifficultyLevelFullDto> GetDifficultyLevelById(int id)
-        {
-            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(id);
-            return _mapper.Map<DifficultyLevelFullDto>(difficultyLevel);
-        }
-
-        /// <inheritdoc/>
-        public async Task<DifficultyLevelFullDto> UpdateDifficultyLevel(DifficultyLevelFullDto difficultyLevelFullDto)
-        {
-            var oldDifficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelFullDto.Id);
-
-            if (oldDifficultyLevel == null)
-            {
-                return null;
-            }
-
-            oldDifficultyLevel.CountOfErrors = difficultyLevelFullDto.CountOfErrors;
-            oldDifficultyLevel.MaxLength = difficultyLevelFullDto.MaxLength;
-            oldDifficultyLevel.ListOfZones = difficultyLevelFullDto.ListOfZones.ToArray();
-
-            await _exercizeRepository.UpdateDifficultyLevel(oldDifficultyLevel);
-            var newDifficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelFullDto.Id);
-            return _mapper.Map<DifficultyLevelFullDto>(newDifficultyLevel);
-        }
-
-        /// <inheritdoc/>
-        public async Task<ExercizeFullDto> AddExercize(ExercizeSendDto exercizeSendDto)
-        {
-            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercizeSendDto.IdDifficultyLevel);
-
-            if (difficultyLevel == null ||
-                exercizeSendDto.Text.Length > difficultyLevel.MaxLength ||
-                exercizeSendDto.CountOfErrors > difficultyLevel.CountOfErrors)
-            {
-                return null;
-            }
-
-            var listOfZones = exercizeSendDto.ListOfZones.First().Split(',');
-
-            foreach (var zone in listOfZones)
-            {
-                if (!difficultyLevel.ListOfZones.Contains(zone))
-                {
-                    return null;
-                }
-            }
-
-            var exercize = _mapper.Map<Exercize>(exercizeSendDto);
-            await _exercizeRepository.AddExercize(exercize);
-            var newExercize = await _exercizeRepository.GetExerciseById(exercize.Id);
-            return _mapper.Map<ExercizeFullDto>(newExercize);
-        }
-
-        /// <inheritdoc/>
-        public async Task<ExercizeFullDto> UpdateExercize(ExercizeSendDto exercizeSendDto)
-        {
-            var oldExercize = await _exercizeRepository.GetExerciseById(exercizeSendDto.Id);
-
-            if (oldExercize == null)
-            {
-                return null;
-            }
-
-            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercizeSendDto.IdDifficultyLevel);
-
-            if (difficultyLevel == null ||
-                exercizeSendDto.Text.Length > difficultyLevel.MaxLength ||
-                exercizeSendDto.CountOfErrors > difficultyLevel.CountOfErrors)
-            {
-                return null;
-            }
-
-            foreach (var zone in exercizeSendDto.ListOfZones)
-            {
-                if (!difficultyLevel.ListOfZones.Contains(zone))
-                {
-                    return null;
-                }
-            }
-
-            oldExercize.CountOfErrors = exercizeSendDto.CountOfErrors;
-            oldExercize.IdDifficultyLevel = exercizeSendDto.IdDifficultyLevel;
-            oldExercize.MaxTime = exercizeSendDto.MaxTime;
-            oldExercize.Text = exercizeSendDto.Text;
-
-            await _exercizeRepository.UpdateExercize(oldExercize);
-            var newExercize = await _exercizeRepository.GetExerciseById(oldExercize.Id);
-            return _mapper.Map<ExercizeFullDto>(newExercize);
-        }
-
-        /// <inheritdoc/>
-        public async Task<ExercizeSendDto> GenerateExercize()
-        {
-            var keyboardZones = new Dictionary<string, char[]>()
+        private readonly Dictionary<string, char[]> _keyboardZones = new Dictionary<string, char[]>()
             {
                 { "11", new char[] {'1', '2', '0', '-', '='} },
 
@@ -191,6 +51,230 @@ namespace KeyTrainer.Business
                 { "51", new char[] { ' ' } }
             };
 
+        private readonly IExercizeRepository _exercizeRepository;
+        private readonly IMapper _mapper;
+        private readonly List<string> _errors;
+
+        public ExercizeBusiness(
+            IExercizeRepository exercizeRepository,
+            IMapper mapper)
+        {
+            _exercizeRepository = exercizeRepository;
+            _mapper = mapper;
+            _errors = new List<string>();
+        }
+
+        /// <inheritdoc/>
+        public IEnumerable<string> GetErrors { get { return _errors; } }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<ExercizeFullDto>> GetExercizes()
+        {
+            var exercizesDto = new List<ExercizeFullDto>();
+            var exercizes = await _exercizeRepository.GetExercizes();
+            foreach (var exercize in exercizes)
+            {
+                exercizesDto.Add(_mapper.Map<ExercizeFullDto>(exercize));
+            }
+            return exercizesDto;
+        }
+
+        /// <inheritdoc/>
+        public async Task<ExercizeFullDto> GetExercizeById(int id)
+        {
+            var exercize = await _exercizeRepository.GetExerciseById(id);
+            return _mapper.Map<ExercizeFullDto>(exercize);
+        }
+
+        /// <inheritdoc/>
+        public async Task<ExercizeSendDto> GetExercizeForEditingById(int id)
+        {
+            var exercize = await _exercizeRepository.GetExerciseById(id);
+            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercize.IdDifficultyLevel);
+            return new ExercizeSendDto()
+            {
+                Id = exercize.Id,
+                IdDifficultyLevel = difficultyLevel.Id,
+                ListOfZones = difficultyLevel.ListOfZones,
+                Text = exercize.Text,
+                CountOfErrors = difficultyLevel.CountOfErrors,
+                MaxTime = exercize.MaxTime
+            };
+        }
+
+        /// <inheritdoc/>
+        public async Task<DifficultyLevelFullDto> GetDifficultyLevelById(int id)
+        {
+            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(id);
+            return _mapper.Map<DifficultyLevelFullDto>(difficultyLevel);
+        }
+
+        /// <inheritdoc/>
+        public async Task<DifficultyLevelFullDto> UpdateDifficultyLevel(DifficultyLevelFullDto difficultyLevelFullDto)
+        {
+            var oldDifficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelFullDto.Id);
+
+            if (oldDifficultyLevel == null)
+            {
+                _errors.Add("Ошибка 16 - Уровень сложности не найден");
+                return null;
+            }
+
+            if (!ValidateDifficultyLevel(difficultyLevelFullDto))
+            {
+                return null;
+            }
+
+            oldDifficultyLevel.CountOfErrors = difficultyLevelFullDto.CountOfErrors;
+            oldDifficultyLevel.MaxLength = difficultyLevelFullDto.MaxLength;
+            oldDifficultyLevel.ListOfZones = difficultyLevelFullDto.ListOfZones.ToArray();
+
+            await _exercizeRepository.UpdateDifficultyLevel(oldDifficultyLevel);
+            var newDifficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelFullDto.Id);
+            return _mapper.Map<DifficultyLevelFullDto>(newDifficultyLevel);
+        }
+
+        private bool ValidateDifficultyLevel(DifficultyLevelFullDto difficultyLevelFullDto)
+        {
+            if (difficultyLevelFullDto.CountOfErrors < 3 ||
+                difficultyLevelFullDto.CountOfErrors > 10)
+            {
+                _errors.Add("Ошибка 10 - Неправильное количество ошибок");
+            }
+
+            if (difficultyLevelFullDto.MaxLength < 20 ||
+                difficultyLevelFullDto.MaxLength > 130)
+            {
+                _errors.Add("Ошибка 9 - Неправильная длина упражнения");
+            }
+
+            if (_errors.Any())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public async Task<ExercizeFullDto> AddExercize(ExercizeSendDto exercizeSendDto)
+        {
+            var isValid = await ValidateExercize(exercizeSendDto);
+            if (!isValid)
+            {
+                return null;
+            }
+
+            var exercize = _mapper.Map<Exercize>(exercizeSendDto);
+            await _exercizeRepository.AddExercize(exercize);
+            var newExercize = await _exercizeRepository.GetExerciseById(exercize.Id);
+            return _mapper.Map<ExercizeFullDto>(newExercize);
+        }
+
+        /// <inheritdoc/>
+        public async Task<ExercizeFullDto> UpdateExercize(ExercizeSendDto exercizeSendDto)
+        {
+            var oldExercize = await _exercizeRepository.GetExerciseById(exercizeSendDto.Id);
+
+            if (oldExercize == null)
+            {
+                _errors.Add("Ошибка 14 - Упражнение не найдено");
+                return null;
+            }
+
+            var isValid = await ValidateExercize(exercizeSendDto);
+            if (!isValid)
+            {
+                return null;
+            }
+
+            oldExercize.CountOfErrors = exercizeSendDto.CountOfErrors;
+            oldExercize.IdDifficultyLevel = exercizeSendDto.IdDifficultyLevel;
+            oldExercize.MaxTime = exercizeSendDto.MaxTime;
+            oldExercize.Text = exercizeSendDto.Text;
+
+            await _exercizeRepository.UpdateExercize(oldExercize);
+            var newExercize = await _exercizeRepository.GetExerciseById(oldExercize.Id);
+            return _mapper.Map<ExercizeFullDto>(newExercize);
+        }
+
+        /// <summary>
+        /// Проверить параметры упражнения
+        /// </summary>
+        /// <param name="exercizeSendDto">ДТО упражнения для проверки</param>
+        /// <returns>Результат валидации</returns>
+        private async Task<bool> ValidateExercize(ExercizeSendDto exercizeSendDto)
+        {
+            var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(exercizeSendDto.IdDifficultyLevel);
+
+            if (difficultyLevel == null)
+            {
+                _errors.Add("Ошибка 7 - Уровень сложности не найден");
+            }
+
+            if (exercizeSendDto.Text.Length > difficultyLevel.MaxLength ||
+                exercizeSendDto.CountOfErrors > difficultyLevel.CountOfErrors)
+            {
+                _errors.Add("Ошибка 8 - Параметры упражнения выходят за ограничения уровня сложности");
+            }
+
+            if (exercizeSendDto.Text.Length < 20 ||
+                exercizeSendDto.Text.Length > 130)
+            {
+                _errors.Add("Ошибка 9 - Неправильная длина упражнения");
+            }
+
+            if (exercizeSendDto.CountOfErrors < 3 ||
+                exercizeSendDto.CountOfErrors > 10)
+            {
+                _errors.Add("Ошибка 10 - Неправильное количество ошибок");
+            }
+
+            if (exercizeSendDto.MaxTime < 60 ||
+                exercizeSendDto.MaxTime > 300)
+            {
+                _errors.Add("Ошибка 11 - Неправильное время на выполнение упражнения");
+            }
+
+            var listOfZones = exercizeSendDto.ListOfZones.First().Split(',');
+
+            foreach (var zone in listOfZones)
+            {
+                if (!difficultyLevel.ListOfZones.Contains(zone))
+                {
+                    _errors.Add("Ошибка 12 - Клавиатурные зоны не соответствуют уровню сложности");
+                }
+            }
+
+            var keys = "";
+            foreach (var zone in listOfZones)
+            {
+                for (int i = 1; i < 5; i++)
+                {
+                    _keyboardZones.TryGetValue(zone + i, out var chars);
+                    keys += chars;
+                }
+            }
+
+            foreach (var key in exercizeSendDto.Text)
+            {
+                if (!keys.Contains(key))
+                {
+                    _errors.Add("Ошибка 13 - Текст не соответствует выбранным клавиатурным зонам");
+                }
+            }
+
+            if (_errors.Any())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public async Task<ExercizeSendDto> GenerateExercize()
+        {
             Random random = new Random();
             var difficultyLevelId = random.Next(1, 4);
             var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelId);
@@ -208,7 +292,7 @@ namespace KeyTrainer.Business
                 {
                     foreach (var row in rows)
                     {
-                        keyboardZones.TryGetValue(zone + row, out var keys);
+                        _keyboardZones.TryGetValue(zone + row, out var keys);
                         if (keys != null)
                         {
                             exercizeText += keys[random.Next(0, keys.Length)];
