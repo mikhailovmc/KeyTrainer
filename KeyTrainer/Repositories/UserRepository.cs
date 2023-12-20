@@ -34,5 +34,12 @@ namespace KeyTrainer.Repositories
                 .FirstOrDefault(user => user.Login == userDto.Login &&
                                         user.Password == userDto.Password);
         }
+
+        /// <inheritdoc/>
+        public async Task<bool> CheckUserLogin(string login)
+        {
+            return _keyTrainerDbContext.User
+                .Any(user => user.Login == login);
+        }
     }
 }

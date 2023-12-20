@@ -246,13 +246,16 @@ namespace KeyTrainer.Business
                 }
             }
 
-            var keys = "";
+            var keys = " ";
             foreach (var zone in listOfZones)
             {
                 for (int i = 1; i < 5; i++)
                 {
                     _keyboardZones.TryGetValue(zone + i, out var chars);
-                    keys += chars;
+                    for (int j = 0; j < chars.Length; j++)
+                    {
+                        keys += chars[j];
+                    }
                 }
             }
 
