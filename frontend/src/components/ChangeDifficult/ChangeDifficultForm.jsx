@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateDifficultLevel, getDifficultyLevel } from "../../helpers/links";
-import useFetch from "../../useFetch/useFetch";
 
 const ChangeDifficultForm = ({easy, middle, hard}) => {
 
@@ -133,12 +132,12 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
 
             <label className="changeDifficult__label">
                 Допустимое количество ошибок:
-                <input className="input-text" type="number"  value={countOfErrors} onChange={e => setCountOfErrors(e.target.value)}/>
+                <input className="input-text" type="number"  value={countOfErrors} onChange={e => setCountOfErrors(e.target.value)} required/>
             </label>
 
             <label className="changeDifficult__label">
                 Максимальная длина упражнения:
-                <input className="input-text" type="number" value={maxLength}  onChange={e => setMaxLength(e.target.value)}/>
+                <input className="input-text" type="number" value={maxLength}  onChange={e => setMaxLength(e.target.value)} required/>
              </label>
 
              <div className="buttons-wrapper">
