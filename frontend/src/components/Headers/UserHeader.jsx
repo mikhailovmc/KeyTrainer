@@ -29,7 +29,7 @@ const Header = ({ login }) => {
                     </li>
 
                     <li className="header__list-item">
-                        <Link to="/statistic">
+                        <Link to="/user-statistic">
                             Статистика
                         </Link>
                     </li>
