@@ -17,7 +17,10 @@ const InputField = ({handleLetter, letters, specs, party}) => {
     }
 
 	function viewUpdate () {
-
+		const showedStrings = party.strings.slice(
+			party.currentStringIndex,
+			party.currentStringIndex + party.maxShowStrings
+		);
     }
 
 	function keydownHandler(event) {

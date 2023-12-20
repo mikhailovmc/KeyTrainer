@@ -44,7 +44,6 @@ const CreateLevel = () => {
         const responceFromServer = await fetch(getAutoExercise, {
             method: "GET",
         });
-        console.log("Ответ сервера в авторизации", responceFromServer)
 
         if(responceFromServer.ok) {
             const result = await responceFromServer.json();
