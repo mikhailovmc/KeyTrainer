@@ -34,7 +34,7 @@ const Authorization = () => {
         if(responceFromServer.ok) {
             const result = await responceFromServer.json()
             console.log(result)
-            result.id === null ? setAuthData(login, "admin") : setAuthData(login, "user");
+            result.id === null ? setAuthData(login, "admin", result.id) : setAuthData(login, "user", result.id);
             navigate("/exercise");
         }
 

@@ -12,6 +12,7 @@ import ChangeLevel from '../ChangeDifficult/ChangeLevel';
 import Creators from '../Spravka/Creators/Creators';
 import SiteInstruction from '../Spravka/SiteInstruction/SiteInstruction';
 import SiteInstructionAdmin from '../Spravka/SiteInstruction/SiteInstructionAdmin';
+import Statistic from '../Statistic/Statistic';
 
 function App() {
     // const {data, isLoading, error} = useQuery(['exercises'], () => fetch(
@@ -41,6 +42,7 @@ function App() {
             <Route path="/changeLevel/:id" element={<ChangeLevel/>}/>
             <Route path="/exercise" element={<ExercisePage/>}/>
             <Route path="/keyboard/:id" element={<KeyboardPage/>}/>
+            <Route path="/user-statistic" element={<Statistic/>}/>
 
             
             

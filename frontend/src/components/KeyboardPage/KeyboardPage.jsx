@@ -90,8 +90,8 @@ const KeyboardPage = () => {
             <UserHeader />
             <div className="container">
                 <Results/>
-                <PracticeText/>
-                {letters && specs && <InputField handleLetter={handleLetter} letters={letters} specs={specs} party={party}/>}
+                {/* <PracticeText/> */}
+                {letters && specs && party && <InputField handleLetter={handleLetter} letters={letters} specs={specs} party={party}/>}
                 <Keyboard collectCollection={collectCollection}/>  
             </div>
         </>
