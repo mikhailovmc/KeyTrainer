@@ -1,4 +1,6 @@
-.statictic {
+.statistic {
+    padding-top: 100px;
+
     &__wrapper {
         padding-top: 100px;
         width: 100%;
@@ -6,6 +8,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    &__view-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    &__view {
+        cursor: pointer;
+        padding: 15px;
+        font-size: 30px;
+        width: fit-content;
+        background-color: rgb(205, 205, 205);
     }
 
     &__table {

@@ -1,8 +1,8 @@
 import CellOfStatistic from "./CellOfStatistic";
 
-const Table = (data) => {
+const Table = ({data}) => {
     return (
-        <table  className="statictic__table">
+        <table  className="statistic__table">
                 <tr>
                     <th>№ Упражнения</th>
                     <th>ID пользователя</th>
