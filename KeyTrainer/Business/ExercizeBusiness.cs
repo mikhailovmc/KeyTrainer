@@ -52,14 +52,17 @@ namespace KeyTrainer.Business
             };
 
         private readonly IExercizeRepository _exercizeRepository;
+        private readonly IStatisticsRepository _statisticsRepository;
         private readonly IMapper _mapper;
         private readonly List<string> _errors;
 
         public ExercizeBusiness(
             IExercizeRepository exercizeRepository,
+            IStatisticsRepository statisticsRepository,
             IMapper mapper)
         {
             _exercizeRepository = exercizeRepository;
+            _statisticsRepository = statisticsRepository;
             _mapper = mapper;
             _errors = new List<string>();
         }
@@ -76,6 +79,61 @@ namespace KeyTrainer.Business
             {
                 exercizesDto.Add(_mapper.Map<ExercizeFullDto>(exercize));
             }
+            return exercizesDto;
+        }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<MainFormSendDto>> GetExercizesForUser(int id)
+        {
+            var exercizesDto = new List<MainFormSendDto>();
+
+            var exercizes = await _exercizeRepository.GetExercizes();
+            var statistics = await _statisticsRepository.GetStatisticsByUserId(id);
+
+            var orderingStats = statistics.OrderByDescending(s => s.Id);
+
+            var exercizeIds = new List<int>(); 
+
+            foreach (var stats in orderingStats)
+            {
+                var exercize = await _exercizeRepository.GetExerciseById(stats.IdExercize);
+
+                if (exercizeIds.Contains(stats.Id))
+                {
+                    continue;
+                }
+
+                var mainFormDto = new MainFormSendDto()
+                {
+                    Id = stats.IdExercize,
+                    IdDifficultyLevel = exercize.IdDifficultyLevel,
+                    Length = exercize.Text.Length,
+                    LengthPercentage = stats.LengthPercentage,
+                    Status = stats.Status
+                };
+                exercizesDto.Add(mainFormDto);
+
+                exercizeIds.Add(stats.IdExercize);
+            }
+
+            foreach (var exercize in exercizes)
+            {
+                if (exercizeIds.Contains(exercize.Id))
+                {
+                    continue;
+                }
+
+                var mainFormDto = new MainFormSendDto()
+                {
+                    Id = exercize.Id,
+                    IdDifficultyLevel = exercize.IdDifficultyLevel,
+                    Length = exercize.Text.Length,
+                    LengthPercentage = 0,
+                    Status = "Не начато",
+                };
+                exercizesDto.Add(mainFormDto);
+            }
+
             return exercizesDto;
         }
 

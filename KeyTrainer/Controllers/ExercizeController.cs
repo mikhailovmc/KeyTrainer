@@ -36,6 +36,20 @@ namespace KeyTrainer.Controllers
         }
 
         /// <summary>
+        /// Получить список упражнений по уровням сложности для пользовател
+        /// </summary>
+        /// <returns>Список упражнений по уровням сложности</returns>
+        [HttpGet]
+        [Route("GetExercizesForUser/{id}")]
+        public async Task<IActionResult> GetExercizesForUser(int id)
+        {
+            var exercizes = await _exercizeBusiness.GetExercizesForUser(id);
+            if (exercizes == null)
+                return StatusCode(500, "Ошибка 15 - Не удалось получить упражнения");
+            return Ok(exercizes);
+        }
+
+        /// <summary>
         /// Получить упражнение по его Id
         /// </summary>
         /// <param name="id">Id упражнения</param>
