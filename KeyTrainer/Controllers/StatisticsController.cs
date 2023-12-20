@@ -86,12 +86,42 @@ namespace KeyTrainer.Controllers
         /// <returns>Статистика упражнения</returns>
         [HttpPost]
         [Route("AddStatistics")]
-        public async Task<StatisticsFullDto> AddStatistics(StatisticsSendDto statisticsSendDto)
+        public async Task<IActionResult> AddStatistics(StatisticsSendDto statisticsSendDto)
         {
             var statistics = await _statisticsBusiness.AddStatistics(statisticsSendDto);
             if (statistics == null)
-                throw new Exception("Не удалось добавить статистику упражнения!");
-            return statistics;
+                return StatusCode(500, "Ошибка 24 - Не удалось добавить статистику упражнения");
+            return Ok(statistics);
+        }
+
+        /// <summary>
+        /// Получить график скорости печати пользователя
+        /// </summary>
+        /// <param name="id">Id пользователя</param>
+        /// <returns>График скорсоти печати</returns>
+        [HttpGet]
+        [Route("GetGraphic/{id}")]
+        public async Task<IActionResult> GetGrapchic(int id)
+        {
+            var graphic = await _statisticsBusiness.GetGraphic(id);
+            if (graphic == null)
+                return StatusCode(500, "Ошибка 25 - Не удалось получить график скорости печати");
+            return Ok(graphic);
+        }
+
+        /// <summary>
+        /// Получить диаграмму пройденных упражнений
+        /// </summary>
+        /// <param name="id">Id пользователя</param>
+        /// <returns>График скорсоти печати</returns>
+        [HttpGet]
+        [Route("GetDiagram/{id}")]
+        public async Task<IActionResult> GetDiagram(int id)
+        { 
+            var diagram = await _statisticsBusiness.GetDiagram(id);
+            if (diagram == null)
+                return StatusCode(500, "Ошибка 26 - Не удалось получить диаграмму выполненных упражнений");
+            return Ok(diagram);
         }
     }
 }

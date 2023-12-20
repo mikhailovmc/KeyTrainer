@@ -98,5 +98,66 @@ namespace KeyTrainer.Business
             var newStatistics = await _statisticsRepository.GetStatisticsById(statistics.Id);
             return _mapper.Map<StatisticsFullDto>(newStatistics);
         }
+
+        /// <inheritdoc/>
+        public async Task<GraphicDto> GetGraphic(int id)
+        {
+            var userStatistics = await _statisticsRepository.GetStatisticsByUserId(id);
+            var statistics = userStatistics.OrderByDescending(us => us.Id);
+            
+            var exercizeIds = new List<int>();
+            var x = new List<int>();
+            var y = new List<int>();
+
+            foreach (var stats in statistics)
+            {
+                if (exercizeIds.Contains(stats.IdExercize))
+                {
+                    continue;
+                }
+
+                x.Add(stats.IdExercize);
+                y.Add(stats.TypingSpeed);
+
+                exercizeIds.Add(stats.IdExercize);
+            }
+
+            x.Reverse();
+            y.Reverse();
+
+            return new GraphicDto
+            {
+                X = x.ToArray(),
+                Y = y.ToArray()
+            };
+        }
+
+        /// <inheritdoc/>
+        public async Task<DiagramDto> GetDiagram(int id)
+        {
+            var userStatistics = await _statisticsRepository.GetStatisticsByUserId(id);
+            var statistics = userStatistics.OrderByDescending(us => us.Id);
+
+            var exercizeIds = new List<int>();
+
+            foreach (var stats in statistics)
+            {
+                if (exercizeIds.Contains(stats.IdExercize))
+                {
+                    continue;
+                }
+
+                exercizeIds.Add(stats.IdExercize);
+            }
+
+            var exercizes = await _exercizeRepository.GetExercizes();
+
+            var percentage = (int)(((double)exercizeIds.Count / (double)exercizes.Count()) * 100);
+
+            return new DiagramDto
+            {
+                X = percentage
+            };
+        }
     }
 }

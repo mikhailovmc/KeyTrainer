@@ -41,8 +41,22 @@ namespace KeyTrainer.Contracts
         /// <summary>
         /// Добавить статистику
         /// </summary>
-        /// <param name="statisticsFullDto">ДТО статистики</param>
+        /// <param name="statisticsSendDto">ДТО статистики</param>
         /// <returns>Статистика пользователя</returns>
         Task<StatisticsFullDto> AddStatistics(StatisticsSendDto statisticsSendDto);
+
+        /// <summary>
+        /// Получить график скорости печати пользователя
+        /// </summary>
+        /// <param name="id">Ид пользователя</param>
+        /// <returns>График скорости печати</returns>
+        Task<GraphicDto> GetGraphic(int id);
+
+        /// <summary>
+        /// Получить диаграмму пройденных упражнений
+        /// </summary>
+        /// <param name="id">Ид пользователя</param>
+        /// <returns>Диаграмма пройденных упражнений</returns>
+        Task<DiagramDto> GetDiagram(int id);
     }
 }
