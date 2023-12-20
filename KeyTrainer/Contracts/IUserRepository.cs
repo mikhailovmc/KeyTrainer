@@ -24,5 +24,12 @@ namespace KeyTrainer.Contracts
         /// <param name="userDto"> ДТО пользователя для авторизации </param>
         /// <returns> Объект пользователя </returns>
         Task<User> GetUser(UserDto userDto);
+
+        /// <summary>
+        /// Проверить уникальность логина пользователя
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <returns>Результат проверки</returns>
+        Task<bool> CheckUserLogin(string login);
     }
 }

@@ -39,6 +39,12 @@ namespace KeyTrainer.Business
                 return;
             }
 
+            if (await _userRepository.CheckUserLogin(userDto.Login))
+            {
+                _errors.Add("Ошибка 22 - Пользователь с таким логином уже зарегистрирован");
+                return;
+            }
+
             var oldUser = await _userRepository.GetUser(userDto);
             if (oldUser != null)
             {
