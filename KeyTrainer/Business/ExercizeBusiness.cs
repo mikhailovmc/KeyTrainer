@@ -127,7 +127,7 @@ namespace KeyTrainer.Business
 
             oldDifficultyLevel.CountOfErrors = difficultyLevelFullDto.CountOfErrors;
             oldDifficultyLevel.MaxLength = difficultyLevelFullDto.MaxLength;
-            oldDifficultyLevel.ListOfZones = difficultyLevelFullDto.ListOfZones.ToArray();
+            oldDifficultyLevel.ListOfZones = difficultyLevelFullDto.ListOfZones.First().Split(',');
 
             await _exercizeRepository.UpdateDifficultyLevel(oldDifficultyLevel);
             var newDifficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelFullDto.Id);
@@ -162,6 +162,12 @@ namespace KeyTrainer.Business
             var isValid = await ValidateExercize(exercizeSendDto);
             if (!isValid)
             {
+                return null;
+            }
+
+            if (await _exercizeRepository.GetCountOfExercizesByDifficultyLevelId(exercizeSendDto.IdDifficultyLevel) > 9)
+            {
+                _errors.Add("Ошибка 23 - Количество упражнений на выбранном уровне сложности не может быть больше 10");
                 return null;
             }
 

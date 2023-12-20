@@ -52,5 +52,12 @@ namespace KeyTrainer.Contracts
         /// <param name="exercizeFullDto">ДТО упражнения</param>
         /// <returns>Упражнение</returns>
         Task UpdateExercize(Exercize exercize);
+
+        /// <summary>
+        /// Получить количество упражнений на заданном уровне сложности
+        /// </summary>
+        /// <param name="difficultyLevelId">Ид уровня сложности</param>
+        /// <returns>Количество упражнений</returns>
+        Task<int> GetCountOfExercizesByDifficultyLevelId(int difficultyLevelId);
     }
 }

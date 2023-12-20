@@ -28,49 +28,6 @@ namespace KeyTrainer
                     );
                     db.SaveChanges();
                 }
-
-                if (!db.DifficultyLevel.Any())
-                {
-                    db.DifficultyLevel.Add(
-                        new DifficultyLevel
-                        {
-                            CountOfErrors = 5,
-                            MaxLength = 30,
-                            ListOfZones = new List<string>() { "1", "2", "3" }.ToArray()
-                        }               
-                    );
-                    db.SaveChanges();
-                }
-
-                if (!db.Exercize.Any())
-                {
-                    db.Exercize.Add(
-                        new Exercize
-                        {
-                            IdDifficultyLevel = 1, 
-                            CountOfErrors = 5, 
-                            MaxTime = 300, 
-                            Text = "Тестовое упражнение"
-                        }
-                    );
-                    db.SaveChanges();
-                }
-
-                if (!db.Statistics.Any())
-                {
-                    db.Statistics.Add(
-                        new Statistics
-                        {
-                            IdExercize = 1,
-                            IdUser = 1, 
-                            Accuracy = 100, 
-                            LengthPercentage = 100,
-                            Status = "Выполнено", 
-                            TypingSpeed = 1, 
-                        }
-                    );
-                    db.SaveChanges();
-                }
             }
 
             CreateHostBuilder(args).Build().Run();

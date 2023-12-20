@@ -70,5 +70,12 @@ namespace KeyTrainer.Repositories
             _keyTrainerDbContext.Exercize.Update(exercize);
             await _keyTrainerDbContext.SaveChangesAsync();
         }
+
+        /// <inheritdoc/>
+        public async Task<int> GetCountOfExercizesByDifficultyLevelId(int difficultyLevelId)
+        {
+            return _keyTrainerDbContext.Exercize
+                .Count(e => e.IdDifficultyLevel == difficultyLevelId);
+        }
     }
 }
