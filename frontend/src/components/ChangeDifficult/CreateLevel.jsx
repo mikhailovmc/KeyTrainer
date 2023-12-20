@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addExercise, getAutoExercise } from "../../helpers/links";
-import useFetch from "../../useFetch/useFetch";
 import AdminHeader from "../Headers/AdminHeader";
+import Modal from "./../Modal/Modal";
 import "./style.scss"
 
 const CreateLevel = () => {
@@ -15,6 +15,8 @@ const CreateLevel = () => {
         zones: [],
         listOfZones: []
     });
+    const [modalActive, setModalActive] = useState(false);
+    const [errorText, setErrorText] = useState()
 
     const navigate = useNavigate();
     
@@ -55,7 +57,6 @@ const CreateLevel = () => {
                 listOfZones: [...result.listOfZones]
             })
             setText(result.text)
-            
         }    
     }
 
@@ -92,7 +93,8 @@ const CreateLevel = () => {
 
             if(!responceFromServer.ok) {
                 const result = await responceFromServer.json();
-                console.log(result);
+                setErrorText(result);
+                setModalActive(true);
             }
 
         } catch (error) {
@@ -168,6 +170,8 @@ const CreateLevel = () => {
 
                 </form>
             </div>
+
+            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}
         </>
     );
 }

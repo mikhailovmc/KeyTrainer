@@ -6,12 +6,15 @@ import Results from "../KeyboardPage/Results/Results";
 import UserHeader from "../Headers/UserHeader";
 import PracticeText from "../KeyboardPage/PracticeText/PracticeText";
 import { useEffect, useState } from "react";
+import { getExercisesById } from "../../helpers/links";
 
 const KeyboardPage = () => {
     const {id} = useParams();
 
-    const {data: application, isLoading, error} = useFetch();
     const [party, setParty] = useState();
+    const {data, isLoading, error} = useFetch(getExercisesById + "/" + id);
+    const [exercise, setExercise] = useState(data)
+
 
     const text = `В начале XIII в. в Центральной Азии возникло новое государство - Монгольская империя. Объединение монгольских племен в немалой степени было вызвано изменением климатических условий местности, где проживали монголы. XI и XII вв. были благоприятными для монголов. Длительный период влажных лет в восточной степи привел к тому, что умножились стада, а, следовательно, одна и та же территория могла прокормить больше людей. Произошло увеличение населения в Монголии. Однако в конце XII в. климат стал постепенно меняться в сторону ухудшения, стал более засушливым. Кочевое скотоводство стало малопродуктивным, в степи стало много избыточного населения. Началась обычная в таких условиях борьба с соседями за пастбища, а также вторжения на земли соседей-земледельцев.
     Чингисхан.Огромную роль в создании Монгольской империи сыграл Темуджин. Железная воля, властолюбие и целеустремленность позволили Темуджину собрать монголов в единое политическое целое и спаять общество на основе т. н. закона Чингисхана - Яссы. На съезде монгольской знати (курултае) в 1206 г. создатель империи Темуджин (Темучин) был провозглашен великим ханом всех монголов и принял имя Чингисхан. Монгольская империя оказалось исключительно боеспособной и жизнеспособной. Чингисхан силой объединил под своей рукой всех монголов, некоторые соседние племена и на основе родового признака создал войско, которому в XII - XIII вв., в среднеазиатских государствах, на Руси и в Европе равных не было. В последующие годы монгольские отряды подчинили себе окрестные народы, беспощадно уничтожая всех непокорных. В середине 20-х гг. XIII в. в состав монгольского государства вошли Северный Китай, Средняя Азия, Северная Индия.
@@ -23,7 +26,7 @@ const KeyboardPage = () => {
 
     function createParty (text) {
         const party = {
-            text,
+            text: text,
             strings: [],
             maxStringLength: 70,
             maxShowStrings: 3,
@@ -63,20 +66,20 @@ const KeyboardPage = () => {
     const [pressedKey, setPressedKey] = useState();
 
     useEffect(()=> {
+        // console.log(exercise.text)
         const party = createParty(text);
         setParty(party); 
         console.log(party)
     }, [])
-
     
 
+    
     const [letters, setLetters] = useState([]);
 	const [specs, setSpecs] = useState([]);
 
     const handleLetter = (letter) => {
         setPressedKey(letter)
     }
-
 
     const collectCollection = (letters, specs) => {
         setLetters(letters);

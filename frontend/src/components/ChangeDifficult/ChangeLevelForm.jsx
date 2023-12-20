@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { updateExercize, getAutoExercise } from "../../helpers/links";
 import { useNavigate } from "react-router-dom";
+import Modal from "./../Modal/Modal";
 
 const ChangeLevelForm = ({exercise}) => {
 
@@ -12,6 +13,8 @@ const ChangeLevelForm = ({exercise}) => {
         zones: [...exercise.listOfZones],
         listOfZones: [...exercise.listOfZones]
     });
+    const [modalActive, setModalActive] = useState(false);
+    const [errorText, setErrorText] = useState()
     const navigate = useNavigate();
 
     const chooseZone = (e) => {
@@ -62,7 +65,12 @@ const ChangeLevelForm = ({exercise}) => {
                 alert('Упражнение успешно редактировано');
                 navigate('/exercise')
             }
-            console.log("Ответ сервера в авторизации", responceFromServer)
+        
+            if(!responceFromServer.ok) {
+                const result = await responceFromServer.json();
+                setErrorText(result);
+                setModalActive(true);
+            }
 
         } catch (error) {
             alert(error)
@@ -70,7 +78,8 @@ const ChangeLevelForm = ({exercise}) => {
     }
 
     return (
-        <form className="changeDifficult__form" action="">
+        <>
+            <form className="changeDifficult__form" action="">
             <p className="changeDifficult__title">Редактирование упражнения</p>
             <p className="changeDifficult__id">ID упражнения: {exercise.id ?  exercise.id : "новое упражнение"}</p>
             <p className="changeDifficult__text">Выбор уровня сложности:</p>
@@ -131,7 +140,10 @@ const ChangeLevelForm = ({exercise}) => {
             </div>
                         
 
-        </form>
+            </form>
+
+            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}    
+        </>
     );
 }
  

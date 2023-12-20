@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserHeader from "../Headers/UserHeader";
 import AuthContext from "../../context/AuthProvider";
+import Modal from "./../Modal/Modal";
+
 import "./style.scss";
 import pic from "./img/eye.png";
 
@@ -12,6 +14,8 @@ const Authorization = () => {
     const [passwordType, setPasswordType] = useState("password");
     const [login, setLogin] = useState();
     const [password, setPassword] = useState();
+    const [modalActive, setModalActive] = useState(false);
+    const [errorText, setErrorText] = useState()
 
     let userData = new FormData();
 
@@ -28,9 +32,16 @@ const Authorization = () => {
         console.log("Ответ сервера в авторизации", responceFromServer)
 
         if(responceFromServer.ok) {
-            let result = await responceFromServer.json()
+            const result = await responceFromServer.json()
+            console.log(result)
             result.id === null ? setAuthData(login, "admin") : setAuthData(login, "user");
             navigate("/exercise");
+        }
+
+        if(!responceFromServer.ok) {
+            const result = await responceFromServer.json();
+            setErrorText(result);
+            setModalActive(true);
         }
         
     }
@@ -72,6 +83,8 @@ const Authorization = () => {
                 </form>
                 
             </div>
+
+            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}
         </>
     );
 }

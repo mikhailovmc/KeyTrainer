@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { checkLogin, checkPassword } from "./validator";
-import axios from "axios";
+import Modal from "./../Modal/Modal";
 
 import UserHeader from "../Headers/UserHeader";
 import pic from "./img/eye.png";
@@ -15,6 +15,8 @@ const Registration = () => {
     const [login, setLogin] = useState();
     const [password, setPassword] = useState();
     const [repeatPassword, setRepeatPassword] = useState();
+    const [modalActive, setModalActive] = useState(false);
+    const [errorText, setErrorText] = useState()
     const navigate = useNavigate();
     
     const  registration = async (event) => {
@@ -33,17 +35,20 @@ const Registration = () => {
             try {
                 const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
                 method: 'POST',
-                // headers: {
-                //     'Content-Type': 'multipart/form-data'
-                // },
                 body: userData
                 });
     
                 if(responceFromServer.ok) {
-                    
                     navigate('/login')
                 }
-                console.log("Ответ сервера в авторизации", responceFromServer)
+                console.log("Ответ сервера в авторизации", responceFromServer);
+
+                if(!responceFromServer.ok) {
+                    const result = await responceFromServer.json();
+                    setErrorText(result);
+                    setModalActive(true);
+                }
+                
     
             } catch (error) {
                 alert(error)
@@ -93,6 +98,7 @@ const Registration = () => {
                 </form>
                 
             </div>
+            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}
         </>
         
     );
