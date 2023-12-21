@@ -197,13 +197,13 @@ namespace KeyTrainer.Business
             if (difficultyLevelFullDto.CountOfErrors < 3 ||
                 difficultyLevelFullDto.CountOfErrors > 10)
             {
-                _errors.Add("Ошибка 10 - Неправильное количество ошибок");
+                _errors.Add("Ошибка 10 - Неправильное количество ошибок [3, 10]");
             }
 
             if (difficultyLevelFullDto.MaxLength < 20 ||
                 difficultyLevelFullDto.MaxLength > 130)
             {
-                _errors.Add("Ошибка 9 - Неправильная длина упражнения");
+                _errors.Add("Ошибка 9 - Неправильная длина упражнения [20, 130]");
             }
 
             if (_errors.Any())
@@ -285,19 +285,19 @@ namespace KeyTrainer.Business
             if (exercizeSendDto.Text.Length < 20 ||
                 exercizeSendDto.Text.Length > 130)
             {
-                _errors.Add("Ошибка 9 - Неправильная длина упражнения");
+                _errors.Add("Ошибка 9 - Неправильная длина упражнения [20, 130]");
             }
 
             if (exercizeSendDto.CountOfErrors < 3 ||
                 exercizeSendDto.CountOfErrors > 10)
             {
-                _errors.Add("Ошибка 10 - Неправильное количество ошибок");
+                _errors.Add("Ошибка 10 - Неправильное количество ошибок [3, 10]");
             }
 
             if (exercizeSendDto.MaxTime < 60 ||
                 exercizeSendDto.MaxTime > 300)
             {
-                _errors.Add("Ошибка 11 - Неправильное время на выполнение упражнения");
+                _errors.Add("Ошибка 11 - Неправильное время на выполнение упражнения [60, 300]");
             }
 
             var listOfZones = exercizeSendDto.ListOfZones.First().Split(',');
