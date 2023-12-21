@@ -21,6 +21,11 @@ namespace KeyTrainer.Dto
         public string Text { get; set; }
 
         /// <summary>
+        /// Длина упражнения
+        /// </summary>
+        public int Length { get; set; }
+
+        /// <summary>
         /// Максимальное число ошибок
         /// </summary>
         public int CountOfErrors { get; set; }

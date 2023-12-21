@@ -24,6 +24,7 @@ namespace KeyTrainer.Utils
             CreateMap<Exercize, ExercizeFullDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
+                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.Text.Length))
                 .ForMember(dest => dest.CountOfErrors, opt => opt.MapFrom(src => src.CountOfErrors))
                 .ForMember(dest => dest.MaxTime, opt => opt.MapFrom(src => src.MaxTime))
                 .ForMember(dest => dest.IdDifficultyLevel, opt => opt.MapFrom(src => src.IdDifficultyLevel))
