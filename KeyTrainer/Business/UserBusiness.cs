@@ -90,12 +90,12 @@ namespace KeyTrainer.Business
         {
             if (userDto.Login.Length < 4 || userDto.Login.Length > 8)
             {
-                _errors.Add("Ошибка 1 - Неправильная длина логина");
+                _errors.Add("Ошибка 1 - Неправильная длина логина [4, 8]");
             }
 
             if (userDto.Password.Length < 4 || userDto.Password.Length > 10)
             {
-                _errors.Add("Ошибка 2 - Неправильная длина пароля");
+                _errors.Add("Ошибка 2 - Неправильная длина пароля [4, 10]");
             }
 
             string pattern = @"^(?=.*[a - z])(?=.*[A - Z])(?=.*[0 - 9])(?=.*[^\w\s]).{4,10}";
