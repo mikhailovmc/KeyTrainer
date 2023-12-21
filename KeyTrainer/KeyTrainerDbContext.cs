@@ -27,7 +27,7 @@ namespace KeyTrainer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Keyboard_Trainer;Username=postgres;Password=1501");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Keyboard_Trainer1;Username=postgres;Password=1501");
         }
     }
 }

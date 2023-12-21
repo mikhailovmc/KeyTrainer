@@ -2,9 +2,6 @@ import "./style.scss"
 import pic from "./img/Ellipse.svg"
 import { Link } from "react-router-dom";
 const UserCard = ({exercises}) => {
-
-    console.log("Вывод упражнений в card", exercises);
-
     const showExercises = () => {
         return exercises.map(exercise => {
             return (

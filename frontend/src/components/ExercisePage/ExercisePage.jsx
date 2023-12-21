@@ -1,22 +1,16 @@
+import { useContext, useState } from "react";
 import UserCard from "../Card/UserCard";
 import AdminCard from "../Card/AdminCard";
 import UserHeader from "../Headers/UserHeader";
-import useFetch from "../../useFetch/useFetch";
-import { getExercisesForUser } from "./../../helpers/links";
-
-import "./style.scss"
-import { useContext, useState } from "react";
 import AdminHeader from "../Headers/AdminHeader";
 import AuthContext from "../../context/AuthProvider";
 
-const ExercisePage = () => {
+import "./style.scss"
 
+
+const ExercisePage = ({userExercise, adminExercise}) => {
     const {auth} = useContext(AuthContext);
 
-    const {data:userExercise, isLoading, error} = useFetch(getExercisesForUser + auth.id);
-    const {data:adminExercise, isLoadingAdmin, errorAdmin} = useFetch(getExercisesForUser + auth.id);
-
-    // console.log(data)
     const [classFilter, setClassFilter] = useState(
         {
             easy: 'active',
@@ -24,58 +18,12 @@ const ExercisePage = () => {
             hard: ''
         }
     );
-
-    const [dataUser, setDataUser] = useState(
-        [
-            {
-                id: 1,
-                bestTime: "00:00",
-                percent: 0,
-                length: 20,
-                idDifficultyLevel: 1
-            },
-            {
-                id: 2,
-                bestTime: "00:00",
-                percent: 0,
-                length: 50,
-                idDifficultyLevel: 2
-            },
-            {
-                id: 3,
-                bestTime: "00:00",
-                percent: 50,
-                length: 70,
-                idDifficultyLevel: 3
-            }
-        ]   
-    );
-
-    const [dataAdmin, setDataAdmin] = useState(
-        [
-            {
-                id: 1,
-                maxTime: "00:00",
-                countOfErrors: 3,
-                length: 20,
-                idDifficultyLevel: 1
-            },
-            {
-                id: 2,
-                maxTime: "00:00",
-                countOfErrors: 5,
-                length: 50,
-                idDifficultyLevel: 2
-            },
-            {
-                id: 3,
-                maxTime: "00:00",
-                countOfErrors: 4,
-                length: 70,
-                idDifficultyLevel: 3
-            }
-        ]   
-    );
+   
+    
+    console.log(userExercise, "данные для юзера");
+    console.log(adminExercise , "данные для админа");
+    
+    
     
     const easyUser = [];
     const mediumUser = [];
@@ -88,13 +36,15 @@ const ExercisePage = () => {
     const [sortedExerciseUser, setSortedExerciseUser] = useState(easyUser);
     const [sortedExerciseAdmin, setSortedExerciseAdmin] = useState(easyAdmin);
 
-    dataUser.map(exercises => {
-        if(exercises.idDifficultyLevel === 1) easyUser.push(exercises)
-        if(exercises.idDifficultyLevel === 2) mediumUser.push(exercises);
-        if(exercises.idDifficultyLevel === 3) hardUser.push(exercises);     
+    userExercise.map(exercise => {
+        console.log(exercise)
+        if(exercise.idDifficultyLevel === 1) easyUser.push(exercise)
+        if(exercise.idDifficultyLevel === 2) mediumUser.push(exercise);
+        if(exercise.idDifficultyLevel === 3) hardUser.push(exercise);     
     })
+    
 
-    dataAdmin.map(exercises => {
+    adminExercise.map(exercises => {
         if(exercises.idDifficultyLevel === 1) easyAdmin.push(exercises)
         if(exercises.idDifficultyLevel === 2) mediumAdmin.push(exercises);
         if(exercises.idDifficultyLevel === 3) hardAdmin.push(exercises);     
@@ -142,7 +92,7 @@ const ExercisePage = () => {
     return (
         <>
         {auth.isAdmin === false ? 
-            <UserHeader login={auth.data}/> : 
+            <UserHeader/> : 
             <AdminHeader/>}
            
         <div className="exercise">
@@ -157,8 +107,8 @@ const ExercisePage = () => {
                 <div className="exercise__container"> 
                     {
                         auth.isAdmin === false ? 
-                        dataUser ? <UserCard exercises={sortedExerciseUser} /> : <h1>Data not found</h1> :
-                        dataAdmin ? <AdminCard exercises={sortedExerciseAdmin} /> : <h1>Data not found</h1>
+                        <UserCard exercises={sortedExerciseUser} /> :
+                        <AdminCard exercises={sortedExerciseAdmin} />
                     }
                 </div>
             </div>
