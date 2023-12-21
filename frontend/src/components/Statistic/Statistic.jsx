@@ -1,33 +1,48 @@
 import UserHeader from "../Headers/UserHeader";
-import AuthContext from "../../context/AuthProvider";
-import { useContext, useState } from "react";
-import useFetch from "../../useFetch/useFetch";
-import { getStatisticsByUserId } from "../../helpers/links";
-import "./style.scss";
+import { useState } from "react";
 import Table from "./Table/Table";
-import Graph from "./Graph/Graph";
 
+
+import "./style.scss";
+import Diagramm from "./Diagramm/Diagramm";
+import Graph from "./Graph/Graph";
 
 const Statistic = () => {
 
-    const { auth } = useContext(AuthContext);
-
-    const {data, isLoading, error} = useFetch(getStatisticsByUserId + auth.id);
-
-    const handleClick = (id) => {
-        if (id === "table") {
-            return <Table data={data} />
+    const [chosenStatistic, setChosenStatistic] = useState(<Table/>)
+    const [classFilter, setClassFilter] = useState(
+        {
+            easy: 'active',
+            medium: '',
+            hard: ''
         }
+    );
+    const handlerClick = (param) => {
 
-        if (id === "graph") {
-            return <Graph />
-        }
-
-        if (id === "diagramm") {
-            return <Table data={data} />
+        if(param.id === "table") {
+            setClassFilter({
+                table: 'active',
+                graph: '',
+                diagram: ''
+            }); 
         }
         
-        return <Table data={data} />
+        if(param.id === "graph") {
+            setClassFilter({
+                table: '',
+                graph: 'active',
+                diagram: ''
+            });
+        }
+        
+        if(param.id === "diagram") { 
+            setClassFilter({
+                table: '',
+                graph: '',
+                diagram: 'active'
+            });  
+        }
+        
     }
 
     return (
@@ -36,14 +51,22 @@ const Statistic = () => {
             <div className="statistic">
                 <div className="container">
                     <div className="statistic__view-wrapper">
-                        <div className="statistic__view" id="table" onClick={e => {handleClick(e.target.id)}}>Легкий уровень</div>
-                        <div className="statistic__view "id="graph" onClick={e => {handleClick(e.target.id)}}>График</div>
-                        <div className="statistic__view" id="diagramm" onClick={e => {handleClick(e.target.id)}}>Диаграмма</div>
+                        <div className={`statistic__view ${classFilter.table}`} id="table" onClick={e => {
+                            handlerClick(e.target);
+                            setChosenStatistic(<Table />);
+                            }}>Таблица</div>
+                        <div className={`statistic__view ${classFilter.graph}`} id="graph" onClick={e => {
+                            handlerClick(e.target);
+                            setChosenStatistic(<Graph/>);
+                            }}>График</div>
+                        <div className={`statistic__view ${classFilter.diagram}`} id="diagram" onClick={e => {
+                            handlerClick(e.target);
+                            setChosenStatistic(<Diagramm />);
+                            }}>Диаграмма</div>
                     </div>
-                    <div className="statictic__wrapper">
-                        { 
-                            handleClick()
-                        }
+
+                    <div className="statistic__wrapper">
+                        {chosenStatistic}
                     </div>
                 </div>
             </div>

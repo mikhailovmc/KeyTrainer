@@ -52,7 +52,7 @@ const Header = ({ login }) => {
                     </div>
 
                     <li className="header__list-item">
-                        {login}
+                        {auth.data}
                     </li>
 
                     <li className="header__list-item cursor" onClick={handleLogOut}>

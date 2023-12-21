@@ -1,7 +1,6 @@
 const CellOfStatistic = ({data:statistics}) => {
     return (
         statistics.map(statistic => {
-            console.log(statistic)
             return (
                 <tr key={statistic.id}>
                     <td>{statistic.idExercize}</td>

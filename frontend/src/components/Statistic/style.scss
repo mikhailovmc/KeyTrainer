@@ -2,12 +2,7 @@
     padding-top: 100px;
 
     &__wrapper {
-        padding-top: 100px;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        height: 700px;
     }
 
     &__view-wrapper {
@@ -23,6 +18,12 @@
         font-size: 30px;
         width: fit-content;
         background-color: rgb(205, 205, 205);
+
+        &.active {
+            background-color: #6095EA;
+            font-weight: 500;
+            color: white
+        }
     }
 
     &__table {

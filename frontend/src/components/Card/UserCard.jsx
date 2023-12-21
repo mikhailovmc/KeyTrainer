@@ -11,12 +11,12 @@ const UserCard = ({exercises}) => {
                 <Link to={`/keyboard/${exercise.id}`} key={exercise.id} className="card">
                     <div className="card__top">Длина: {exercise.length} символов</div>
                     <div className="card__body">
-                        <img className="card__img"src={pic} alt="" />
-                        <span className="card__percent">{exercise.percent}%</span>
+                        <img className="card__img" src={pic} alt="круг" />
+                        <span className="card__percent">{exercise.lengthPercentage}%</span>
                         <span className="card__number">№{exercise.id}</span>
                     </div>
                     <div className="card__footer">
-                        Наилучшее время: {exercise.bestTime}
+                        {exercise.status}
                     </div>
                 </Link>
             )

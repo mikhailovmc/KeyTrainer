@@ -2,16 +2,20 @@ import UserCard from "../Card/UserCard";
 import AdminCard from "../Card/AdminCard";
 import UserHeader from "../Headers/UserHeader";
 import useFetch from "../../useFetch/useFetch";
-import AuthContext from "../../context/AuthProvider";
-import { getExercises } from "./../../helpers/links";
+import { getExercisesForUser } from "./../../helpers/links";
 
 import "./style.scss"
 import { useContext, useState } from "react";
 import AdminHeader from "../Headers/AdminHeader";
+import AuthContext from "../../context/AuthProvider";
 
 const ExercisePage = () => {
 
-    // const {data, isLoading, error} = useFetch(getExercises);
+    const {auth} = useContext(AuthContext);
+
+    const {data:userExercise, isLoading, error} = useFetch(getExercisesForUser + auth.id);
+    const {data:adminExercise, isLoadingAdmin, errorAdmin} = useFetch(getExercisesForUser + auth.id);
+
     // console.log(data)
     const [classFilter, setClassFilter] = useState(
         {
@@ -72,9 +76,6 @@ const ExercisePage = () => {
             }
         ]   
     );
-
-    const { auth } = useContext(AuthContext);
-    console.log("Проверка на админа", auth)
     
     const easyUser = [];
     const mediumUser = [];

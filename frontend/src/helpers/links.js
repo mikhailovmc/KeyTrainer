@@ -1,6 +1,9 @@
 // Получение всех упражнений
 export const getExercises = 'https://localhost:5001/api/Exercize/GetExercizes';
 
+// Получение всех упражнений по ID пользователя:
+export const getExercisesForUser = 'https://localhost:5001/api/Exercize/GetExercizesForUser/';
+
 // Получение всех упражнений по ID
 export const getExercisesById = 'https://localhost:5001/api/Exercize/GetExercize';
 
@@ -31,3 +34,8 @@ export const getStatistics = 'https://localhost:5001/api/Statistics/GetStatistic
 export const getStatisticsByUserId = 'https://localhost:5001/api/Statistics/getStatisticsByUserId/';
 
 export const getStatisticsByExerciseId = 'https://localhost:5001/api/Statistics/getStatisticsByExerciseId/';
+
+
+export const getGraphic = 'https://localhost:5001/api/Statistics/GetGraphic/';
+
+export const getDiagram = 'https://localhost:5001/api/Statistics/GetDiagram/';
