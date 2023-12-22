@@ -33,7 +33,7 @@ export const getStatistics = 'https://localhost:5001/api/Statistics/GetStatistic
 
 export const getStatisticsByUserId = 'https://localhost:5001/api/Statistics/getStatisticsByUserId/';
 
-export const getStatisticsByExerciseId = 'https://localhost:5001/api/Statistics/getStatisticsByExerciseId/';
+export const getStatisticsByExerciseId = 'https://localhost:5001/api/Statistics/GetStatisticsByExercizeId/';
 
 
 export const getGraphic = 'https://localhost:5001/api/Statistics/GetGraphic/';

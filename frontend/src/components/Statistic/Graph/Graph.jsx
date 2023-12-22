@@ -6,10 +6,14 @@ import useFetch from '../../../useFetch/useFetch';
 import ShowGraph from './ShowGraph';
 
 
-const Graph = () => {
+const Graph = ({userId}) => {
     const {auth} = useContext(AuthContext);
-    
-    const {data:lineGraph, isLoading, error} = useFetch(getGraphic + auth.id);
+
+    let currentUserId;
+    if (userId) currentUserId = userId;
+    else currentUserId = auth.id
+
+    const {data:lineGraph, isLoading, error} = useFetch(getGraphic + currentUserId);
 
     return (
         <>

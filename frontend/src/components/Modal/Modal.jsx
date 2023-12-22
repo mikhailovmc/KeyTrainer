@@ -1,6 +1,6 @@
 import "./style.scss"
 
-const Modal = ({active, setActive, text}) => {
+const Modal = ({active, setActive, text, children}) => {
 
     const showErrorMessage = () => {
         return text.map(error => {
@@ -13,7 +13,7 @@ const Modal = ({active, setActive, text}) => {
     return (
         <div className={active ? "modal active" : "modal"} onClick={() => setActive(false)}>
             <div className="modal__content" onClick={e => e.stopPropagation()}>
-                <p>Ошибка!</p>
+                {children}
                 {showErrorMessage()}
             </div>
         </div>

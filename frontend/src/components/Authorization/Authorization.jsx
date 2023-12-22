@@ -8,20 +8,24 @@ import "./style.scss";
 import pic from "./img/eye.png";
 
 const Authorization = () => {
-
+    
     const navigate = useNavigate();
     const { setAuthData } = useContext(AuthContext);
     const [passwordType, setPasswordType] = useState("password");
     const [login, setLogin] = useState();
     const [password, setPassword] = useState();
     const [modalActive, setModalActive] = useState(false);
-    const [errorText, setErrorText] = useState()
+    const [errorText, setErrorText] = useState();
 
     let userData = new FormData();
 
+    const navigateToPage = () => {
+        navigate("/exercise")
+    }
+
     const checkLogin = async (event) => {
         event.preventDefault();
-
+        setErrorText('')
         userData.append('login', login);
         userData.append('password', password);
 
@@ -29,13 +33,12 @@ const Authorization = () => {
             method: "POST",
             body: userData
         });
-        console.log("Ответ сервера в авторизации", responceFromServer)
 
         if(responceFromServer.ok) {
             const result = await responceFromServer.json()
-            console.log(result)
             result.id === null ? setAuthData(login, "admin", result.id) : setAuthData(login, "user", result.id);
-            navigate("/exercise");
+            setModalActive(true);
+            setTimeout(navigateToPage, 2000); 
         }
 
         if(!responceFromServer.ok) {
@@ -56,7 +59,7 @@ const Authorization = () => {
 
     return (
         <>
-            <UserHeader links={[{text: "Инструкция", route: "/instruction"}, {text: "Регистрация", route: "/registration"}]}/>
+            <UserHeader/>
             <div className="logPage">
                 
                 <form className="form" action="">
@@ -84,7 +87,14 @@ const Authorization = () => {
                 
             </div>
 
-            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}
+            {errorText ? 
+                <Modal active={modalActive} setActive={setModalActive} text={errorText}>
+                    <p className="modal__title">Ошибка!</p>
+                </Modal> :
+                <Modal active={modalActive} setActive={setModalActive} text={[]}>
+                    <p className="modal__title">Добро пожаловать, {login}</p>
+                </Modal>
+            }
         </>
     );
 }

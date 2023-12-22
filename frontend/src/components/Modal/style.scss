@@ -21,19 +21,28 @@
     }
 
     &__content {
+        font-size: 25px;
         padding: 40px;
         border-radius: 12px;
         border: 3px solid $brand-color;
         background-color: white;
+        color: $brand-color;
 
         p {
             margin-bottom: 10px;
-        }
+        } 
+    }
 
-        p:first-child {
-            text-align: center;
-            font-size: 20px;
-            font-weight: 500;
-        }
+    &__title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: 600;
+    }
+
+    &__button {
+        background-color: #6095EA;
+        color: white;
+        display: flex;
+        padding: 20px;
     }
 }

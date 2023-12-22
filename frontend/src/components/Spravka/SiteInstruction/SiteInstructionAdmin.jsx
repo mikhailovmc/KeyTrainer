@@ -1,17 +1,18 @@
-import UserHeader from "./../../Headers/UserHeader";
+
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import pic1 from "./../../../assets/spravka-auth.jpg"
 import pic2 from "./../../../assets/spravka-ok.jpg"
 import pic3 from "./../../../assets/difficultAdmin.jpg"
-import pic4 from "./../../../assets/keyboard.jpg"
+import pic4 from "./../../../assets/create-level.jpg"
 import "./style.scss";
+import AdminHeader from "../../Headers/AdminHeader";
 
 const SiteInstructionAdmin = () => {
 
     return (
         <>
-            <UserHeader/>
-            <div className="site-instruction">
+            <AdminHeader/>
+            <div id="instruction" className="site-instruction">
                 <p className="site-instruction__title">Инструкция по сайту</p>
                 <ol className="site-instruction__list">
                     <li>
@@ -33,20 +34,26 @@ const SiteInstructionAdmin = () => {
                     </li>
 
                     <li>
-                        <AnchorLink href="#exercise">
-                            Упражнение
+                        <AnchorLink href="#createExercise">
+                            Создания упражнения
                         </AnchorLink> 
                     </li>
 
                     <li>
-                        <AnchorLink href="#passExercise">
-                            Прохождение упражнения
+                        <AnchorLink href="#changeExercise">
+                            Редактирование упражнения
                         </AnchorLink> 
+                    </li>
+
+                    <li>
+                        <AnchorLink href="#changeDifficult">
+                            Настройка уровня сложности упражнения
+                        </AnchorLink>
                     </li>
 
                     <li>
                         <AnchorLink href="#statistic">
-                            Статистика
+                            Просмотр статистики
                         </AnchorLink>
                     </li>
                 </ol>
@@ -84,26 +91,27 @@ const SiteInstructionAdmin = () => {
                     <h2>Выбор сложности</h2>
                     <p>
                         После успешной авторизации администартор попадает на страницу с выбором 
-                        упражнения. С самого начала выбран легкий уровень сложности упражнения. 
-                        При нажатии на один из уровней сложности будет произведено изменения 
-                        списка с упражнениями в соответствии с выбранной сложностью. После выбора 
-                        уровня сложности, пользователь выбирает с помощью клика карточку с упражнением. 
-                        После выбора происходит переход на страницу с редактированием выбранного упражнения.
+                        упражнения. На этой странице отображаются карточки упражнения с характеристиками в 
+                        соответствии выбранному уровню сложности. По нажатию на карточку вы можете перейти на 
+                        страницу редактирования упражнения.
                     </p>
                     <img src={pic3} alt="Выбор сложности" />
                 </section>
 
-                <section className="site-instruction__section" id="exercise">
-                    <h2>Упражнение</h2>
+                <section className="site-instruction__section" id="createExercise">
+                    <h2>Страница создания упражнения</h2>
                     <p>
-                        Упражнения состоит из нескольких частей. Непосредственно самого текста 
-                        для выполнения, количества максимально допустимых ошибок, времени на 
-                        выполнение упражнения. В зависимости от увеличения сложности все эти 
-                        значения уменьшаются.
+                        На этой странице вы выбираете один из трех уровней сложностей - легкий, средний, сложный. 
+                        После выбора уровня сложности вы должны выбрать клавиатурные зоны, которые хотите использовать.
+                        На рисунке ниже представлена таблица с зонами и соответствующими для них клавишами.
+                        Дальше вы набираете текст упражнения в соответствии с параметрами.
+                        Дальше вы устанавливаете время выполнения упражнения в секундах и максимальное количество ошибок, 
+                        которое можно сделать во время выполнения упражнения.
                     </p>
+                    <img src={pic4} alt="Выбор сложности" />
                 </section>
 
-                <section className="site-instruction__section" id="passExercise">
+                <section className="site-instruction__section" id="changeExercise">
                     <h2>Редактирование упражнения</h2>
                     <p>
                         При переходе на страницу редактирования упражнения появтся поля с текущими значениями выбранного упражнения. 
@@ -115,15 +123,32 @@ const SiteInstructionAdmin = () => {
                     <img src={pic4} alt="Прохождение упражнения" />
                 </section>
                 
-                <section className="site-instruction__section" id="statistic">
-                    <h2>Статистика</h2>
+                <section className="site-instruction__section" id="changeDifficult">
+                    <h2>Настройка уровня сложности упражнения.</h2>
                     <p>
-                        После прохождения упражнения формируется статистика по этому упражнению. 
-                        Пользователь может кликнуть по шапке на пункт меню "Статистика" и перейти 
-                        на страницу со статистикой. Здесь он может просмотреть всю свою статистику. 
+                        При выборе соответствующего пункта из выпадающего меню шапки администратора можно перейти к настройке уровня сложности.
+                        На странице настройки уровня сложности вы можете выбрать соответствующий уровень сложности и настроить для него клавиатурные 
+                        зоны, максимальное допустимое количество ошибок, а также длину упражнения. 
                     </p>
+                    <img src={pic4} alt="Прохождение упражнения" />
+                </section>
+
+                <section className="site-instruction__section" id="statistic">
+                    <h2>Просмотр статистики</h2>
+                    <p>
+                        При выборе соответствующего пункта из выпадающего меню шапки администратора можно перейти к настройке уровня сложности.
+                        На странице настройки уровня сложности вы можете выбрать соответствующий уровень сложности и настроить для него клавиатурные 
+                        зоны, максимальное допустимое количество ошибок, а также длину упражнения. 
+                    </p>
+                    <img src={pic4} alt="Прохождение упражнения" />
                 </section>
             </div>
+
+
+            <AnchorLink className="arrow__anchor-wrapper" href="#instruction">
+                <div className="arrow__anchor"></div>
+            </AnchorLink> 
+
         </>
     );
 }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { checkLogin, checkPassword } from "./validator";
 import Modal from "./../Modal/Modal";
 
 import UserHeader from "../Headers/UserHeader";
@@ -16,44 +15,53 @@ const Registration = () => {
     const [password, setPassword] = useState();
     const [repeatPassword, setRepeatPassword] = useState();
     const [modalActive, setModalActive] = useState(false);
+    const [validatorModalActive, setValidatorModalActive] = useState(false);
     const [errorText, setErrorText] = useState()
     const navigate = useNavigate();
+
+    let flag = false;
     
-    const  registration = async (event) => {
+    const navigateToPage = () => {
+        navigate("/login")
+    }
+
+    const registration = async (event) => {
         event.preventDefault();
         
         let userData = new FormData();
 
         if(password === repeatPassword) {
             userData.append('login', login)
-            userData.append('password', password)
+            userData.append('password', password);
+            flag = true;
         } else {
-            alert("Пароли не совпадают");
+            flag = false;
+            setValidatorModalActive(true);
         }
-
-        if(checkLogin(login) && checkPassword(password)) {
+        
+        if(flag) {
             try {
+                setErrorText("")
                 const responceFromServer = await fetch('https://localhost:5001/api/User/Register', {
                 method: 'POST',
                 body: userData
                 });
     
                 if(responceFromServer.ok) {
-                    navigate('/login')
+                    setModalActive(true)
+                    setTimeout(navigateToPage, 2000)
                 }
-                console.log("Ответ сервера в авторизации", responceFromServer);
-
+    
                 if(!responceFromServer.ok) {
                     const result = await responceFromServer.json();
                     setErrorText(result);
                     setModalActive(true);
                 }
-                
-    
             } catch (error) {
-                alert(error)
+                setErrorText(error)
             }
-        }  
+        }
+        
 
     }
 
@@ -98,7 +106,19 @@ const Registration = () => {
                 </form>
                 
             </div>
-            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}
+            {errorText ? 
+                <Modal active={modalActive} setActive={setModalActive} text={errorText}>
+                    <p className="modal__title">Ошибка!</p>
+                </Modal> :
+                <Modal active={modalActive} setActive={setModalActive} text={[]}>
+                    <p className="modal__title">Успешная регистрация!</p>
+                </Modal>
+            }
+
+            <Modal active={validatorModalActive} setActive={setValidatorModalActive} text={[]}>
+                <p className="modal__title">Ошибка!</p>
+                <p>Пароли не совпадают</p>
+            </Modal>
         </>
         
     );

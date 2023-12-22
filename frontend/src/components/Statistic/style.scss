@@ -5,6 +5,10 @@
         height: 700px;
     }
 
+    &__base-text {
+        font-size: 23px;
+    }
+
     &__view-wrapper {
         display: flex;
         flex-direction: row;

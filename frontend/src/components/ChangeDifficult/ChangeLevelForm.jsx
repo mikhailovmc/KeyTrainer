@@ -33,9 +33,15 @@ const ChangeLevelForm = ({exercise}) => {
             })
         }
     }
+
+    const navigateToPage = () => {
+        navigate("/exercise")
+    }
+
     
     const handleSave = async (e) => {
         e.preventDefault();
+        setErrorText("");
         let exerciseData = new FormData();
 
         exerciseData.append('id', exercise.id);
@@ -53,7 +59,6 @@ const ChangeLevelForm = ({exercise}) => {
             maxTime,
             listOfZones: zone.listOfZones
         }
-        console.log(data)
 
         try {
             const responceFromServer = await fetch(updateExercize, {
@@ -62,8 +67,8 @@ const ChangeLevelForm = ({exercise}) => {
             });
 
             if(responceFromServer.ok) {
-                alert('Упражнение успешно редактировано');
-                navigate('/exercise')
+                setModalActive(true);
+                setTimeout(navigateToPage, 2000);
             }
         
             if(!responceFromServer.ok) {
@@ -142,7 +147,14 @@ const ChangeLevelForm = ({exercise}) => {
 
             </form>
 
-            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}    
+            {errorText ? 
+                <Modal active={modalActive} setActive={setModalActive} text={errorText}>
+                    <p className="modal__title">Ошибка!</p>
+                </Modal> :
+                <Modal active={modalActive} setActive={setModalActive} text={[]}>
+                    <p className="modal__title">Упражнение успешно изменено!</p>
+                </Modal>
+            }   
         </>
     );
 }

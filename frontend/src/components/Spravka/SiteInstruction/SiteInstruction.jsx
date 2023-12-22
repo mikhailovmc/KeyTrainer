@@ -12,7 +12,7 @@ const SiteInstruction = () => {
     return (
         <>
             <UserHeader/>
-            <div className="site-instruction">
+            <div id="instruction" className="site-instruction">
                 <p className="site-instruction__title">Инструкция по сайту</p>
                 <ol className="site-instruction__list">
                     <li>
@@ -123,12 +123,18 @@ const SiteInstruction = () => {
                 <section className="site-instruction__section" id="statistic">
                     <h2>Статистика</h2>
                     <p>
-                        После прохождения упражнения формируется статистика по этому упражнению. 
-                        Пользователь может кликнуть по шапке на пункт меню "Статистика" и перейти 
-                        на страницу со статистикой. Здесь он может просмотреть всю свою статистику. 
+                        Администратор для просмотра статистики может в шапке сайта нажать соответствующую кнопку для перехода на страницу статистики.
+                        На этой странице администратор выбирает пользователя по нажатию на кнопку "Введите Id пользователя". Для удобства можно выбрать 
+                        различные форматы отображения данных (Таблица, График, Диаграмма). Тоже самое администратор может сделать и с упражнением. 
+                        При вводе ID упражнения будет выведена статистика по этому упражнению
                     </p>
+                    <img src={pic4} alt="Прохождение упражнения" />
                 </section>
             </div>
+
+            <AnchorLink className="arrow__anchor-wrapper"  href="#instruction">
+                <div className="arrow__anchor"></div>
+            </AnchorLink> 
         </>
     );
 }
