@@ -328,6 +328,7 @@ namespace KeyTrainer.Business
                 if (!keys.Contains(key))
                 {
                     _errors.Add("Ошибка 13 - Текст не соответствует выбранным клавиатурным зонам");
+                    break;
                 }
             }
 
