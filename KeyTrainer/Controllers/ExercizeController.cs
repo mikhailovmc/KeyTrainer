@@ -149,5 +149,19 @@ namespace KeyTrainer.Controllers
                 return StatusCode(500, "Ошибка 17 - Не удалось создать упражнение");
             return Ok(exercize);
         }
+
+        /// <summary>
+        /// Получить упражнения для выбора статистики
+        /// </summary>
+        /// <returns>Список ДТО названий упражнений</returns>
+        [HttpGet]
+        [Route("GetExercizeNames")]
+        public async Task<IActionResult> GetExercizeNames()
+        {
+            var exercizes = await _exercizeBusiness.GetExercizeNames();
+            if (exercizes == null)
+                return StatusCode(500, "Ошибка 28 - Не удалось получить названия упражнений");
+            return Ok(exercizes);
+        }
     }
 }

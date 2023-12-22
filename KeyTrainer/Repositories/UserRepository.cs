@@ -41,5 +41,11 @@ namespace KeyTrainer.Repositories
             return _keyTrainerDbContext.User
                 .Any(user => user.Login == login);
         }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            return _keyTrainerDbContext.User.Select(u => u);
+        }
     }
 }

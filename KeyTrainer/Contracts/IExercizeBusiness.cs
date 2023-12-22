@@ -76,5 +76,11 @@ namespace KeyTrainer.Contracts
         /// </summary>
         /// <returns>Упражнение</returns>
         Task<ExercizeSendDto> GenerateExercize();
+
+        /// <summary>
+        /// Получить список названий упражнений
+        /// </summary>
+        /// <returns>Список названий упражнений</returns>
+        Task<IEnumerable<ExercizeNamesDto>> GetExercizeNames();
     }
 }

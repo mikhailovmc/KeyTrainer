@@ -55,5 +55,22 @@ namespace KeyTrainer.Controllers
 
             return Ok(user);
         }
+
+        /// <summary>
+        /// Получить логины пользователей для выбора статистики 
+        /// </summary>
+        /// <returns>список ДТО логинов пользователей</returns>
+        [HttpGet]
+        [Route("GetLogins")]
+        public async Task<IActionResult> GetLogins()
+        {
+            var users = await _userBusiness.GetLogins();
+            if (_userBusiness.GetErrors.Any())
+            {
+                return StatusCode(500, _userBusiness.GetErrors);
+            }
+
+            return Ok(users);
+        }
     }
 }

@@ -118,5 +118,25 @@ namespace KeyTrainer.Business
 
             return true;
         }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<UserLoginsDto>> GetLogins()
+        {
+            var users = await _userRepository.GetUsers();
+
+            if (users == null)
+            {
+                _errors.Add("Ошибка 27 - Не удалось получить пользователей");
+            }
+
+            var userLogins = new List<UserLoginsDto>();
+
+            foreach (var user in users)
+            {
+                userLogins.Add(_mapper.Map<UserLoginsDto>(user));
+            }
+
+            return userLogins;
+        }
     }
 }

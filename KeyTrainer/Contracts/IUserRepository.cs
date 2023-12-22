@@ -31,5 +31,11 @@ namespace KeyTrainer.Contracts
         /// <param name="login">Логин</param>
         /// <returns>Результат проверки</returns>
         Task<bool> CheckUserLogin(string login);
+
+        /// <summary>
+        /// Получить всех пользователей
+        /// </summary>
+        /// <returns>Список пользователей</returns>
+        Task<IEnumerable<User>> GetUsers();
     }
 }

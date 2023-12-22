@@ -384,5 +384,17 @@ namespace KeyTrainer.Business
                 MaxTime = exercizeText.Length + exercizeText.Length / rows.Count
             };
         }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<ExercizeNamesDto>> GetExercizeNames()
+        {
+            var exercizeNamesDto = new List<ExercizeNamesDto>();
+            var exercizes = await _exercizeRepository.GetExercizes();
+            foreach (var exercize in exercizes)
+            {
+                exercizeNamesDto.Add(_mapper.Map<ExercizeNamesDto>(exercize));
+            }
+            return exercizeNamesDto;
+        }
     }
 }

@@ -30,5 +30,11 @@ namespace KeyTrainer.Contracts
         /// <param name="userAuthorizeDto"> ДТО пользователя для авторизации </param>
         /// <returns> ДТО авторизованного пользователя </returns>
         Task<UserDto> Authorize(UserDto userAuthorizeDto);
+
+        /// <summary>
+        /// Получить логины пользователей для статистики
+        /// </summary>
+        /// <returns>список ДТО логинов пользователей</returns>
+        Task<IEnumerable<UserLoginsDto>> GetLogins();
     }
 }
