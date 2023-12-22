@@ -13,10 +13,12 @@ const Table = ({userId, exerciseId}) => {
     if (userId) currentUserId = userId;
     else currentUserId = auth.id
 
-    
+    let currentExerciseId;
+    if (exerciseId) currentExerciseId = exerciseId;
+    else currentExerciseId = null
  
     const {data: userStatistic, isLoading, error} = useFetch(getStatisticsByUserId + currentUserId);
-    const {data: exerciseStatistic, isLoading1, error1} = useFetch(getStatisticsByExerciseId + exerciseId);
+    const {data: exerciseStatistic, isLoading1, error1} = useFetch(getStatisticsByExerciseId + currentExerciseId);
 
     return (
         <table className="statistic__table">

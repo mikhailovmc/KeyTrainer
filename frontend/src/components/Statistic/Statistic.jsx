@@ -1,14 +1,13 @@
 import UserHeader from "../Headers/UserHeader";
 import { useContext, useEffect, useState } from "react";
 import Table from "./Table/Table";
-
-
 import "./style.scss";
 import Diagramm from "./Diagramm/Diagramm";
 import Graph from "./Graph/Graph";
 import AuthContext from "../../context/AuthProvider";
 import Modal from "../Modal/Modal";
 import AdminHeader from "../Headers/AdminHeader";
+import CheckBoxes from "../CheckBoxes/CheckBoxes";
 
 const Statistic = () => {
     const {auth} = useContext(AuthContext);
@@ -19,7 +18,12 @@ const Statistic = () => {
     const [chosenStatistic, setChosenStatistic] = useState(
         auth.id ? <Table userId={userId}/> : ''
     )
-    
+
+    const [logins, setLogins] = useState()
+    const [names, setNames] = useState()
+    const [selectedLogins, setSelectedLogins] = useState()
+    const [selectedNames, setSelectedNames] = useState()
+
     const [classFilter, setClassFilter] = useState(
         auth.id ? 
         {
@@ -67,8 +71,10 @@ const Statistic = () => {
 
     const handleClickUserModal = (e) => {
         e.preventDefault();
+        setUserId(selectedLogins);
         setModalActiveUserId(false);
-        setChosenStatistic(<Table userId={userId} exerciseId={exerciseId}/>);
+        console.log('ИД пользователя', userId);
+        setChosenStatistic(<Table userId={selectedLogins} exerciseId={selectedNames} />);
         setClassFilter(
             {
                 table: 'active',
@@ -81,7 +87,9 @@ const Statistic = () => {
     const handleClickExerciseModal = (e) => {
         e.preventDefault();
         setModalActiveExerciseId(false);
-        setChosenStatistic(<Table userId={userId} exerciseId={exerciseId}/>);
+        setExerciseId(selectedNames);
+        console.log('ИД упражнения', exerciseId);
+        setChosenStatistic(<Table userId={selectedLogins} exerciseId={selectedNames} />);
         setClassFilter(
             {
                 table: 'active',
@@ -89,6 +97,36 @@ const Statistic = () => {
                 diagram: ''
             }
         )
+    }
+
+    const handleLogins = (e) => {
+        getLogins();
+        setModalActiveUserId(true);
+    }
+
+    const handleNames = (e) => {
+        getNames();
+        setModalActiveExerciseId(true);
+    }
+
+    const getLogins = async () => {
+        const response = await fetch("https://localhost:5001/api/User/GetLogins", {
+            method: "Get"
+        })
+        let result = response.json()
+        result.then((res) => {
+            setLogins(res);
+        });
+    }
+
+    const getNames = async () => {
+        const response = await fetch("https://localhost:5001/api/Exercize/GetExercizeNames", {
+            method: "Get"
+        })
+        let result = response.json()
+        result.then((res) => {
+            setNames(res);
+        });
     }
 
     return (
@@ -143,12 +181,12 @@ const Statistic = () => {
                         </div>
                     </div>
 
-                    <div className="statistic__view-wrapper">
-                        <div className="statistic__view"  onClick={e => {setModalActiveUserId(true);}}>
+                        <div className="statistic__view-wrapper">
+                            <div className="statistic__view" onClick={handleLogins}>
                             Выбрать пользователя
                         </div>
 
-                        <div className="statistic__view" onClick={e => {setModalActiveExerciseId(true)}}>
+                            <div className="statistic__view" onClick={handleNames}>
                             Выбрать упражнение
                         </div>
                     </div> 
@@ -162,20 +200,22 @@ const Statistic = () => {
             
             <Modal active={modalActiveUserId} setActive={setModalActiveUserId} text={[]}>
                 <form>
-                    <input className="input" type="text" defaultValue={""} placeholder="Введите ID пользователя" onChange={e => {
-                        setUserId(e.target.value)
-                        setExerciseId(null);
-                        }}/>
+                    <label>
+                        Выберите пользователя для поиска :
+                        <CheckBoxes allOptions={logins} setSelected={setSelectedLogins} />
+                    </label>
+                    
                     <button className="modal__button" onClick={handleClickUserModal}>Посмотреть статистику</button>
                 </form>
             </Modal>
 
             <Modal active={modalActiveExerciseId} setActive={setModalActiveExerciseId} text={[]}>
                 <form>
-                    <input className="input" type="text" defaultValue={""} placeholder="Введите ID упражнения" onChange={e => {
-                        setExerciseId(e.target.value);
-                        setUserId(null);
-                        }}/>
+                    <label>
+                        Выберите упражнение для поиска :
+                        <CheckBoxes allOptions={names} setSelected={setSelectedNames} />
+                    </label>
+
                     <button className="modal__button" onClick={handleClickExerciseModal}>Посмотреть статистику</button>
                 </form>
             </Modal>
