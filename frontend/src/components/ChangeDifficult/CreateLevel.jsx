@@ -59,8 +59,13 @@ const CreateLevel = () => {
         }    
     }
 
+    const navigateToPage = () => {
+        navigate("/exercise")
+    }
+
     const handleSave = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setErrorText("");
         let exerciseData = new FormData();
 
         exerciseData.append('idDifficultyLevel', idDifficultyLevel);
@@ -76,7 +81,6 @@ const CreateLevel = () => {
             text, 
             listOfZones: zone.listOfZones
         }
-        console.log(data)
 
         try {
             const responceFromServer = await fetch(addExercise, {
@@ -85,10 +89,9 @@ const CreateLevel = () => {
             });
 
             if(responceFromServer.ok) {
-                alert('Упражнение успешно создано');
-                navigate('/exercise')
+                setModalActive(true);
+                setTimeout(navigateToPage, 2000);
             }
-            console.log("Ответ сервера в авторизации", responceFromServer)
 
             if(!responceFromServer.ok) {
                 const result = await responceFromServer.json();
@@ -170,7 +173,14 @@ const CreateLevel = () => {
                 </form>
             </div>
 
-            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}
+            {errorText ? 
+                <Modal active={modalActive} setActive={setModalActive} text={errorText}>
+                    <p className="modal__title">Ошибка!</p>
+                </Modal> :
+                <Modal active={modalActive} setActive={setModalActive} text={[]}>
+                    <p className="modal__title">Упражнение успешно создано!</p>
+                </Modal>
+            }
         </>
     );
 }

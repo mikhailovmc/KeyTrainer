@@ -1,22 +1,29 @@
 import CellOfStatistic from "./CellOfStatistic";
 import AuthContext from "../../../context/AuthProvider";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import useFetch from "../../../useFetch/useFetch";
-import { getStatisticsByUserId } from "../../../helpers/links";
+import { getStatisticsByExerciseId, getStatisticsByUserId } from "../../../helpers/links";
 
 import "./../style.scss";
 
-const Table = () => {
+const Table = ({userId, exerciseId}) => {
     const { auth } = useContext(AuthContext);
 
-    const {data, isLoading, error} = useFetch(getStatisticsByUserId + auth.id);
+    let currentUserId;
+    if (userId) currentUserId = userId;
+    else currentUserId = auth.id
+
+    
+ 
+    const {data: userStatistic, isLoading, error} = useFetch(getStatisticsByUserId + currentUserId);
+    const {data: exerciseStatistic, isLoading1, error1} = useFetch(getStatisticsByExerciseId + exerciseId);
 
     return (
         <table className="statistic__table">
             <thead>
                 <tr>
-                    <th>№ Упражнения</th>
                     <th>ID пользователя</th>
+                    <th>№ Упражнения</th>
                     <th>Скорость набора</th>
                     <th>Точность</th>
                     <th>Процент пройденного</th>
@@ -25,7 +32,8 @@ const Table = () => {
             </thead>
             
             <tbody>
-                {data && <CellOfStatistic  data={data}/>}
+                {userStatistic && <CellOfStatistic data={userStatistic}/>}
+                {exerciseStatistic && <CellOfStatistic data={exerciseStatistic}/>}
             </tbody> 
         </table>
     );

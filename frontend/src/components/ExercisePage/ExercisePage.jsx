@@ -18,12 +18,6 @@ const ExercisePage = ({userExercise, adminExercise}) => {
             hard: ''
         }
     );
-   
-    
-    console.log(userExercise, "данные для юзера");
-    console.log(adminExercise , "данные для админа");
-    
-    
     
     const easyUser = [];
     const mediumUser = [];
@@ -37,7 +31,6 @@ const ExercisePage = ({userExercise, adminExercise}) => {
     const [sortedExerciseAdmin, setSortedExerciseAdmin] = useState(easyAdmin);
 
     userExercise.map(exercise => {
-        console.log(exercise)
         if(exercise.idDifficultyLevel === 1) easyUser.push(exercise)
         if(exercise.idDifficultyLevel === 2) mediumUser.push(exercise);
         if(exercise.idDifficultyLevel === 3) hardUser.push(exercise);     
@@ -84,8 +77,6 @@ const ExercisePage = ({userExercise, adminExercise}) => {
         }
         
     }
-    
-    
     
     const title = auth.isAdmin === false ? "Упражнения" : "Редактирование упражнений";
 

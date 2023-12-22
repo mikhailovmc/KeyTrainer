@@ -46,8 +46,13 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
         }
     }    
 
+    const navigateToPage = () => {
+        navigate("/exercise")
+    }
+
     const handleSave = async (e) => {
         e.preventDefault();
+        setErrorText("")
         let difficultData = new FormData();
 
         difficultData.append('id', idDifficultyLevel);
@@ -61,7 +66,7 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
             maxLength,
             listOfZones: zone.listOfZones
         }
-        console.log(data)
+
 
         try {
             const responceFromServer = await fetch(updateDifficultLevel, {
@@ -70,9 +75,8 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
             });
 
             if(responceFromServer.ok) {
-                const result = await responceFromServer.json()
-                alert('Сложность успешно редактирована');
-                navigate('/exercise')
+                setModalActive(true);
+                setTimeout(navigateToPage, 2000);
             }
             
             if(!responceFromServer.ok) {
@@ -152,7 +156,14 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
                 </div>
             </form>
 
-            {errorText && <Modal active={modalActive} setActive={setModalActive} text={errorText}/>}
+            {errorText ? 
+                <Modal active={modalActive} setActive={setModalActive} text={errorText}>
+                    <p className="modal__title">Ошибка!</p>
+                </Modal> :
+                <Modal active={modalActive} setActive={setModalActive} text={[]}>
+                    <p className="modal__title">Сложность успешно изменена!</p>
+                </Modal>
+            }
         </>
         
 

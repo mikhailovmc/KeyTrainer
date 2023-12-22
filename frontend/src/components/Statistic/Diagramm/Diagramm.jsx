@@ -9,15 +9,19 @@ import AuthContext from '../../../context/AuthProvider';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-const Diagramm = () => {
+const Diagramm = ({userId}) => {
     const {auth} = useContext(AuthContext);
 
-    const {data:percent, isLoading, error} = useFetch(getDiagram + auth.id);
+    let currentUserId;
+    if (userId) currentUserId = userId;
+    else currentUserId = auth.id
+
+    const {data:percent, isLoading, error} = useFetch(getDiagram + currentUserId);
     const [dataPercent, setDataPercent] = useState();
 
     useEffect(() => {
         if (percent) {
-            setDataPercent(percent.x);
+          setDataPercent(percent.x);
         }
     }, [isLoading])
 
