@@ -230,6 +230,7 @@ namespace KeyTrainer.Business
             }
 
             var exercize = _mapper.Map<Exercize>(exercizeSendDto);
+            exercize.Text = exercize.Text.Trim();
             await _exercizeRepository.AddExercize(exercize);
             var newExercize = await _exercizeRepository.GetExerciseById(exercize.Id);
             return _mapper.Map<ExercizeFullDto>(newExercize);
@@ -255,7 +256,7 @@ namespace KeyTrainer.Business
             oldExercize.CountOfErrors = exercizeSendDto.CountOfErrors;
             oldExercize.IdDifficultyLevel = exercizeSendDto.IdDifficultyLevel;
             oldExercize.MaxTime = exercizeSendDto.MaxTime;
-            oldExercize.Text = exercizeSendDto.Text;
+            oldExercize.Text = exercizeSendDto.Text.Trim();
 
             await _exercizeRepository.UpdateExercize(oldExercize);
             var newExercize = await _exercizeRepository.GetExerciseById(oldExercize.Id);
@@ -379,7 +380,7 @@ namespace KeyTrainer.Business
             {
                 IdDifficultyLevel = difficultyLevelId,
                 ListOfZones = difficultyLevel.ListOfZones,
-                Text = exercizeText,
+                Text = exercizeText.Trim(),
                 CountOfErrors = difficultyLevel.CountOfErrors,
                 MaxTime = exercizeText.Length + exercizeText.Length / rows.Count
             };

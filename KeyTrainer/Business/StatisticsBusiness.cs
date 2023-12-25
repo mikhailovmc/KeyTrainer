@@ -103,7 +103,7 @@ namespace KeyTrainer.Business
         public async Task<GraphicDto> GetGraphic(int id)
         {
             var userStatistics = await _statisticsRepository.GetStatisticsByUserId(id);
-            var statistics = userStatistics.OrderByDescending(us => us.Id);
+            var statistics = userStatistics.OrderByDescending(us => us.IdExercize);
             
             var exercizeIds = new List<int>();
             var x = new List<int>();

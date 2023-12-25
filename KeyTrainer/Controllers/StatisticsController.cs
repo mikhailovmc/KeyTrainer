@@ -91,7 +91,7 @@ namespace KeyTrainer.Controllers
             var statistics = await _statisticsBusiness.AddStatistics(statisticsSendDto);
             if (statistics == null)
                 return StatusCode(500, "Ошибка 24 - Не удалось добавить статистику упражнения");
-            return Ok(statistics);
+            return Ok();
         }
 
         /// <summary>
