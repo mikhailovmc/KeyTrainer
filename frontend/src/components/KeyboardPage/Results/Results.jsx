@@ -1,23 +1,33 @@
 import "./style.scss";
+import errorPic from "./../../../assets/icons/error-mark.png";
+import timerPic from "./../../../assets/icons/timer.png";
+import lengthPic from "./../../../assets/icons/length.png";
 
-const Results = () => {
+const Results = ({maxErrors, maxTime, errorCount, timeLeft, length, remainLength}) => {
     return (
         <div className="results ">
-			<div className="results-title">Результаты предыдущей строки:</div>
+			<div className="results-title">Результаты:</div>
 			<div className="indicators">
+				
 				<div className="indicator">
 					<div className="indicator__icon">
-						<i className="fas fa-tachometer-alt"></i>
+						<img src={lengthPic}/>
 					</div>
-					<div className="indicator__name">Время: 0/120 cек</div>
-					{/* <div className="indicator__value">266</div> */}
+					<div className="indicator__name">Длина: {remainLength} / {length}</div>
 				</div>
+
 				<div className="indicator">
 					<div className="indicator__icon indicator__icon--errors">
-						<i className="fas fa-exclamation-circle"></i>
+						<img src={errorPic}/>
 					</div>
-					<div className="indicator__name">Ошибок: </div>
-					<div className="indicator__value"> 0 / 6</div>
+					<div className="indicator__name">Ошибок: {errorCount} / {maxErrors}</div>
+				</div>
+
+				<div className="indicator">
+					<div className="indicator__icon indicator__icon--errors">
+						<img src={timerPic}/>
+					</div>
+					<div className="indicator__name">Время: {timeLeft} / {maxTime} cек</div>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,7 @@
 .keyboard {
-  padding-bottom: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
 
     & .line {
       display: -webkit-box;
@@ -78,5 +80,21 @@
         margin-right: auto;
       }
     }
-  }
+
+    &__button {
+      padding: 10px;
+      background-color: #6095EA;
+      width: fit-content;
+      color: white;
+      font-size: 20px;
+      margin-bottom: 20px;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+}
 

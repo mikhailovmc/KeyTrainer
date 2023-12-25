@@ -1,11 +1,16 @@
 .results {
+  margin-top: 100px;
     display: -webkit-box;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
-            flex-direction: column;
+            flex-direction: row;
     -webkit-box-align: start;
             align-items: flex-start;
+            justify-content: center;
+            
   }
   .results-title {
     display: -webkit-box;
@@ -14,6 +19,8 @@
     margin-bottom: 15px;
     font-weight: 600;
     color: #5C8DCB;
+    margin-right: 40px;
+    margin-top: 7px;
   }
 
   .indicators {
@@ -37,7 +44,7 @@
     border-right: none;
   }
   .indicator__icon {
-    margin-right: 5px;
+    margin-right: 10px;
   }
   .indicator__icon {
     color: #0070ff;
@@ -45,7 +52,3 @@
   .indicator__icon--errors {
     color: #e50909;
   }
-
-  .indicator__name {}
-
-  .indicator__value {}

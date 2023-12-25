@@ -1,99 +1,148 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useFetch from "../../useFetch/useFetch";
 import Keyboard from "./Keyboard/Keyboard";
 import InputField from "./InputField/InputField";
 import Results from "../KeyboardPage/Results/Results";
 import UserHeader from "../Headers/UserHeader";
 import PracticeText from "../KeyboardPage/PracticeText/PracticeText";
-import { useEffect, useState } from "react";
-import { getExercisesById } from "../../helpers/links";
+import { useContext, useEffect, useState } from "react";
+import { addStatistic, getExercisesById } from "../../helpers/links";
+import Modal from "../Modal/Modal";
+import AuthContext from "../../context/AuthProvider";
 
-const KeyboardPage = () => {
-    const {id} = useParams();
+const KeyboardPage = ({data, id}) => {
+    const { auth } = useContext(AuthContext);
 
-    const [party, setParty] = useState();
-    const {data, isLoading, error} = useFetch(getExercisesById + "/" + id);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [errorCount, setErrorCount] = useState(0);
+    const [startTime, setStartTime] = useState(true);
+    const [timeLeft, setTimeLeft] = useState(data.maxTime);
+    const [finished, setFinished] = useState(false);
+    const [remainLength, setRemainLength] = useState(0);
+    const [badModal, setBadModal] = useState(false);
 
-    const text = `В начале XIII в. в Центральной Азии возникло новое государство - Монгольская империя. Объединение монгольских племен в немалой степени было вызвано изменением климатических условий местности, где проживали монголы. XI и XII вв. были благоприятными для монголов. Длительный период влажных лет в восточной степи привел к тому, что умножились стада, а, следовательно, одна и та же территория могла прокормить больше людей. Произошло увеличение населения в Монголии. Однако в конце XII в. климат стал постепенно меняться в сторону ухудшения, стал более засушливым. Кочевое скотоводство стало малопродуктивным, в степи стало много избыточного населения. Началась обычная в таких условиях борьба с соседями за пастбища, а также вторжения на земли соседей-земледельцев.
-    Чингисхан.Огромную роль в создании Монгольской империи сыграл Темуджин. Железная воля, властолюбие и целеустремленность позволили Темуджину собрать монголов в единое политическое целое и спаять общество на основе т. н. закона Чингисхана - Яссы. На съезде монгольской знати (курултае) в 1206 г. создатель империи Темуджин (Темучин) был провозглашен великим ханом всех монголов и принял имя Чингисхан. Монгольская империя оказалось исключительно боеспособной и жизнеспособной. Чингисхан силой объединил под своей рукой всех монголов, некоторые соседние племена и на основе родового признака создал войско, которому в XII - XIII вв., в среднеазиатских государствах, на Руси и в Европе равных не было. В последующие годы монгольские отряды подчинили себе окрестные народы, беспощадно уничтожая всех непокорных. В середине 20-х гг. XIII в. в состав монгольского государства вошли Северный Китай, Средняя Азия, Северная Индия.
-    Рядовой единицей монгольского войска была десятка - семья, ближайшие родственники одной юрты, одного аила. Потом следовала сотня, в нее входили люди одного рода. Тысяча могла объединять два или три аила, далее шла тьма - десятитысячный отряд. В войске Чингисхана действовала Ясса: если в бою кто-то из десятки побежит от врага, то казнили всю десятку; если в сотне побежит десятка, то казнили всю сотню, если побежит сотня и откроет брешь врагу, то казнили всю тысячу. Основную ударную силу монголов составляла конница. Каждый воин имел два-три лука, веревочный аркан, топор, хорошо владел саблей. Лошадь воина покрывалась шкурами для защиты. Голову, шею и грудь воина защищали железный или медный шлем, панцирь из кожи. Монгольская конница на своих низкорослых выносливых конях могла проходить в сутки до 80 км, а с обозами, стенобитными, огнеметными орудиями - до 10 км.
-    К 1211 г. монголы завоевали землю бурят, якутов, киргизов и уйгуров, т.е. подчинили себе практически все основные племена и народы Сибири, обложив их данью. В 1211 г. Чингисхан приступил к завоеванию северного Китая, которое было завершено лишь к 1234 г. Монголы в процессе завоевания заимствовали у китайцев различную военную технику, а также научились осаждать крепости при помощи стенобитных и осадных машин. Китайцы передали монголам и важную науку дипломатии. Монголы одними из первых стали придерживаться принципа неприкосновенности послов, беспощадно карая народы за нарушение этого принципа.Схватка грузин с монголо-татарами.
-    В 1218 г. татаро-монголы покорили всю Корею. После этого Чингисхан устремил свой взгляд на богатейшие государства Средней Азии. Цель Чингисхана - покорение городов Бухары, Самарканда, Мерва, Ургенча и других. Всё завоевание было совершено за 3 года - 1219-1221 гг. Хорезмшах Мухаммед недооценил силу Чингисхана, вследствие чего вынужден был спастись бегством. В погоню было отправлено несколько туменов под руководством военноначальников Джебе и Субэдея. Монголы огнем и мечом прошли по Северному Ирану, вышли на Кавказ, разрушили несколько древних и богатых городов, разбили грузинские войска, проникли через Ширванское ущелье на Северный Кавказ и столкнулись с половцами. В это время состоялась первая встреча русских воинов с новым врагом и произошла (1223 г.). К концу жизни Чингисхана (1227г.) монголы подчинили огромные территории от Тихого океана на востоке до Каспийского моря на западе.
-    Причины успехов монголов состояли в следующем: Первая причина - Китай, Средняя Азия и Иран переживали в то время период феодальной раздробленности и не смогли организовать коллективного отпора монголам. Вторая причина - это великолепная военная и политическая подготовка вторжения. Проведя разведку, монголы стравливали народы и раздували междоусобицы. Если удавалось, то монголы занимали ключевые военные посты в армии намеченной жертвы (Хорезм). Тактика завоеваний была отточена до совершенства. По возможности избегая фронтальных сражений, кочевники разбивали противника по частям, предварительно измотав его непрерывными стычками и налетами.
-    Еще при жизни Чингисхан разделил огромную империю между сыновьями на улусы, которые были в составе единого государства еще 40 лет после его смерти (1227 г.). Улус Угедэя - собственно Монголия и Северный Китай, улус Чагатая - Средняя Азия, улус Джучи - пространства к западу и югу от Иртыша до Уральских гор, Аральского и Каспийского морей. В 40-х гг. XIII в. выделился еще один улус, охватывающий часть Ирана и Закавказье, который был отдан внуку Чингисхана Хулагу. Далее процесс распада великой империи ускорился. В начале XIV в. улус Джучи распался на Синюю и Белую Орду. Впоследствии за Белой Ордой, располагавшейся в бассейне рек Волги и Дона, в Крыму и на Северном Кавказе, закрепилось название Золотой Орды.`;
-
-    function createParty (text) {
-        const party = {
-            text: text,
-            strings: [],
-            maxStringLength: 70,
-            maxShowStrings: 3,
-            currentStringIndex: 0,
-            currentPressedIndex: 0,
-            errors: 0,
-        }
-        console.log(party)
-
-        party.text = party.text.replace(/\n/g, "\n ");
-        const words = party.text.split(' ');
-
-        console.log(words)
-        let string = []
-        for (const word of words) {
-            const newStringLength = [...string, word].join(' ').length + !word.includes("\n");
-            if (newStringLength > party.maxStringLength) {
-                party.strings.push(string.join(' ') + ' ');
-                string = []
-            }
-
-            string.push(word);
-
-            if (word.includes("\n")) {
-                party.strings.push(string.join(' '));
-                string = []
-            }
-        }
-
-        if (string.length) {
-            party.strings.push(string.join(" "))
-        }
-
-        return party;
-    }
-
-    const [pressedKey, setPressedKey] = useState();
-
-    useEffect(()=> {
-        if(data) {
-            const party = createParty(data.text);
-            setParty(party); 
-            console.log(party)
-        }
-    }, [isLoading])
-    
-
-    
+    const [status, setStatus] = useState("Пройдено")
     const [letters, setLetters] = useState([]);
 	const [specs, setSpecs] = useState([]);
+    const [currentInputValue, setCurrentInputValue] = useState("");
 
-    const handleLetter = (letter) => {
-        setPressedKey(letter)
-    }
+    let userStatistic = new FormData();
 
     const collectCollection = (letters, specs) => {
         setLetters(letters);
         setSpecs(specs)
     }
 
+    const sendStatisticOnServer  = async () => {
+        userStatistic.append("countOFError", errorCount + 1);
+        userStatistic.append("length", remainLength);
+        userStatistic.append("status", status);
+        userStatistic.append("time", data.maxTime - timeLeft);
+        userStatistic.append("idExercize", id);
+        userStatistic.append("idUser", auth.id);
+        
+        try {
+            const responceFromServer = await fetch(addStatistic, {
+                method: 'POST',
+                body: userStatistic
+            });
+
+            if(responceFromServer.ok) {
+                // setModalActive(true);
+                // setTimeout(navigateToPage, 2000);
+            }
+            
+            // if(!responceFromServer.ok) {
+            //     const result = await responceFromServer.json();
+            //     setErrorText(result);
+            //     setModalActive(true);
+            // }
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    useEffect(() => {
+        if (startTime) {
+          const interval = setInterval(() => {
+            
+            setTimeLeft(prevTime => prevTime > 0 ? prevTime - 1 : 0);
+            if (timeLeft === 0 || errorCount + 1 === data.countOfErrors) {
+                setStatus("Не пройдено");
+                setBadModal(true);
+                sendStatisticOnServer();
+                setStartTime(false);
+            } 
+          }, 1000);
+    
+          return () => clearInterval(interval);
+        }
+      }, [startTime, timeLeft]);
+
+    function press (letter) {
+
+        if(letter === data.text[currentIndex]) {
+            setRemainLength(prev => prev + 1)
+            setCurrentInputValue((prev) => prev + letter);
+            setCurrentIndex((prev) => prev + 1);
+
+            if (currentIndex === data.text.length - 1) {
+                setFinished(true);
+                setStatus("Пройдено");
+                sendStatisticOnServer();
+            }
+
+        } else {
+            setErrorCount((prev) => prev + 1)
+            if (errorCount + 1 === data.countOfErrors) {
+                setStatus("Не пройдено");
+                setBadModal(true);
+                clearInterval(timeLeft)
+                sendStatisticOnServer();
+            }
+        }
+    }
+
     return (
         <>
             <UserHeader />
             <div className="container">
-                <Results/>
-                {/* <PracticeText/> */}
-                {letters && specs && party && <InputField handleLetter={handleLetter} letters={letters} specs={specs} party={party}/>}
+                <Results 
+                    maxErrors={data.countOfErrors} 
+                    maxTime={data.maxTime} 
+                    errorCount={errorCount} 
+                    timeLeft={timeLeft} 
+                    length={data.length}
+                    remainLength={remainLength}
+                    />
+                <PracticeText text={data.text} currentIndex={currentIndex}/>
+                <InputField
+                    press={press}
+                    letters={letters} 
+                    specs={specs}
+                    currentInputValue={currentInputValue} 
+                />
                 <Keyboard collectCollection={collectCollection}/>  
             </div>
+
+            {finished ? 
+                <Modal active={finished} setActive={setFinished} text={[]}>
+                    <p className="modal__title">Упражнение завершено!</p>
+                    <p className="modal__text">Результаты прохождения...</p>
+                    <Link className="button" to={"/exercise"}>Перейти на страницу с упражненими</Link>
+                </Modal> :
+                <></>
+                // <Modal active={modalActive} setActive={setFinished} text={[]}>
+                //     <p className="modal__title">Упражнение завершено!</p>
+                //     <p className="modal__text">Результаты прохождения...</p>
+                // </Modal>
+            }
+            <Modal active={badModal} setActive={setBadModal} text={[]}>
+                <p className="modal__title">Упражнение прервано!</p>
+                <p className="modal__text">Возможно вы превысили допустимое количество времени, либо превысили допустимое количество ошибок</p>
+                <Link className="modal__button" to={"/exercise"}>Перейти на страницу с упражненими</Link>
+                {/* <Link className="button" to={`/keyboard/${id}`}>Повторить упражнение</Link> */}
+            </Modal>
         </>
     );
 }

@@ -60,14 +60,6 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
         difficultData.append('maxLength', maxLength);
         difficultData.append('listOfZones', zone.listOfZones);
 
-        const data = {
-            id: idDifficultyLevel,
-            countOfErrors,
-            maxLength,
-            listOfZones: zone.listOfZones
-        }
-
-
         try {
             const responceFromServer = await fetch(updateDifficultLevel, {
                 method: 'POST',

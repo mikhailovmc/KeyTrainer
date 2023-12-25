@@ -14,6 +14,7 @@ import SiteInstruction from '../Spravka/SiteInstruction/SiteInstruction';
 import SiteInstructionAdmin from '../Spravka/SiteInstruction/SiteInstructionAdmin';
 import Statistic from '../Statistic/Statistic';
 import GetDataFromServer from '../ExercisePage/GetDataFromServer';
+import GetDataForExercise from '../KeyboardPage/GetDataForExercise';
 
 function App() {
     // const {data, isLoading, error} = useQuery(['exercises'], () => fetch(
@@ -42,7 +43,7 @@ function App() {
             <Route path="/create" element={<CreateLevel/>}/>
             <Route path="/changeLevel/:id" element={<ChangeLevel/>}/>
             <Route path="/exercise" element={<GetDataFromServer/>}/>
-            <Route path="/keyboard/:id" element={<KeyboardPage/>}/>
+            <Route path="/keyboard/:id" element={<GetDataForExercise/>}/>
             <Route path="/user-statistic" element={<Statistic/>}/>
 
             
