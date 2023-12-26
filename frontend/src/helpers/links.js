@@ -39,3 +39,5 @@ export const getStatisticsByExerciseId = 'https://localhost:5001/api/Statistics/
 export const getGraphic = 'https://localhost:5001/api/Statistics/GetGraphic/';
 
 export const getDiagram = 'https://localhost:5001/api/Statistics/GetDiagram/';
+
+export const addStatistic = 'https://localhost:5001/api/Statistics/AddStatistics';

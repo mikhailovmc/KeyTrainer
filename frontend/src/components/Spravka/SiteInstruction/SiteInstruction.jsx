@@ -5,6 +5,7 @@ import pic1 from "./../../../assets/spravka-auth.jpg"
 import pic2 from "./../../../assets/spravka-ok.jpg"
 import pic3 from "./../../../assets/difficult.jpg"
 import pic4 from "./../../../assets/keyboard.jpg"
+import pic5 from "./../../../assets/statistic.jpg"
 import "./style.scss";
 
 const SiteInstruction = () => {
@@ -128,7 +129,7 @@ const SiteInstruction = () => {
                         различные форматы отображения данных (Таблица, График, Диаграмма). Тоже самое администратор может сделать и с упражнением. 
                         При вводе ID упражнения будет выведена статистика по этому упражнению
                     </p>
-                    <img src={pic4} alt="Прохождение упражнения" />
+                    <img src={pic5} alt="Прохождение упражнения" />
                 </section>
             </div>
 
