@@ -98,7 +98,7 @@ namespace KeyTrainer.Business
             {
                 var exercize = await _exercizeRepository.GetExerciseById(stats.IdExercize);
 
-                if (exercizeIds.Contains(stats.Id))
+                if (exercizeIds.Contains(exercize.Id))
                 {
                     continue;
                 }
