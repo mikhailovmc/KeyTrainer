@@ -54,7 +54,7 @@ const AdminHeader = () => {
                     </li>
                     
                     <li className="header__list-item">
-                        <Link to="/user-statistic">
+                        <Link to="/admin-statistic">
                             Статистика
                         </Link>
                     </li>

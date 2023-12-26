@@ -37,6 +37,7 @@
         text-align: center;
         font-size: 30px;
         font-weight: 600;
+        margin-bottom: 20px;
     }
 
     &__button {
@@ -45,4 +46,10 @@
         display: flex;
         padding: 20px;
     }
+
+    label {
+        margin-bottom: 20px;
+    }
+
 }
+

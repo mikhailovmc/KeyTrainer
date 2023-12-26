@@ -8,7 +8,7 @@ import AuthContext from "../../context/AuthProvider";
 import "./style.scss"
 
 
-const ExercisePage = ({userExercise, adminExercise}) => {
+const ExercisePage = ({exercise}) => {
     const {auth} = useContext(AuthContext);
 
     const [classFilter, setClassFilter] = useState(
@@ -19,36 +19,37 @@ const ExercisePage = ({userExercise, adminExercise}) => {
         }
     );
     
-    const easyUser = [];
-    const mediumUser = [];
-    const hardUser = [];
+    const easy = [];
+    const medium = [];
+    const hard = [];
 
-    const easyAdmin = [];
-    const mediumAdmin = [];
-    const hardAdmin = [];
+    // const easyAdmin = [];
+    // const mediumAdmin = [];
+    // const hardAdmin = [];
 
-    const [sortedExerciseUser, setSortedExerciseUser] = useState(easyUser);
-    const [sortedExerciseAdmin, setSortedExerciseAdmin] = useState(easyAdmin);
+    const [sortedExercise, setSortedExercise] = useState(easy);
+    // const [sortedExerciseAdmin, setSortedExerciseAdmin] = useState(easyAdmin);
 
-    userExercise.map(exercise => {
-        if(exercise.idDifficultyLevel === 1) easyUser.push(exercise)
-        if(exercise.idDifficultyLevel === 2) mediumUser.push(exercise);
-        if(exercise.idDifficultyLevel === 3) hardUser.push(exercise);     
+    exercise.map(exercise => {
+        if(exercise.idDifficultyLevel === 1) easy.push(exercise)
+        if(exercise.idDifficultyLevel === 2) medium.push(exercise);
+        if(exercise.idDifficultyLevel === 3) hard.push(exercise);     
     })
     
 
-    adminExercise.map(exercises => {
-        if(exercises.idDifficultyLevel === 1) easyAdmin.push(exercises)
-        if(exercises.idDifficultyLevel === 2) mediumAdmin.push(exercises);
-        if(exercises.idDifficultyLevel === 3) hardAdmin.push(exercises);     
-    })
+    // adminExercise.map(exercises => {
+    //     if(exercises.idDifficultyLevel === 1) easyAdmin.push(exercises)
+    //     if(exercises.idDifficultyLevel === 2) mediumAdmin.push(exercises);
+    //     if(exercises.idDifficultyLevel === 3) hardAdmin.push(exercises);     
+    // })
 
 
     const handlerClick = (param) => {
 
         if(param.id === "1") {
-            setSortedExerciseUser(easyUser);
-            setSortedExerciseAdmin(easyAdmin);
+            setSortedExercise([]);
+            setSortedExercise([...easy]);
+            // setSortedExerciseAdmin(easyAdmin);
             setClassFilter({
                 easy: 'active',
                 medium: '',
@@ -57,8 +58,9 @@ const ExercisePage = ({userExercise, adminExercise}) => {
         }
         
         if(param.id === "2") {
-            setSortedExerciseUser(mediumUser);
-            setSortedExerciseAdmin(mediumAdmin);
+            setSortedExercise([]);
+            setSortedExercise([...medium]);
+            // setSortedExerciseAdmin(mediumAdmin);
             setClassFilter({
                 easy: '',
                 medium: 'active',
@@ -67,8 +69,9 @@ const ExercisePage = ({userExercise, adminExercise}) => {
         }
         
         if(param.id === "3") {
-            setSortedExerciseUser(hardUser);
-            setSortedExerciseAdmin(hardAdmin);  
+            setSortedExercise([]);
+            setSortedExercise([...hard]);
+            // setSortedExerciseAdmin(hardAdmin);  
             setClassFilter({
                 easy: '',
                 medium: '',
@@ -97,9 +100,9 @@ const ExercisePage = ({userExercise, adminExercise}) => {
              
                 <div className="exercise__container"> 
                     {
-                        auth.isAdmin === false ? 
-                        <UserCard exercises={sortedExerciseUser} /> :
-                        <AdminCard exercises={sortedExerciseAdmin} />
+                        !auth.isAdmin ? 
+                        <UserCard exercises={sortedExercise} /> :
+                        <AdminCard exercises={sortedExercise} />
                     }
                 </div>
             </div>

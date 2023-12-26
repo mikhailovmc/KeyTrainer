@@ -15,6 +15,7 @@ import SiteInstructionAdmin from '../Spravka/SiteInstruction/SiteInstructionAdmi
 import Statistic from '../Statistic/Statistic';
 import GetDataFromServer from '../ExercisePage/GetDataFromServer';
 import GetDataForExercise from '../KeyboardPage/GetDataForExercise';
+import AdminStatistic from '../Statistic/AdminStatistic';
 
 function App() {
     // const {data, isLoading, error} = useQuery(['exercises'], () => fetch(
@@ -45,6 +46,7 @@ function App() {
             <Route path="/exercise" element={<GetDataFromServer/>}/>
             <Route path="/keyboard/:id" element={<GetDataForExercise/>}/>
             <Route path="/user-statistic" element={<Statistic/>}/>
+            <Route path="/admin-statistic" element={<AdminStatistic/>}/>
 
             
             

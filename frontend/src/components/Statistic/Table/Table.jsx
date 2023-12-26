@@ -6,19 +6,26 @@ import { getStatisticsByExerciseId, getStatisticsByUserId } from "../../../helpe
 
 import "./../style.scss";
 
-const Table = ({userId, exerciseId}) => {
+const Table = ({userId}) => {
     const { auth } = useContext(AuthContext);
-
+    
+    const [userStatistic, setUserStatistic] = useState();
     let currentUserId;
-    if (userId) currentUserId = userId;
-    else currentUserId = auth.id
 
-    let currentExerciseId;
-    if (exerciseId) currentExerciseId = exerciseId;
-    else currentExerciseId = null
- 
-    const {data: userStatistic, isLoading, error} = useFetch(getStatisticsByUserId + currentUserId);
-    const {data: exerciseStatistic, isLoading1, error1} = useFetch(getStatisticsByExerciseId + currentExerciseId);
+    if (userId) {
+        currentUserId = userId;
+    } else {
+        currentUserId = auth.id
+    }
+
+    const {data, isLoading, error} = useFetch(getStatisticsByUserId + currentUserId);
+
+    useEffect(() => {
+        if (data) {
+            setUserStatistic(data);
+        }
+    }, [isLoading])
+    // const {data: exerciseStatistic, isLoading1, error1} = useFetch(getStatisticsByExerciseId + currentExerciseId);
 
     return (
         <table className="statistic__table">
@@ -35,7 +42,7 @@ const Table = ({userId, exerciseId}) => {
             
             <tbody>
                 {userStatistic && <CellOfStatistic data={userStatistic}/>}
-                {exerciseStatistic && <CellOfStatistic data={exerciseStatistic}/>}
+                {/* {exerciseStatistic && <CellOfStatistic data={exerciseStatistic}/>} */}
             </tbody> 
         </table>
     );
