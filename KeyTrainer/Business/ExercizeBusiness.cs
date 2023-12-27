@@ -92,7 +92,7 @@ namespace KeyTrainer.Business
 
             var orderingStats = statistics.OrderByDescending(s => s.Id);
 
-            var exercizeIds = new List<int>(); 
+            var exercizeIds = new List<int>();
 
             foreach (var stats in orderingStats)
             {
@@ -348,31 +348,28 @@ namespace KeyTrainer.Business
             var difficultyLevelId = random.Next(1, 4);
             var difficultyLevel = await _exercizeRepository.GetDifficultyLevelById(difficultyLevelId);
 
-            var rows = new List<int>();
-            for (int i = 0; i < difficultyLevelId; i++)
+            var keys = "";
+            foreach (var zone in difficultyLevel.ListOfZones)
             {
-                rows.Add(random.Next(1, 4));
+                for (int i = 1; i < 5; i++)
+                {
+                    _keyboardZones.TryGetValue(zone + i, out var chars);
+                    for (int j = 0; j < chars.Length; j++)
+                    {
+                        keys += chars[j];
+                    }
+                }
             }
 
             var exercizeText = "";
-            while (exercizeText.Length < difficultyLevel.MaxLength - difficultyLevel.ListOfZones.Length - rows.Count)
+            while (exercizeText.Length < difficultyLevel.MaxLength)
             {
-                foreach (var zone in difficultyLevel.ListOfZones)
-                {
-                    foreach (var row in rows)
-                    {
-                        _keyboardZones.TryGetValue(zone + row, out var keys);
-                        if (keys != null)
-                        {
-                            exercizeText += keys[random.Next(0, keys.Length)];
-                        }
-                    }
+                exercizeText += keys[random.Next(0, keys.Length)];
 
-                    var spaseChance = random.Next(0, 7);
-                    if (spaseChance / 3 == 0)
-                    {
-                        exercizeText += ' ';
-                    }
+                var spaseChance = random.Next(0, 7);
+                if (spaseChance / 3 == 0)
+                {
+                    exercizeText += ' ';
                 }
             }
 
@@ -382,7 +379,7 @@ namespace KeyTrainer.Business
                 ListOfZones = difficultyLevel.ListOfZones,
                 Text = exercizeText.Trim(),
                 CountOfErrors = difficultyLevel.CountOfErrors,
-                MaxTime = exercizeText.Length + exercizeText.Length / rows.Count
+                MaxTime = exercizeText.Length + exercizeText.Length / difficultyLevel.ListOfZones.Length
             };
         }
 
