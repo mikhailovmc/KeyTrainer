@@ -96,6 +96,7 @@ const KeyboardPage = ({data, id}) => {
             if (currentIndex === data.text.length - 1) {
                 finishProgram = true;
                 status = "Пройдено";
+                setFinished(true);
                 sendStatisticOnServer();
                 setStartTime(false)
             }
