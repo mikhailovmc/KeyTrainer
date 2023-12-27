@@ -15,6 +15,7 @@ const AdminStatistic = () => {
     const [exerciseId, setExerciseId] = useState();
     const [logins, setLogins] = useState();
     const [names, setNames] = useState();
+    const [hiddenDivButtons, setHiddenDivButton] = useState(false);
 
     const [selectedLogins, setSelectedLogins] = useState();
     const [selectedNames, setSelectedNames] = useState();
@@ -58,8 +59,9 @@ const AdminStatistic = () => {
         e.preventDefault();
         setExerciseId(selectedNames);
         setModalActiveExerciseId(false);
-        // console.log('ИД упражнения', exerciseId);
-        // setChosenStatistic(<Table userId={selectedLogins} exerciseId={selectedNames} />);
+
+        setHiddenDivButton(true);
+        setChosenStatistic(<Table exerciseId={selectedNames}/>);
         setClassFilter(
             {
                 table: 'active',
@@ -118,16 +120,6 @@ const AdminStatistic = () => {
             setNames(res);
         });
     }
-
-    // const getAllStatistic = async () => {
-    //     const response = await fetch("https://localhost:5001/api/Exercize/GetExercize", {
-    //         method: "Get"
-    //     })
-    //     let result = response.json()
-    //     result.then((res) => {
-    //         setNames(res);
-    //     });
-    // }
    
     return (
         <>
@@ -135,22 +127,38 @@ const AdminStatistic = () => {
         <div className="statistic">
                 <div className="container">
                     <div className="statistic__view-wrapper">
-                        <div className={`statistic__view ${classFilter.table}`} id="table" onClick={e => {
-                            handlerClick(e.target);
-                            setChosenStatistic(<Table userId={userId}/>);
-                            }}>Таблица
-                        </div>
-                        <div className={`statistic__view ${classFilter.graph}`} id="graph" onClick={e => {
-                            handlerClick(e.target);
-                            setChosenStatistic(<Graph userId={userId}/>);
-                            }}>График
-                        </div>
-                        <div className={`statistic__view ${classFilter.diagram}`} id="diagram" onClick={e => {
-                            handlerClick(e.target);
-                            setChosenStatistic(<Diagramm userId={userId}/>);
-                            }}>Диаграмма
-                        </div>
-                    </div>
+                    { !hiddenDivButtons ?
+                        <>
+                            <div className={`statistic__view ${classFilter.table}`} id="table" onClick={e => {
+                                handlerClick(e.target);
+                                setChosenStatistic(<Table userId={userId}/>);
+                                }}>Таблица
+                            </div>
+                            <div className={`statistic__view ${classFilter.graph}`} id="graph" onClick={e => {
+                                handlerClick(e.target);
+                                setChosenStatistic(<Graph userId={userId}/>);
+                                }}>График
+                            </div>
+                            <div className={`statistic__view ${classFilter.diagram}`} id="diagram" onClick={e => {
+                                handlerClick(e.target);
+                                setChosenStatistic(<Diagramm userId={userId}/>);
+                                }}>Диаграмма
+                            </div>
+                        </> :
+                        <>
+                            <div className={`statistic__view ${classFilter.table}`} id="table" onClick={e => {
+                                handlerClick(e.target);
+                                setChosenStatistic(<Table userId={userId}/>);
+                                }}>Таблица
+                            </div>
+                        </>
+                        
+                    }
+                        
+                    </div>  
+
+
+                    {/* {`statistic__view ${selectedLogins ? "hidden" : ''}`} */}
 
                         <div className="statistic__view-wrapper">
                             <div className="statistic__view" onClick={handleLogins}>

@@ -48,7 +48,7 @@ const ExercisePage = ({exercise}) => {
 
         if(param.id === "1") {
             setSortedExercise([]);
-            setSortedExercise([...easy]);
+            setSortedExercise(easy);
             // setSortedExerciseAdmin(easyAdmin);
             setClassFilter({
                 easy: 'active',

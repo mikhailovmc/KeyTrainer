@@ -18,10 +18,12 @@ const KeyboardPage = ({data, id}) => {
     const [startTime, setStartTime] = useState(true);
     const [timeLeft, setTimeLeft] = useState(data.maxTime);
     const [finished, setFinished] = useState(false);
-    const [remainLength, setRemainLength] = useState(0);
     const [badModal, setBadModal] = useState(false);
-
-    const [status, setStatus] = useState("Пройдено")
+    
+    const [countLength, setCountLength] = useState(0);
+    let finishProgram = false;
+    let status = "Пройдено";
+    // const [status, setStatus] = useState("");
     const [letters, setLetters] = useState([]);
 	const [specs, setSpecs] = useState([]);
     const [currentInputValue, setCurrentInputValue] = useState("");
@@ -34,8 +36,13 @@ const KeyboardPage = ({data, id}) => {
     }
 
     const sendStatisticOnServer  = async () => {
-        userStatistic.append("countOFError", errorCount + 1);
-        userStatistic.append("length", remainLength);
+        if (finishProgram) {
+            userStatistic.append("length", countLength + 1);
+        } else {
+            userStatistic.append("length", countLength);
+        } 
+        
+        userStatistic.append("countOFError", errorCount + 1);        
         userStatistic.append("status", status);
         userStatistic.append("time", data.maxTime - timeLeft);
         userStatistic.append("idExercize", id);
@@ -67,8 +74,8 @@ const KeyboardPage = ({data, id}) => {
           const interval = setInterval(() => {
             
             setTimeLeft(prevTime => prevTime > 0 ? prevTime - 1 : 0);
-            if (timeLeft === 0 || errorCount + 1 === data.countOfErrors) {
-                setStatus("Не пройдено");
+            if (timeLeft === 0) {
+                status = "Не пройдено";
                 setBadModal(true);
                 sendStatisticOnServer();
                 setStartTime(false);
@@ -82,22 +89,25 @@ const KeyboardPage = ({data, id}) => {
     function press (letter) {
 
         if(letter === data.text[currentIndex]) {
-            setRemainLength(prev => prev + 1)
+            setCountLength(prev => ++prev)
             setCurrentInputValue((prev) => prev + letter);
             setCurrentIndex((prev) => prev + 1);
 
             if (currentIndex === data.text.length - 1) {
-                setFinished(true);
-                setStatus("Пройдено");
+                finishProgram = true;
+                status = "Пройдено";
                 sendStatisticOnServer();
+                setStartTime(false)
             }
 
         } else {
             setErrorCount((prev) => prev + 1)
             if (errorCount + 1 === data.countOfErrors) {
-                setStatus("Не пройдено");
+                status = "Не пройдено";
+                console.log(status);
+                // clearInterval(timeLeft)
+                setStartTime(false)
                 setBadModal(true);
-                clearInterval(timeLeft)
                 sendStatisticOnServer();
             }
         }
@@ -113,7 +123,7 @@ const KeyboardPage = ({data, id}) => {
                     errorCount={errorCount} 
                     timeLeft={timeLeft} 
                     length={data.length}
-                    remainLength={remainLength}
+                    remainLength={countLength}
                     />
                 <PracticeText text={data.text} currentIndex={currentIndex}/>
                 <InputField
@@ -128,7 +138,10 @@ const KeyboardPage = ({data, id}) => {
             {finished ? 
                 <Modal active={finished} setActive={setFinished} text={[]}>
                     <p className="modal__title">Упражнение завершено!</p>
-                    <p className="modal__text">Результаты прохождения...</p>
+                    <p className="modal__text">Результаты:</p>
+                    <p className="modal__text">Ошибок: {errorCount} / {data.countOfErrors} </p>
+                    <p className="modal__text">Написано символов: {countLength} / {data.length} </p>
+                    <p className="modal__text">Времени осталось: {timeLeft} / {data.maxTime} </p>
                     <Link className="button" to={"/exercise"}>Перейти на страницу с упражненими</Link>
                 </Modal> :
                 <></>
@@ -140,6 +153,11 @@ const KeyboardPage = ({data, id}) => {
             <Modal active={badModal} setActive={setBadModal} text={[]}>
                 <p className="modal__title">Упражнение прервано!</p>
                 <p className="modal__text">Возможно вы превысили допустимое количество времени, либо превысили допустимое количество ошибок</p>
+                <p className="modal__text">Результаты:</p>
+                    <p className="modal__text">Ошибок: {errorCount} / {data.countOfErrors} </p>
+                    <p className="modal__text">Написано символов: {countLength} / {data.length} </p>
+                    <p className="modal__text">Времени осталось: {timeLeft} / {data.maxTime} </p>
+
                 <Link className="modal__button" to={"/exercise"}>Перейти на страницу с упражненими</Link>
                 {/* <Link className="button" to={`/keyboard/${id}`}>Повторить упражнение</Link> */}
             </Modal>
