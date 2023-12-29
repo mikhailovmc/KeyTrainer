@@ -45,6 +45,7 @@ const AdminStatistic = () => {
         setUserId(selectedLogins);
         setModalActiveUserId(false);
         console.log('ИД пользователя', userId);
+        setHiddenDivButton(false)
         setChosenStatistic(<Table userId={selectedLogins} />);
         setClassFilter(
             {

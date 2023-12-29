@@ -55,15 +55,8 @@ const KeyboardPage = ({data, id}) => {
             });
 
             if(responceFromServer.ok) {
-                // setModalActive(true);
-                // setTimeout(navigateToPage, 2000);
+
             }
-            
-            // if(!responceFromServer.ok) {
-            //     const result = await responceFromServer.json();
-            //     setErrorText(result);
-            //     setModalActive(true);
-            // }
         } catch (error) {
             alert(error)
         }

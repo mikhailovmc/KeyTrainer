@@ -24,7 +24,7 @@ const AdminHeader = () => {
                                 </Link>
                                 
                                 <Link to="/difficult">
-                                    Редактировать уровень сложность
+                                    Редактировать уровень сложности
                                 </Link>
 
                                 <Link to="/exercise">
