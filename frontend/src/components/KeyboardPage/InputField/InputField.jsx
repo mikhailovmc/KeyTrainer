@@ -81,7 +81,8 @@ const InputField = ({press, letters, specs, currentInputValue}) => {
 					type="text" 
 					className="input " 
 					placeholder="Поле для ввода текста"
-					defaultValue={currentInputValue} 
+					defaultValue={currentInputValue}
+					autofocus="autofocus" 
 				/>
 			</form>
 		</>

@@ -1,9 +1,14 @@
 import UserHeader from "./../../Headers/UserHeader"
 import "./style.scss"
+import { useContext } from "react"
+import AuthContext from "../../../context/AuthProvider"
+import AdminHeader from "../../Headers/AdminHeader"
 const Creators = () => {
+
+    const { auth } = useContext(AuthContext);
     return (
         <>
-            <UserHeader/> 
+            {auth.isAdmin ? <AdminHeader/> : <UserHeader/>}
             <div className="creators">
                 <p className="creators__title">Информация о разработчиках</p>
                 <p className="">Самарский университет</p>

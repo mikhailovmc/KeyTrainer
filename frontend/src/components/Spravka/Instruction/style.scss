@@ -1,5 +1,6 @@
 .instruction {
     padding: 50px;
+    font-size: 18px;
 
     &__title {
         font-weight: 700;
@@ -9,6 +10,7 @@
 
     &__text {
         margin-bottom: 30px;
+        line-height: 30px;
     }
 
     &__list {
@@ -19,9 +21,18 @@
         }
         
     }
+    p {
+        margin-bottom: 15px;
+    }
 
     &__list li {
         margin-bottom: 10px;
+    }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
 }

@@ -153,7 +153,7 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
                     <p className="modal__title">Ошибка!</p>
                 </Modal> :
                 <Modal active={modalActive} setActive={setModalActive} text={[]}>
-                    <p className="modal__title">Сложность успешно изменена!</p>
+                    <p className="modal__title">Уровень сложности изменен!</p>
                 </Modal>
             }
         </>

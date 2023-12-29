@@ -1,10 +1,16 @@
 import UserHeader from "./../../Headers/UserHeader"
 import "./style.scss"
+import pic1 from "./../../../assets/hands.png"
+import { useContext } from "react"
+import AuthContext from "../../../context/AuthProvider"
+import AdminHeader from "../../Headers/AdminHeader"
 
 const Instruction = () => {
+
+    const { auth } = useContext(AuthContext);
     return (
         <>
-            <UserHeader/>
+            {auth.isAdmin ? <AdminHeader/> : <UserHeader/>}
             <div className="instruction">
                 <div className="container">
                     <h2 className="instruction__title">Посадка и положение рук</h2>
@@ -33,7 +39,7 @@ const Instruction = () => {
                         Указательные пальцы слегка касаются кончиками середины клавиш А и О, но не опираются на них. Правильная посадка и положение рук показаны на рисунке ниже.
                     </p>    
                         
-                    <img src="" alt="" />
+                    <img src={pic1} alt="hands" />
                 </div>
             </div>
         </>
