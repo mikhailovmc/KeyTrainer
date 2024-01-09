@@ -42,7 +42,7 @@ const KeyboardPage = ({data, id}) => {
             userStatistic.append("length", countLength);
         } 
         
-        userStatistic.append("countOFError", errorCount + 1);        
+        userStatistic.append("countOFErrors", errorCount + 1);        
         userStatistic.append("status", status);
         userStatistic.append("time", data.maxTime - timeLeft);
         userStatistic.append("idExercize", id);
