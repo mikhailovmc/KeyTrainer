@@ -308,6 +308,7 @@ namespace KeyTrainer.Business
                 if (!difficultyLevel.ListOfZones.Contains(zone))
                 {
                     _errors.Add("Ошибка 12 - Клавиатурные зоны не соответствуют уровню сложности");
+                    break;
                 }
             }
 

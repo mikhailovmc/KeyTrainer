@@ -80,7 +80,7 @@ namespace KeyTrainer.Business
 
             var accuracy = (int)((1 - ((double)statisticsSendDto.CountOfErrors / (double)exercize.Text.Length)) * 100);
 
-            int typingSpeed = exercize.Text.Length / statisticsSendDto.Time;
+            int typingSpeed = (int)((double)exercize.Text.Length / (double)statisticsSendDto.Time) * 60;
 
             var statisticsFullDto = new StatisticsFullDto
             {
