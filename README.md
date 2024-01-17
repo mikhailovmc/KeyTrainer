@@ -8,4 +8,6 @@ https://www.figma.com/file/SHHvvHj78lbBrZ8DWahWSM/%D0%97%D0%B5%D0%BB%D0%B5%D0%BD
 - фреймворк React v18+;
 - React-Router-Dom v6;
 - Axios для запросов на сервер;
-- REST API.
+- REST API;
+- Sass modules.
+  
