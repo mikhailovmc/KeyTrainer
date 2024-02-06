@@ -3,11 +3,9 @@ import PrivateRoute from '../PrivateRoute';
 import Authorization from "../Authorization/Authorization";
 import Registration from "../Authorization/Registration";
 import Instruction from "../Spravka/Instruction/Instruction";
-import ExercisePage from "../ExercisePage/ExercisePage";
 import HiPage from '../HiPage/HiPage';
 import ChangeDifficult from '../ChangeDifficult/ChangeDifficult';
 import CreateLevel from '../ChangeDifficult/CreateLevel';
-import KeyboardPage from '../KeyboardPage/KeyboardPage';
 import ChangeLevel from '../ChangeDifficult/ChangeLevel';
 import Creators from '../Spravka/Creators/Creators';
 import SiteInstruction from '../Spravka/SiteInstruction/SiteInstruction';
@@ -37,7 +35,6 @@ function App() {
           <Route path="/creators" element={<Creators/>}/>
           <Route path="/site-instruction" element={<SiteInstruction/>}/>
           
-
           <Route path='/' element={<PrivateRoute/>}>
             <Route path="/site-instruction/admin" element={<SiteInstructionAdmin/>}/>
             <Route path="/difficult" element={<ChangeDifficult/>}/>
@@ -46,13 +43,8 @@ function App() {
             <Route path="/exercise" element={<GetDataFromServer/>}/>
             <Route path="/keyboard/:id" element={<GetDataForExercise/>}/>
             <Route path="/user-statistic" element={<Statistic/>}/>
-            <Route path="/admin-statistic" element={<AdminStatistic/>}/>
-
-            
-            
+            <Route path="/admin-statistic" element={<AdminStatistic/>}/>  
           </Route>
-
-          
         </Routes>
        
       </BrowserRouter>

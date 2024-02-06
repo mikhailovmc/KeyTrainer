@@ -20,10 +20,8 @@ const Creators = () => {
                 <p className="creators__text">Едавкин С.И.</p>
                 <p className="creators__director">Руководитель: Зеленко Л.С.</p>
             </div>
-
             <span className="data">Самара 2023</span>
         </>
-        
     );
 }
  

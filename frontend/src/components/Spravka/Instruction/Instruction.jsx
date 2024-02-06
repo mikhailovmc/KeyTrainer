@@ -1,9 +1,9 @@
-import UserHeader from "./../../Headers/UserHeader"
-import "./style.scss"
-import pic1 from "./../../../assets/hands.png"
 import { useContext } from "react"
+import UserHeader from "./../../Headers/UserHeader"
 import AuthContext from "../../../context/AuthProvider"
 import AdminHeader from "../../Headers/AdminHeader"
+import pic1 from "./../../../assets/hands.png"
+import "./style.scss"
 
 const Instruction = () => {
 
@@ -43,8 +43,6 @@ const Instruction = () => {
                 </div>
             </div>
         </>
-        
-        
     );
 }
  

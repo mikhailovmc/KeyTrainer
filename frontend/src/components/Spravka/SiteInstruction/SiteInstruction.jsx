@@ -1,5 +1,4 @@
 import UserHeader from "./../../Headers/UserHeader";
-import { Link } from "react-router-dom";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import pic1 from "./../../../assets/spravka-auth.jpg"
 import pic2 from "./../../../assets/spravka-ok.jpg"
@@ -7,6 +6,7 @@ import pic3 from "./../../../assets/difficult.jpg"
 import pic4 from "./../../../assets/keyboard.jpg"
 import pic5 from "./../../../assets/statistic.jpg"
 import "./style.scss";
+import InstructionSection from "./InstructionSection";
 
 const SiteInstruction = () => {
 
@@ -53,6 +53,7 @@ const SiteInstruction = () => {
                     </li>
                 </ol>
 
+                {/* <InstructionSection title={"Введение"} text= id={"introduction"} urlImg= imgAlt= /> */}
                 <section className="site-instruction__section" id="introduction">
                     <h2>Введение</h2>
                     <p>
@@ -64,6 +65,7 @@ const SiteInstruction = () => {
                     </p>
                 </section>
 
+                {/* <InstructionSection title= text= id={"auth"} urlImg= imgAlt= /> */}
                 <section className="site-instruction__section" id="auth">
                     <h2>Авторизация, запуск программы</h2>
                     <p>
@@ -82,6 +84,7 @@ const SiteInstruction = () => {
                     <img src={pic2} alt="Вход" />    
                 </section>
 
+                {/* <InstructionSection title= text= id= urlImg= imgAlt= /> */}
                 <section className="site-instruction__section" id="difficult">
                     <h2>Выбор сложности</h2>
                     <p>

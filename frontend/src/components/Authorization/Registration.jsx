@@ -6,7 +6,6 @@ import UserHeader from "../Headers/UserHeader";
 import pic from "./img/eye.png";
 import "./style.scss";
 
-
 const Registration = () => {
 
     const [passwordType, setPasswordType] = useState("password");
@@ -76,11 +75,11 @@ const Registration = () => {
 
     return (
         <>
-            <UserHeader links={[{text: "Инструкция", route: "/instruction"}, {text: "Авторизироваться", route: "/login"}]}/>
+            <UserHeader/>
             <div className="logPage">
                 
                 <form className="form" id="formElem" onSubmit={registration}>
-                    <div className="form__title">Зарегистрироваться</div>
+                    <p className="form__title">Зарегистрироваться</p>
 
                     <label className="form__label">
                         Логин:
@@ -99,7 +98,8 @@ const Registration = () => {
                         <div 
                             className={passwordType==="password" ? "password__btn" :" password__btn active"} 
                             onClick={togglePassword}>
-                                <img src={pic} alt="Посмотреть пароль" /></div>
+                            <img src={pic} alt="Посмотреть пароль" />
+                        </div>
                     </label>
 
                     <button className="button" type="submit" onSubmit={registration}>Зарегистрироваться</button>

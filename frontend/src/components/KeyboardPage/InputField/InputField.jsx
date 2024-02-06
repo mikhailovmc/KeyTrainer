@@ -1,22 +1,6 @@
-import { useEffect, useState } from "react";
 import "./style.scss";
 
 const InputField = ({press, letters, specs, currentInputValue}) => {
-
-	// if(value) {
-	// 	if(!value.length === 0) {
-	// 		value.join("")
-	// 	}
-	// }
-	
-
-	// useEffect(() => {
-	// 	viewUpdate();
-	// }, [])
-
-	
-
-
 	function keydownHandler(event) {
 		event.preventDefault();
 		console.log(event.key)
@@ -30,7 +14,7 @@ const InputField = ({press, letters, specs, currentInputValue}) => {
 
 		let key = event.key.toLowerCase();
 
-		if (key == " ") {
+		if (key === " ") {
 			key = "space";
 			press(" ")
 		}
@@ -39,7 +23,6 @@ const InputField = ({press, letters, specs, currentInputValue}) => {
 			press('\n')
 		}
 
-		
 		const ownSpec = specs.filter(x => x.dataset.specs === key);
 		
 		if(ownSpec.length) {

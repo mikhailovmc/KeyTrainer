@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-
 import UserHeader from "../Headers/UserHeader";
 import "./style.scss"
 
 const HiPage = () => {
     return (
         <>
-            <UserHeader links={[{text: "Инструкция", route: "/instruction"}, {text: "Авторизация", route: "/login"}]}/>
+            <UserHeader/>
             <div className="hello-page">
                 <h1 className="hello-page__title">Добро пожаловать на нашу тренировку в KeyGym-online</h1>
                 <p className="hello-page__text">
@@ -20,7 +19,6 @@ const HiPage = () => {
                 </div>
             </div>
         </>
-        
     );
 }
  

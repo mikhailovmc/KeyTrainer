@@ -1,10 +1,11 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
+import Dropdown from "./Dropdown/Dropdown";
+import { dropDownLinks } from "./links";
 import "./style.scss"
 
 const AdminHeader = () => {
-
     const { setAuthData } = useContext(AuthContext);
 
     const handleLogOut = () => {
@@ -16,41 +17,11 @@ const AdminHeader = () => {
             <nav>
                 <ul className="header__list">
                     <li className="header__list-item">
-                        <div className="dropdown">
-                            <span className="dropbtn">Упражнение</span>
-                            <div className="dropdown-content">
-                                <Link to="/create">
-                                    Создать упражнение
-                                </Link>
-                                
-                                <Link to="/difficult">
-                                    Редактировать уровень сложности
-                                </Link>
-
-                                <Link to="/exercise">
-                                    Все упражнения
-                                </Link>
-                            </div>
-                        </div>    
+                        <Dropdown title={'Упражнение'} links={dropDownLinks[0]}/>
                     </li>
                     
                     <li className="header__list-item">
-                        <div className="dropdown">
-                            <span className="dropbtn">Справка</span>
-                            <div className="dropdown-content">
-                                <Link to="/site-instruction/admin">
-                                    Инструкция по сайту
-                                </Link>
-                                    
-                                <Link to="/instruction">
-                                    Правила выполнения упражнения
-                                </Link>
-
-                                <Link to="/creators">
-                                    Разработчики
-                                </Link>
-                            </div>
-                        </div>
+                        <Dropdown title={"Справка"} links={dropDownLinks[1]}/>
                     </li>
                     
                     <li className="header__list-item">
@@ -59,13 +30,8 @@ const AdminHeader = () => {
                         </Link>
                     </li>
 
-                    <li className="header__list-item">
-                        Администратор
-                    </li>
-
-                    <li className="header__list-item cursor" onClick={handleLogOut}>
-                        Выйти
-                    </li>
+                    <li className="header__list-item">Администратор</li>
+                    <li className="header__list-item cursor" onClick={handleLogOut}>Выйти</li>
                 </ul>
             </nav>
         </header>
