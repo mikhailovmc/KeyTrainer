@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
 import Dropdown from "./Dropdown/Dropdown";
-import { dropDownLinks } from "./links";
+import { dropDownLinks, dropDownLinksAdmin } from "./links";
 import "./style.scss"
 
 const AdminHeader = () => {
@@ -17,11 +17,11 @@ const AdminHeader = () => {
             <nav>
                 <ul className="header__list">
                     <li className="header__list-item">
-                        <Dropdown title={'Упражнение'} links={dropDownLinks[0]}/>
+                        <Dropdown title={'Упражнение'} links={dropDownLinksAdmin}/>
                     </li>
                     
                     <li className="header__list-item">
-                        <Dropdown title={"Справка"} links={dropDownLinks[1]}/>
+                        <Dropdown title={"Справка"} links={dropDownLinks}/>
                     </li>
                     
                     <li className="header__list-item">

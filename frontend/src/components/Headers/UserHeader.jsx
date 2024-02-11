@@ -33,7 +33,7 @@ const Header = () => {
                         </li>
 
                         <li className="header__list-item">
-                            <Dropdown title={"Справка"} links={dropDownLinks[1]}/>
+                            <Dropdown title={"Справка"} links={dropDownLinks}/>
                         </li>
                         
                         <li className="header__list-item">{auth.data}</li>

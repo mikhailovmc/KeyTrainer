@@ -36,7 +36,6 @@ function App() {
           <Route path="/site-instruction" element={<SiteInstruction/>}/>
           
           <Route path='/' element={<PrivateRoute/>}>
-            <Route path="/site-instruction/admin" element={<SiteInstructionAdmin/>}/>
             <Route path="/difficult" element={<ChangeDifficult/>}/>
             <Route path="/create" element={<CreateLevel/>}/>
             <Route path="/changeLevel/:id" element={<ChangeLevel/>}/>
