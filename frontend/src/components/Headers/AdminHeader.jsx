@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
 import Dropdown from "./Dropdown/Dropdown";
 import { dropDownLinks, dropDownLinksAdmin } from "./links";
@@ -7,9 +7,11 @@ import "./style.scss"
 
 const AdminHeader = () => {
     const { setAuthData } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleLogOut = () => {
-        setAuthData(null)
+        setAuthData(null);
+        navigate("/");
     }
     return (
         <header>

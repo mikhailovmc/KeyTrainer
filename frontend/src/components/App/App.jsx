@@ -9,7 +9,6 @@ import CreateLevel from '../ChangeDifficult/CreateLevel';
 import ChangeLevel from '../ChangeDifficult/ChangeLevel';
 import Creators from '../Spravka/Creators/Creators';
 import SiteInstruction from '../Spravka/SiteInstruction/SiteInstruction';
-import SiteInstructionAdmin from '../Spravka/SiteInstruction/SiteInstructionAdmin';
 import Statistic from '../Statistic/Statistic';
 import GetDataFromServer from '../ExercisePage/GetDataFromServer';
 import GetDataForExercise from '../KeyboardPage/GetDataForExercise';

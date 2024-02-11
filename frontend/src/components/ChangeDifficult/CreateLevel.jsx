@@ -4,6 +4,9 @@ import { addExercise, getAutoExercise } from "../../helpers/links";
 import AdminHeader from "../Headers/AdminHeader";
 import Modal from "./../Modal/Modal";
 import "./style.scss"
+import KeyboardZone from "./KeyboardZone/KeyboardZone";
+import LabelExercise from "./LabelExercise/LabelExercise";
+import DifficultZone from "./DifficultZone/DifficultZone";
 
 const CreateLevel = () => {
 
@@ -107,69 +110,27 @@ const CreateLevel = () => {
     return (
         <>
             <AdminHeader/>
-
             <div className="changeDifficult">
-            <form className="changeDifficult__form" action="">
+                <form className="changeDifficult__form" action="">
                     <p className="changeDifficult__title">Создание упражнения</p>
-                    <p className="changeDifficult__text">Выбор уровня сложности:</p>
-                    <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" value="1" checked={idDifficultyLevel == 1 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
-                        Легкий
-                    </label>
-                    
-                    <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" value="2"  checked={idDifficultyLevel == 2 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
-                        Средний
-                    </label>
-
-                    <label className="changeDifficult__label">
-                        <input className="input" name="difficult" type="radio" value="3"  checked={idDifficultyLevel == 3 ? true : false} onChange={e => setIdDifficultyLevel(e.target.value)}/>
-                        Сложный
-                    </label>
-
-                    <p className="changeDifficult__text">Выбор зон клавиатуры:</p>
-                    <div className="changeDifficult__zone">
-                        <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="1" checked={zone.listOfZones.includes("1")} onChange={chooseZone}/>
-                            1
-                        </label>
-
-                        <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="2" checked={zone.listOfZones.includes("2")} onChange={chooseZone}/>
-                            2
-                        </label>
-
-                        <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="3" checked={zone.listOfZones.includes("3")} onChange={chooseZone}/>
-                            3
-                        </label>
-
-                        <label className="changeDifficult__label inner--label">
-                            <input className="input-checkbox" type="checkbox" value="4" checked={zone.listOfZones.includes("4")} onChange={chooseZone}/>
-                            4
-                        </label>
-                    </div>
+                    <DifficultZone idDifficultyLevel={idDifficultyLevel} setIdDifficultyLevel={setIdDifficultyLevel}/>
+                    <KeyboardZone func={chooseZone} zones={zone} />
 
                     <p className="changeDifficult__text">Текст для упражнения:</p>
-                    <textarea className="textarea" name="" id="" required cols="30" rows="10" value={text} onChange={e => setText(e.target.value)}></textarea>
+                    <textarea className="textarea" required cols="30" rows="10" value={text} onChange={e => setText(e.target.value)}></textarea>
 
-                    
-                    <label className="changeDifficult__label">
+                    <LabelExercise value={countOfErrors} func={setCountOfErrors} inputType={"number"}>
                         Допустимое количество ошибок:
-                        <input className="input-text" type="number" required  value={countOfErrors} onChange={e => setCountOfErrors(e.target.value)}/>
-                    </label>
+                    </LabelExercise>
 
-                    <label className="changeDifficult__label">
+                    <LabelExercise value={maxTime} func={setMaxTime} inputType={"number"}>
                         Время на выполнение:
-                        <input className="input-text" type="number" required value={maxTime} onChange={e => setMaxTime(e.target.value)}/>
-                    </label>
+                    </LabelExercise>
 
                     <div className="buttons-wrapper">
-                        <button className="button"onClick={useCreateAuto}>Создать упражнения автоматически</button>
+                        <button className="button" onClick={useCreateAuto}>Создать упражнения автоматически</button>
                         <button className="button" onClick={handleSave}>Сохранить</button>
                     </div>
-                    
-
                 </form>
             </div>
 

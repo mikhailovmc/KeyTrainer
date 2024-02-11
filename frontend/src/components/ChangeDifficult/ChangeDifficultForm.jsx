@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateDifficultLevel, getDifficultyLevel } from "../../helpers/links";
 import Modal from "./../Modal/Modal";
+import KeyboardZone from "./KeyboardZone/KeyboardZone";
 
 const ChangeDifficultForm = ({easy, middle, hard}) => {
 
@@ -105,33 +106,13 @@ const ChangeDifficultForm = ({easy, middle, hard}) => {
 
                 <label className="changeDifficult__label">
                     <input className="input" name="difficult" type="radio"  defaultChecked={idDifficultyLevel === 3 } data-id="3" onChange={e => {
-                        setIdDifficultyLevel(e.target.dataset.id)
-                        changeState(hard);}}/>
+                        setIdDifficultyLevel(e.target.dataset.id);
+                        changeState(hard);
+                        }}/>
                     Сложный
                 </label>
 
-                <p className="changeDifficult__text">Выбор зон клавиатуры:</p>
-                <div className="changeDifficult__zone">
-                    <label className="changeDifficult__label inner--label">
-                        <input className="input-checkbox" type="checkbox" value="1" checked={zone.listOfZones.includes("1")} onChange={chooseZone}/>
-                        1
-                    </label>
-
-                    <label className="changeDifficult__label inner--label">
-                        <input className="input-checkbox" type="checkbox" value="2" checked={zone.listOfZones.includes("2")} onChange={chooseZone}/>
-                        2
-                    </label>
-
-                    <label className="changeDifficult__label inner--label">
-                        <input className="input-checkbox" type="checkbox" value="3" checked={zone.listOfZones.includes("3")} onChange={chooseZone}/>
-                        3
-                    </label>
-
-                    <label className="changeDifficult__label inner--label">
-                        <input className="input-checkbox" type="checkbox" value="4" checked={zone.listOfZones.includes("4")}  onChange={chooseZone}/>
-                        4
-                    </label>
-                </div>
+                <KeyboardZone func={chooseZone} zones={zone} />
 
                 <label className="changeDifficult__label">
                     Допустимое количество ошибок:

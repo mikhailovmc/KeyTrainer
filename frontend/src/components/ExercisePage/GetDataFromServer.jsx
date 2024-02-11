@@ -7,11 +7,7 @@ import { getExercisesForUser, getExercises } from "./../../helpers/links";
 const GetDataFromServer = () => {
     const {auth} = useContext(AuthContext);
     const [exerciseList, setExrciseList] = useState();
-    // const [dataAdmin, setDataAdmin] = useState();
 
-    // let dataUser = [];
-    // let dataAdmin = [];
-    // const axios = require('axios');
     useEffect(() => {
         if (auth.isAdmin) {
             axios.get(getExercises)    // Возвращение обещаний используя get-запрос
@@ -41,9 +37,7 @@ const GetDataFromServer = () => {
         <>
             {exerciseList &&  <ExercisePage exercise={exerciseList}/>}     
         </>
-        
     )
-    
 }
  
 export default GetDataFromServer;
